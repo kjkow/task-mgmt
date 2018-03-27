@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { AuthService } from './sign-in/auth-service.service';
 
 
 @NgModule({
@@ -12,9 +13,13 @@ import { SignInComponent } from './sign-in/sign-in.component';
     SignInComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor (private authService: AuthService){
+    //this.authService.getToken(); 
+  }
+ }
