@@ -4,7 +4,7 @@ import { AuthService } from './auth-service.service';
 @Component({
   selector: 'app-sign-in',
   template: `
-    <div class="row">
+    <div class="row btn-group">
       <button type="button" (click)="authorize()" class="btn btn-info">Zaloguj się z Google</button>
       <button type="button" (click)="check()" class="btn btn-info">Sprawdź</button>
     </div>
