@@ -65,7 +65,7 @@ export class AuthService {
     let client_id = '660414676955-apq8kh280raba6dhuq003mu4oo5c57bp.apps.googleusercontent.com';
     let prompt = 'consent';
     let response_type = 'code';
-    let scope = 'https://www.googleapis.com/auth/userinfo.profile';
+    let scope = 'https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email';
     let access_type = 'offline';
 
     window.location.replace(`${location}?redirect_uri=${redirect_uri}&prompt=${prompt}&response_type=${response_type}&client_id=${client_id}&scope=${scope}&access_type=${access_type}`);
@@ -108,4 +108,16 @@ export class AuthService {
     console.error(error.message || error);
     return Promise.reject(error.message || error);
   }
+
+  getGoogleData(access_token){
+    let url = 'https://www.googleapis.com/oauth2/v2/userinfo';
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization' : 'Bearer ' + access_token
+      })
+    };
+
+    return this.http.get(url, httpOptions);
+  }
+
 }

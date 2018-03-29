@@ -21,11 +21,4 @@ import { AuthService } from './sign-in/auth-service.service';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor (private authService: AuthService){
-    var auth = localStorage.getItem('auth');
-    if(auth){
-      this.authService.getToken();
-    }
-
-  }
  }
