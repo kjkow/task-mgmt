@@ -31,29 +31,17 @@ export class AuthService {
     if(!code){
       if(this.matchLocationToAuthCode(code)){
         localStorage.setItem('auth', 'false');
+        this.changeAuthCodeToAccessToken(localStorage.getItem('auth_code'));
         return;
       }
     }
 
     if(!code){
       this.requestAuthCode();
-      //this.matchLocationToAuthCode(code);
-      //this.getToken();
     }
 
-    //var access_token = localStorage.getItem('access_token');
-
-    //if(!access_token){
-      //this.changeAuthCodeToAccessToken(code);
-    //}
-
-
-
-   // localStorage.setItem('access_token', access_token);
-
-
+    //TODO: ustawienie access tokena w headersach
     //this.httpHeaders.set('Authorization', 'Bearer ' + token);
-
 
   }
 
@@ -79,9 +67,6 @@ export class AuthService {
     let response_type = 'code';
     let scope = 'https://www.googleapis.com/auth/userinfo.profile';
     let access_type = 'offline';
-
-    //let url = `${location}?redirect_uri=${redirect_uri}&prompt=${prompt}&response_type=${response_type}&client_id=${client_id}&scope=${scope}&access_type=${access_type}`;
-    //return this.http.get(url);
 
     window.location.replace(`${location}?redirect_uri=${redirect_uri}&prompt=${prompt}&response_type=${response_type}&client_id=${client_id}&scope=${scope}&access_type=${access_type}`);
     //UWAGA: to mi spowoduje ze bedziemy budowac caly modul od zera, bo przechodzimy na inna strone, a potem wracamy. Po tym kodzie funkcja wykonuje reszte instrukcji po czym robi redirecta
@@ -112,10 +97,15 @@ export class AuthService {
 
   private extractData(res){
     localStorage.setItem('access_token', res.access_token);
+    localStorage.setItem('refresh_token', res.refresh_token);
+    localStorage.setItem('id_token', res.id_token);
+    localStorage.setItem('expires_in', res.expires_in);
+    localStorage.setItem('token_type', res.token_type);
+    //TODO: moze zapisac to w session storage??
   }
 
   private handleErrorPromise (error: Response | any) {
-    console.error(error.message || error);  //TODO: dostaje odpowiedz z tego posta ze bad request, cos zle wysylam...
+    console.error(error.message || error);
     return Promise.reject(error.message || error);
   }
 }

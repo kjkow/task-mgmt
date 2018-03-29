@@ -4,9 +4,8 @@ import { AuthService } from './auth-service.service';
 @Component({
   selector: 'app-sign-in',
   template: `
-    <div class="row btn-group">
+    <div class="row">
       <button type="button" (click)="authorize()" class="btn btn-info">Zaloguj się z Google</button>
-      <button type="button" (click)="check()" class="btn btn-info">Sprawdź</button>
     </div>
   `,
   styles: []
@@ -17,16 +16,10 @@ export class SignInComponent implements OnInit {
 
   authorize(){
     this.authService.getToken();
-    
-  }
-
-  check(){
-    console.log(localStorage.getItem('access_token'));
-    //TODO: po pierwszym zalogowaniu nie mam w local storage tokena, dopiero jak drugi raz wywołam getToken()
   }
 
   ngOnInit() {
-    
+  //TODO: jeśli mamy access token to wybierzmy z googla imie i nazwisko, i maila i wyswietmy tutaj
   }
 
 }
