@@ -1,10 +1,8 @@
 package pl.kjkow.server.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import pl.kjkow.server.model.User;
 import pl.kjkow.server.repository.UserRepository;
 
@@ -17,13 +15,14 @@ public class UserRest {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/all")
-    public @ResponseBody Iterable<User> getAllUsers(){
-        return userRepository.findAll();
+    @GetMapping("/users/{email}")
+    @ResponseStatus(HttpStatus.FOUND)
+    public @ResponseBody User getUserByEmail(@PathVariable String email){
+        return userRepository.findByEmail(email);
     }
 
-    @RequestMapping("/add")
-    public @ResponseBody User addUser(String email, String name, String lastName){
-        return userRepository.save(new User(name, lastName, email));
+    @RequestMapping(value = "/add", method = RequestMethod.PUT)
+    public @ResponseBody User addUser(User user) {
+        return userRepository.save(user);//TODO: dokonczyc
     }
 }
