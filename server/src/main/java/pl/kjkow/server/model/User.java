@@ -1,9 +1,12 @@
 package pl.kjkow.server.model;
 
+import org.springframework.data.annotation.CreatedDate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 /**
  * Created by kamil on 2018-03-30.
@@ -17,11 +20,14 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    @CreatedDate
+    private Date created;
 
     public User(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        created = new Date();
     }
 
     public Long getId() {
