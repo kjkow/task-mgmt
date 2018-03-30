@@ -11,7 +11,7 @@ export class UsersService {
       name: "Kamil",
       lastName: "Kowalczyk"
     }
-  ];
+  ]; //TODO: do wyniesienia do pliku i jako konfiguracja testowa
 
   getUser(email){
     var _user;

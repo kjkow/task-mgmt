@@ -14,11 +14,13 @@ import { UsersService } from './auth-service.service';
       <button *ngIf="!loggedIn" type="button" (click)="signInWithGoogle()" class="btn btn-info">Zaloguj się z Google</button>
       <button *ngIf="loggedIn" type="button" (click)="signOut()" class="btn btn-info">Wyloguj się</button>
   </div>
-  <div *ngIf="userInfo" >
-    <h4>{{userInfo.name}} {{userInfo.lastName}}</h4>
-    <h5>{{userInfo.email}}</h5>
+  <div *ngIf="loggedIn" class="card" >
+    <div class="card-body">
+    <h5 class="card-title">Zalogowany jako:</h5>
+    <p>{{userInfo.name}} {{userInfo.lastName}} <br> {{userInfo.email}}</p>
+    </div>
   </div>
-  `,
+  `,//TODO: zrobić ładny html
   styles: []
 })
 export class SignInComponent implements OnInit {
@@ -48,6 +50,10 @@ export class SignInComponent implements OnInit {
       console.log("Trying to get user: " + user)
       if(user){
         this.userInfo = this.userService.getUser(user.email);
+        if(!this.userInfo){
+          this.userService.addUser(user);
+          this.userInfo = this.userService.getUser(user.email);
+        }
       }
       this.loggedIn = (user != null);
     });
