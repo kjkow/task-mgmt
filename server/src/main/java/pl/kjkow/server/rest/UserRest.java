@@ -22,6 +22,7 @@ public class UserRest {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody User addUser(User user) {
         return userRepository.save(user);//TODO: dokonczyc
     }
