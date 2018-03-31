@@ -2,10 +2,7 @@ package pl.kjkow.server.model;
 
 import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.Date;
 
@@ -20,12 +17,13 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     @Email
     private String email;
     @CreatedDate
     private Date created;
 
-    public User() {
+    public User() { //TODO: private?
     }
 
     public User(String firstName, String lastName, String email) {
