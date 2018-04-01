@@ -16,9 +16,9 @@ public class UserRest {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/users/{email}")
+    @GetMapping(value = "/users/{email}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody User getUserByEmail(@PathVariable String email){
+    public @ResponseBody User getUserByEmail(@PathVariable("email") String email){
         return userRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException(email));
     }
 
