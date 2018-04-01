@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.kjkow.server.model.User;
+import pl.kjkow.server.model.UserNotFoundException;
 import pl.kjkow.server.repository.UserRepository;
 
 /**
@@ -18,7 +19,7 @@ public class UserRest {
     @GetMapping("/users/{email}")
     @ResponseStatus(HttpStatus.FOUND)
     public @ResponseBody User getUserByEmail(@PathVariable String email){
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException(email));
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.PUT)
