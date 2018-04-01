@@ -17,7 +17,7 @@ public class UserRest {
     private UserRepository userRepository;
 
     @GetMapping("/users/{email}")
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     public @ResponseBody User getUserByEmail(@PathVariable String email){
         return userRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException(email));
     }
