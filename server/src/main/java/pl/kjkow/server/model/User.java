@@ -23,7 +23,7 @@ public class User {
     @CreatedDate
     private Date created;
 
-    public User() { //TODO: private?
+    private User() {
     }
 
     public User(String firstName, String lastName, String email) {
