@@ -4,6 +4,7 @@ import { GoogleLoginProvider } from "angular4-social-login";
 import { SocialUser } from "angular4-social-login";
 import { logging } from 'protractor';
 import { UsersService } from './auth-service.service';
+import { User } from './customer';
 
 
 
@@ -17,7 +18,7 @@ import { UsersService } from './auth-service.service';
   <div *ngIf="loggedIn" class="card" >
     <div class="card-body">
     <h5 class="card-title">Zalogowany jako:</h5>
-    <p>{{userInfo.name}} {{userInfo.lastName}} <br> {{userInfo.email}}</p>
+    <p>{{userInfo.firstName}} {{userInfo.lastName}} <br> {{userInfo.email}}</p>
     </div>
   </div>
   `,//TODO: zrobić ładny html
@@ -25,9 +26,9 @@ import { UsersService } from './auth-service.service';
 })
 export class SignInComponent implements OnInit {
 
-  userInfo = {};
+  userInfo: User;
 
-  loggedIn;
+  loggedIn: boolean;
 
   constructor(private authService: AuthService, private userService: UsersService) {
 
@@ -41,21 +42,30 @@ export class SignInComponent implements OnInit {
   signOut(): void {
     this.authService.signOut();
     this.loggedIn = false;
-    this.userInfo = {};
+    this.userInfo.email = "";
+    this.userInfo.firstName = "";
+    this.userInfo.lastName = "";
   }
 
   ngOnInit() {
-   setTimeout(()=>{
-    this.authService.authState.subscribe((user) => {
-      console.log("Trying to get user: " + user)
-      if(user){
-        this.userInfo = this.userService.getUser(user.email);
-        if(!this.userInfo){
+    this.userInfo = new User;
+    this.loggedIn = false;
+    setTimeout(()=>{
+      this.authService.authState.subscribe((user) => {
+        if(user){
+          let u = this.userService.getUser(user).subscribe(u =>{
+          this.userInfo.email = u.email;
+          this.userInfo.firstName = u.firstName;
+          this.userInfo.lastName = u.lastName;  
+          
+          if(this.userInfo != null) this.loggedIn = true;//TODO: kiedy nie ma użytkownika na bazie
+
+          if(!this.userInfo && this.userInfo != undefined){
           this.userService.addUser(user);
-          this.userInfo = this.userService.getUser(user.email);
+          //this.userInfo = this.userService.getUser(user.email);
         }
+        })
       }
-      this.loggedIn = (user != null);
     });
    },5000); //TODO: działa, ale do poprawienia (routes!?) - trzeba jakoś poczekać na response
 

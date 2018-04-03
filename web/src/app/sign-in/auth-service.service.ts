@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { User } from './customer';
 
 @Injectable()
 export class UsersService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   users = [
     {
@@ -13,17 +15,11 @@ export class UsersService {
     }
   ]; //TODO: do wyniesienia do pliku i jako konfiguracja testowa
 
-  getUser(email){
-    var _user;
-    this.users.forEach(user=>{
-      if(user.email == email){
-        _user = user;
-      } 
-    })
-    return _user;
+  getUser(user){
+    return this.http.get<User>("http://localhost:4646/users/" + user.email);   //TODO: localhost do wyciagniecia do konfiguracji
   }
 
   addUser(user){
-    this.users.push(user);
+    this.users.push(user); //todo: http post users/add
   }
 }
