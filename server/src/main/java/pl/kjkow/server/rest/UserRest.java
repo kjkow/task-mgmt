@@ -24,10 +24,7 @@ public class UserRest {
 
     @RequestMapping(value = "users/add", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public @ResponseBody User addUser(
-            @RequestParam String firstName,
-            @RequestParam String lastName,
-            @RequestParam String email) {
-        return userRepository.save(new User(firstName, lastName, email));
+    public @ResponseBody User addUser(@RequestBody User user) {
+        return userRepository.save(user);
     }
 }

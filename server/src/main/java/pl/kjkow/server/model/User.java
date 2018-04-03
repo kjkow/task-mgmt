@@ -24,6 +24,7 @@ public class User {
     private Date created;
 
     private User() {
+        created = new Date();
     }
 
     public User(String firstName, String lastName, String email) {
