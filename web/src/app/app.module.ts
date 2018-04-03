@@ -5,7 +5,17 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { SignInComponent } from './sign-in/sign-in.component';
-import { AuthService } from './sign-in/auth-service.service';
+import { UsersService } from './sign-in/auth-service.service';
+
+import { SocialLoginModule, AuthServiceConfig } from "angular4-social-login";
+import { GoogleLoginProvider } from "angular4-social-login"
+
+let config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider("660414676955-26nqpv4smg9pe266iiiun9g21cqu4on9.apps.googleusercontent.com")
+  }
+]); //TODO: przenieść do pliku
 
 
 @NgModule({
@@ -15,9 +25,10 @@ import { AuthService } from './sign-in/auth-service.service';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    SocialLoginModule.initialize(config)
   ],
-  providers: [AuthService],
+  providers: [UsersService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
