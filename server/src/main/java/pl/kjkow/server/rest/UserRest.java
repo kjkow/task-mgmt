@@ -18,7 +18,6 @@ public class UserRest {
 
     @GetMapping(value = "/users/{email}")
     @ResponseStatus(HttpStatus.OK)
-    @CrossOrigin
     public @ResponseBody User getUserByEmail(@PathVariable("email") String email){
         return userRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException(email));
     }
