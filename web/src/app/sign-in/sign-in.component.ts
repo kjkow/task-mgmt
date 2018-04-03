@@ -53,17 +53,22 @@ export class SignInComponent implements OnInit {
     setTimeout(()=>{
       this.authService.authState.subscribe((user) => {
         if(user){
-          let u = this.userService.getUser(user).subscribe(u =>{
-          this.userInfo.email = u.email;
-          this.userInfo.firstName = u.firstName;
-          this.userInfo.lastName = u.lastName;  
-          
-          if(this.userInfo != null) this.loggedIn = true;//TODO: kiedy nie ma użytkownika na bazie
-
-          if(!this.userInfo && this.userInfo != undefined){
-          this.userService.addUser(user);
-          //this.userInfo = this.userService.getUser(user.email);
-        }
+          this.userService.getUser(user).subscribe(u =>{
+            if(u){
+              this.userInfo.email = u.email;
+              this.userInfo.firstName = u.firstName;
+              this.userInfo.lastName = u.lastName;
+              this.loggedIn = true;  
+            }
+        }, err => {
+            if(err.error.status == 404){
+                this.userService.addUser(user).subscribe(u =>{
+                this.userInfo.email = u.email;
+                this.userInfo.firstName = u.firstName;
+                this.userInfo.lastName = u.lastName;
+                this.loggedIn = true;
+                })
+          }
         })
       }
     });
