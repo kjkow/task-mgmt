@@ -52,6 +52,7 @@ public class UserRestTest {
         this.mvc = webAppContextSetup(webApplicationContext).build();
         userList = new ArrayList<>();
 
+        userRepository.deleteAll();
         userList.add(userRepository.save(new User("John", "Doe", "abc@example.com")));
         userList.add(userRepository.save(new User("Michelle", "Francis", email)));
     }
