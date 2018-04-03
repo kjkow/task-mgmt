@@ -18,11 +18,11 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 
 /**
@@ -77,6 +77,18 @@ public class UserRestTest {
 
     @Test
     public void addUser() throws Exception {
+        String firstName = "Percy";
+        String lastName = "Jackson";
+        String mail = "test@ing.com";
+
+        mvc.perform(post("/users/add")
+                .param("firstName", firstName)
+                .param("lastName", lastName)
+                .param("email", mail))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.firstName", is(firstName)))
+                .andExpect(jsonPath("$.lastName", is(lastName)))
+                .andExpect(jsonPath("$.email", is(mail)));
     }
 
 }

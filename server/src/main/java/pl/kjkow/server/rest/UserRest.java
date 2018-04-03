@@ -22,9 +22,12 @@ public class UserRest {
         return userRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException(email));
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.PUT)
+    @RequestMapping(value = "users/add", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public @ResponseBody User addUser(User user) {
-        return userRepository.save(user);//TODO: dokonczyc
+    public @ResponseBody User addUser(
+            @RequestParam String firstName,
+            @RequestParam String lastName,
+            @RequestParam String email) {
+        return userRepository.save(new User(firstName, lastName, email));
     }
 }
