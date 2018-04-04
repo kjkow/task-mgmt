@@ -1,5 +1,6 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
-import { Obszar } from './services/obszar.enum';
+import { Obszar } from '../tasks-services/obszar.enum';
+
 
 @Component({
   selector: 'tasks-main',
@@ -13,7 +14,7 @@ import { Obszar } from './services/obszar.enum';
   `,
   styles: []
 })
-export class TasksMainComponent implements OnInit {
+export class UsersTasksComponent implements OnInit {
 
   taskAreasTitle = "Bieżące zadania";
   referencesTitle = Obszar.MATERIALY_REFERENCYJNE;

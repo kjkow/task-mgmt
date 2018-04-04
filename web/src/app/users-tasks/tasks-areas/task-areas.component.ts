@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Obszar } from '../services/obszar.enum';
+import { Obszar } from '../tasks-services/obszar.enum';
 
 @Component({
   selector: 'task-areas',
