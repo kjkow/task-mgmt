@@ -22,12 +22,17 @@ export class TaskTestService implements TaskService {
     },
     {
       nazwa: "Odkurzyć przedpokój",
-      obszar: Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI,
+      obszar: Obszar.MOZE_KIEDYS,
       idUzytkownika: 123
     },
     {
       nazwa: "Zamieść liście",
       obszar: Obszar.W_PIERWSZEJ_CHWILI,
+      idUzytkownika: 123
+    },
+    {
+      nazwa: "Nakarmić kota",
+      obszar: Obszar.OBOWIAZKI,
       idUzytkownika: 123
     }
   ];

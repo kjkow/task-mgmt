@@ -17,6 +17,7 @@ import { Obszar } from '../tasks-services/obszar.enum';
     width:50%;
     height:100%;
     float:left;
+    min-height: 18em;
   }
   .contents{
     height:50%;
