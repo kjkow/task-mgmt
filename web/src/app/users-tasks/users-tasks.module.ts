@@ -5,6 +5,7 @@ import { TaskTestService } from './tasks-services/task-test.service';
 import { UsersTasksComponent, ObszaryZadanLista } from './tasks-main/tasks-main.component';
 import { TaskAreasComponent } from './tasks-areas/task-areas.component';
 import { TaskAreaComponent } from './tasks-area/task-area.component';
+import { UserTaskComponent } from './user-task/user-task.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { TaskAreaComponent } from './tasks-area/task-area.component';
     UsersTasksComponent,
     TaskAreasComponent,
     ObszaryZadanLista,
-    TaskAreaComponent
+    TaskAreaComponent,
+    UserTaskComponent
   ],
   exports: [UsersTasksComponent],
   bootstrap: [UsersTasksComponent]
