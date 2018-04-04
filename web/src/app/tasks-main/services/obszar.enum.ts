@@ -1,8 +1,8 @@
 export enum Obszar {
-    W_PIERWSZEJ_CHWILI,
-    MATERIALY_REFERENCYJNE,
-    OBOWIAZKI,
-    W_NIEDALEKIEJ_PRZYSZLOSCI,
-    MOZE_KIEDYS,
-    UKONCZONE //==kosz
+    W_PIERWSZEJ_CHWILI = "W pierwszej chwili",
+    MATERIALY_REFERENCYJNE = "Materiały referencyjne",
+    OBOWIAZKI = "Obowiązki",
+    W_NIEDALEKIEJ_PRZYSZLOSCI = "W niedalekiej przyszłości",
+    MOZE_KIEDYS = "Może kiedyś",
+    UKONCZONE = "Ukończone" //==kosz
 }
