@@ -13,6 +13,7 @@ import { TasksMainComponent, ObszaryZadanLista } from './tasks-main/tasks-main.c
 import { TaskService } from './tasks-main/services/task.service';
 import { TaskTestService } from './tasks-main/services/task-test.service';
 import { TaskAreasComponent } from './tasks-main/task-areas/task-areas.component';
+import { TaskAreaComponent } from './tasks-main/task-areas/task-area/task-area.component';
 
 let config = new AuthServiceConfig([
   {
@@ -28,7 +29,8 @@ let config = new AuthServiceConfig([
     SignInComponent,
     TasksMainComponent,
     TaskAreasComponent,
-    ObszaryZadanLista
+    ObszaryZadanLista,
+    TaskAreaComponent
   ],
   imports: [
     BrowserModule,

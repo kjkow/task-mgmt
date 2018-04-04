@@ -4,10 +4,11 @@ import { Component, OnInit } from '@angular/core';
   selector: 'task-areas',
   template: `
   <div class="contents">
-  <div class="col-md-6 quarter card">test</div>
-  <div class="col-md-6 quarter card">test</div>
-  <div class="col-md-6 quarter card">test</div>
-  <div class="col-md-6 quarter card">test</div>
+    <task-area class="col-md-6 quarter card"></task-area>
+    <task-area class="col-md-6 quarter card"></task-area>
+    <task-area class="col-md-6 quarter card"></task-area>
+    <task-area class="col-md-6 quarter card"></task-area>
+  </div>
   `,
   styles: [`
   .quarter{
