@@ -4,5 +4,5 @@ export enum Obszar {
     OBOWIAZKI,
     W_NIEDALEKIEJ_PRZYSZLOSCI,
     MOZE_KIEDYS,
-    KOSZ
+    UKONCZONE //==kosz
 }
