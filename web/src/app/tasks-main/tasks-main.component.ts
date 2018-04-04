@@ -4,15 +4,20 @@ import { Obszar } from './services/obszar.enum';
 @Component({
   selector: 'tasks-main',
   template: `
-  <div *ngFor="let item of obszaryZadan | obszaryZadanLista">
-    {{ item }}
-  </div> 
+  <h4>{{taskAreasTitle}}</h4>
+  <task-areas></task-areas>
+  <h4>{{referencesTitle}}</h4>
+  <div>todo...</div>
+  <h4>{{finnishedTitle}}</h4>
+  <div>todo...</div>
   `,
   styles: []
 })
 export class TasksMainComponent implements OnInit {
 
-  obszaryZadan = Obszar;
+  taskAreasTitle = "Bieżące zadania";
+  referencesTitle = "Materiały referencyjne";
+  finnishedTitle = "Zadania ukończone";
 
   constructor() { }
 
@@ -21,7 +26,15 @@ export class TasksMainComponent implements OnInit {
 
 }
 
-@Pipe({
+/**
+ * do iterowania po enumie, może się przyda:
+ * JS:  obszaryZadan = Obszar;
+ *   <div *ngFor="let item of obszaryZadan | obszaryZadanLista">
+    {{ item }}
+  </div> 
+ */
+
+@Pipe({ //TODO: raczej do wywalenia, na początku myślałem że będę generował obszary zadań z listy, ale to mi nie pasuje do layotu
   name: 'obszaryZadanLista'
 })
 export class ObszaryZadanLista implements PipeTransform {
