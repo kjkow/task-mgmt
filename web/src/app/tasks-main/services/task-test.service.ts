@@ -6,11 +6,22 @@ import { Obszar } from './obszar.enum';
 export class TaskTestService implements TaskService {
 
   getUsersTasksForArea(userId: number, area: Obszar): Task[] {
-    return this.tasks;
+    let tasksToReturn: Array<Task> = new Array;
+    this.tasks.forEach(element => {
+      if(element.idUzytkownika == userId && element.obszar == area){
+        tasksToReturn.push(element);
+      }
+    });
+    return tasksToReturn;
   }
   tasks: Task[] = [
     {
       nazwa: "Umyć naczynia",
+      obszar: Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI,
+      idUzytkownika: 123
+    },
+    {
+      nazwa: "Odkurzyć przedpokój",
       obszar: Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI,
       idUzytkownika: 123
     },
