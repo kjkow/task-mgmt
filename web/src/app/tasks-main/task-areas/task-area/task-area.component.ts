@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'task-area',
   template: `
-    <p>
-      task-area works!
-    </p>
+  <div class="card-block">
+    <ng-content class="card-title"></ng-content>
+  </div>
   `,
   styles: []
 })
