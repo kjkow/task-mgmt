@@ -8,7 +8,10 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { UsersService } from './sign-in/auth-service.service';
 
 import { SocialLoginModule, AuthServiceConfig } from "angular4-social-login";
-import { GoogleLoginProvider } from "angular4-social-login"
+import { GoogleLoginProvider } from "angular4-social-login";
+import { TasksMainComponent } from './tasks-main/tasks-main.component'
+import { TaskService } from './tasks-main/task.service';
+import { TaskTestService } from './tasks-main/task-test.service';
 
 let config = new AuthServiceConfig([
   {
@@ -21,14 +24,15 @@ let config = new AuthServiceConfig([
 @NgModule({
   declarations: [
     AppComponent,
-    SignInComponent
+    SignInComponent,
+    TasksMainComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     SocialLoginModule.initialize(config)
   ],
-  providers: [UsersService],
+  providers: [UsersService, {provide: TaskService, useClass: TaskTestService}],
   bootstrap: [AppComponent]
 })
 export class AppModule {
