@@ -21,6 +21,16 @@ export class TaskTestService implements TaskService {
       idUzytkownika: 123
     },
     {
+      nazwa: "Umyć naczynia 2",
+      obszar: Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI,
+      idUzytkownika: 123
+    },
+    {
+      nazwa: "Umyć naczynia 3",
+      obszar: Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI,
+      idUzytkownika: 123
+    },
+    {
       nazwa: "Odkurzyć przedpokój",
       obszar: Obszar.MOZE_KIEDYS,
       idUzytkownika: 123
