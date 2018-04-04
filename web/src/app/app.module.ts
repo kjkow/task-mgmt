@@ -9,7 +9,7 @@ import { UsersService } from './sign-in/auth-service.service';
 
 import { SocialLoginModule, AuthServiceConfig } from "angular4-social-login";
 import { GoogleLoginProvider } from "angular4-social-login";
-import { TasksMainComponent } from './tasks-main/tasks-main.component'
+import { TasksMainComponent, ObszaryZadanLista } from './tasks-main/tasks-main.component'
 import { TaskService } from './tasks-main/services/task.service';
 import { TaskTestService } from './tasks-main/services/task-test.service';
 import { TaskAreasComponent } from './tasks-main/task-areas/task-areas.component';
@@ -27,7 +27,8 @@ let config = new AuthServiceConfig([
     AppComponent,
     SignInComponent,
     TasksMainComponent,
-    TaskAreasComponent
+    TaskAreasComponent,
+    ObszaryZadanLista
   ],
   imports: [
     BrowserModule,
