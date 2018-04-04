@@ -4,5 +4,5 @@ export enum Obszar {
     OBOWIAZKI = "Obowiązki",
     W_NIEDALEKIEJ_PRZYSZLOSCI = "W niedalekiej przyszłości",
     MOZE_KIEDYS = "Może kiedyś",
-    UKONCZONE = "Ukończone" //==kosz
+    UKONCZONE = "Zadania ukończone" //==kosz
 }

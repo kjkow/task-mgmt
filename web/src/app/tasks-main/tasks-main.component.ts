@@ -16,8 +16,8 @@ import { Obszar } from './services/obszar.enum';
 export class TasksMainComponent implements OnInit {
 
   taskAreasTitle = "Bieżące zadania";
-  referencesTitle = "Materiały referencyjne";
-  finnishedTitle = "Zadania ukończone";
+  referencesTitle = Obszar.MATERIALY_REFERENCYJNE;
+  finnishedTitle = Obszar.UKONCZONE;
 
   constructor() { }
 

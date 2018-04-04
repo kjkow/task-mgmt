@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { Obszar } from '../services/obszar.enum';
 
 @Component({
   selector: 'task-areas',
   template: `
   <div class="contents">
-    <task-area class="col-md-6 quarter card"></task-area>
-    <task-area class="col-md-6 quarter card"></task-area>
-    <task-area class="col-md-6 quarter card"></task-area>
-    <task-area class="col-md-6 quarter card"></task-area>
+    <task-area 
+      class="col-md-6 quarter card"  
+      *ngFor="let o of viewedTaskAreas"
+      [obszar]="o">
+    </task-area>
   </div>
   `,
   styles: [`
@@ -23,6 +25,13 @@ import { Component, OnInit } from '@angular/core';
   `]
 })
 export class TaskAreasComponent implements OnInit {
+
+  viewedTaskAreas = [
+    Obszar.W_PIERWSZEJ_CHWILI,
+    Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI,
+    Obszar.OBOWIAZKI,
+    Obszar.MOZE_KIEDYS
+  ]
 
   constructor() { }
 
