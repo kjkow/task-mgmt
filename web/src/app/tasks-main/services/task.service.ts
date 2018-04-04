@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Obszar } from './obszar.enum';
 
 export interface Task {
   nazwa: string;
-  obszar: string; //TODO: enum obszar zadan
+  obszar: Obszar;
   priorytet?: number;
   termin?: Date;
   komentarz?: string;
@@ -16,6 +17,6 @@ export interface Task {
 @Injectable()
 export abstract class TaskService {
 
-  abstract getUsersTasks(userId): Array<Task>;
+  abstract getUsersTasksForArea(userId: number, area: Obszar): Array<Task>;
 
 }
