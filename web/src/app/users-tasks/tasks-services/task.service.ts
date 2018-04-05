@@ -17,6 +17,18 @@ export interface Task {
 @Injectable()
 export abstract class TaskService {
 
+  /**
+   * Get tasks for specified areas
+   * @param userId user id
+   * @param area task's area
+   */
   abstract getUsersTasksForArea(userId: number, area: Obszar): Array<Task>;
+
+  /**
+   * Create new task
+   * @param task new task to save
+   * @returns newly created task
+   */
+  abstract addTask(task: Task): Task;
 
 }
