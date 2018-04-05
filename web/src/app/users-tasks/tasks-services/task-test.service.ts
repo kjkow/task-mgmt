@@ -5,6 +5,10 @@ import { Obszar } from './obszar.enum';
 @Injectable()
 export class TaskTestService implements TaskService {
 
+  addTask(task: Task): Task {
+    this.tasks.push(task);
+    return task;
+  }
   getUsersTasksForArea(userId: number, area: Obszar): Task[] {
     let tasksToReturn: Array<Task> = new Array;
     this.tasks.forEach(element => {
