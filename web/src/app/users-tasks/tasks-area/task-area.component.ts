@@ -33,10 +33,15 @@ export class TaskAreaComponent implements OnInit {
   tasksInArea: Task[];
   
 
-  constructor(private taskService: TaskService) { }
+  constructor(private taskService: TaskService) { 
+    
+  }
 
   ngOnInit() {
-    this.tasksInArea = this.taskService.getUsersTasksForArea(123, this.obszar);
-  }//TODO: id uzytkownika
+    this.taskService.getTasksStream(this.obszar).subscribe((tasks)=>{
+      this.tasksInArea = tasks;  
+    })
+    this.taskService.getUsersTasksForArea(this.obszar);
+  }
 
 }

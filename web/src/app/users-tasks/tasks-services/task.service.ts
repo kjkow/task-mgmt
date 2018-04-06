@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Obszar } from './obszar.enum';
+import { Observable } from 'rxjs';
 
 export interface Task {
   nazwa: string;
@@ -22,13 +23,18 @@ export abstract class TaskService {
    * @param userId user id
    * @param area task's area
    */
-  abstract getUsersTasksForArea(userId: number, area: Obszar): Array<Task>;
+  abstract getUsersTasksForArea(area: Obszar);
 
   /**
    * Create new task
    * @param task new task to save
    * @returns newly created task
    */
-  abstract addTask(task: Task): Task;
+  //abstract addTask(task: Task): Observable<Task>;
+
+  /**
+   * Get task stream for specified area
+   */
+  abstract getTasksStream(area: Obszar): Observable<Array<Task>>
 
 }
