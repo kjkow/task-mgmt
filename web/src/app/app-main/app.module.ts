@@ -9,6 +9,7 @@ import { SignInComponent } from '../sign-in/sign-in.component';
 import { UsersTasksModule } from '../users-tasks/users-tasks.module';
 import { UsersService } from '../sign-in/users.service';
 import { UsersRestService } from '../sign-in/users.rest.service';
+import { UsersMockService } from '../sign-in/users-mock.service';
 
 let config = new AuthServiceConfig([
   {
@@ -29,7 +30,7 @@ let config = new AuthServiceConfig([
     SocialLoginModule.initialize(config),
     UsersTasksModule
   ],
-  providers: [{provide: UsersService, useClass: UsersRestService}],
+  providers: [{provide: UsersService, useClass: UsersMockService}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

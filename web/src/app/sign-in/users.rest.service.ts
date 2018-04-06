@@ -14,11 +14,11 @@ export class UsersRestService implements UsersService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  getUser(user): Observable<User>{
+  getUser(user: User): Observable<User>{
     return this.http.get<User>("http://localhost:4500/users/" + user.email);   //TODO: localhost do wyciagniecia do konfiguracji
   }
 
-  addUser(user){
+  addUser(user: User){
     let userName: String = user.name;
 
     let firstName;
