@@ -5,8 +5,11 @@ import { AppComponent } from './app.component';
 import { SocialLoginModule, AuthServiceConfig } from "angular4-social-login";
 import { GoogleLoginProvider } from "angular4-social-login";
 import { SignInComponent } from '../sign-in/sign-in.component';
-import { UsersService } from '../sign-in/auth-service.service';
+
 import { UsersTasksModule } from '../users-tasks/users-tasks.module';
+import { UsersService } from '../sign-in/users.service';
+import { UsersRestService } from '../sign-in/users.rest.service';
+import { UsersMockService } from '../sign-in/users-mock.service';
 
 let config = new AuthServiceConfig([
   {
@@ -27,7 +30,7 @@ let config = new AuthServiceConfig([
     SocialLoginModule.initialize(config),
     UsersTasksModule
   ],
-  providers: [UsersService],
+  providers: [{provide: UsersService, useClass: UsersMockService}],
   bootstrap: [AppComponent]
 })
 export class AppModule {
