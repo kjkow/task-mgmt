@@ -1,12 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from "angular4-social-login";
-import { GoogleLoginProvider } from "angular4-social-login";
-import { SocialUser } from "angular4-social-login";
-import { logging } from 'protractor';
-import { UsersService } from './auth-service.service';
-import { User } from './customer';
-
-
+import { UsersService } from './users.service';
+import { User } from './user';
 
 @Component({
   selector: 'app-sign-in',
@@ -39,7 +33,7 @@ export class SignInComponent implements OnInit {
   userNotFound;
   socialUser;
 
-  constructor(private authService: AuthService, private userService: UsersService) {
+  constructor(private userService: UsersService) {
 
   }
 
@@ -53,11 +47,11 @@ export class SignInComponent implements OnInit {
   }
 
   signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    this.userService.signIn();
   }
 
   signOut(): void {
-    this.authService.signOut();
+    this.userService.signOut();
     this.loggedIn = false;
     this.userNotFound = false;
     this.userInfo.email = "";
@@ -70,26 +64,24 @@ export class SignInComponent implements OnInit {
     this.loggedIn = false;
     this.userNotFound = false;
 
-    setTimeout(()=>{
-      this.authService.authState.subscribe((user) => {
-        if(user){
-          this.emailAddress = user.email;
-          this.socialUser = user;
-          this.userService.getUser(user).subscribe(u =>{
-            if(u){
-              this.userInfo.email = u.email;
-              this.userInfo.firstName = u.firstName;
-              this.userInfo.lastName = u.lastName;
-              this.loggedIn = true;  
-            }
-        }, err => {
-            if(err.error.status == 404){
-                this.userNotFound = true;
+    this.userService.getAuthenticationStateStream().subscribe((user) => {
+      if(user){
+        this.emailAddress = user.email;
+        this.socialUser = user;
+        this.userService.getUser(user).subscribe(u =>{
+          if(u){
+            this.userInfo.email = u.email;
+            this.userInfo.firstName = u.firstName;
+            this.userInfo.lastName = u.lastName;
+            this.loggedIn = true;  
           }
-        })
-      }
-    });
-   },5000); //TODO: działa, ale do poprawienia (routes!?) - trzeba jakoś poczekać na response
+      }, err => {
+          if(err.error.status == 404){
+              this.userNotFound = true;
+        }
+      })
+    }
+  });
 
   }
   
