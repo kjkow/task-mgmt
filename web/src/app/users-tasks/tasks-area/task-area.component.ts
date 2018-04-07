@@ -8,12 +8,6 @@ import { Task, TaskService } from '../tasks-services/task.service';
   <h5>{{obszar}}</h5>
   <div class="row">
 
-    <user-task 
-      class="col-sm-4" 
-      *ngFor="let task of tasksInArea | async"
-      [task]="task">
-    </user-task>
-
     <div class="col-sm-4">
       <div class="card">
         <div class="card-body">
@@ -21,7 +15,13 @@ import { Task, TaskService } from '../tasks-services/task.service';
         </div>
       </div>
     </div>
-    
+
+    <user-task 
+      class="col-sm-4" 
+      *ngFor="let task of tasksInArea | async"
+      [task]="task">
+    </user-task>
+
   </div>
   `,
   styles: []
