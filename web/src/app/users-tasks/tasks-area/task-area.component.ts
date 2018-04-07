@@ -10,8 +10,8 @@ import { Task, TaskService } from '../tasks-services/task.service';
 
     <user-task 
       class="col-sm-4" 
-      *ngFor="let _task of tasksInArea"
-      [task]="_task">
+      *ngFor="let task of tasksInArea | async"
+      [task]="task">
     </user-task>
 
     <div class="col-sm-4">
@@ -30,18 +30,12 @@ export class TaskAreaComponent implements OnInit {
 
   @Input() obszar: Obszar;
 
-  tasksInArea: Task[];
-  
+  tasksInArea;
 
-  constructor(private taskService: TaskService) { 
-    
-  }
+  constructor(private taskService: TaskService) {}
 
   ngOnInit() {
-    this.taskService.getTasksStream(this.obszar).subscribe((tasks)=>{
-      this.tasksInArea = tasks;  
-    })
-    this.taskService.getUsersTasksForArea(this.obszar);
+    this.tasksInArea = this.taskService.getTasksStream(this.obszar);  
   }
 
 }

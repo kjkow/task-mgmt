@@ -19,13 +19,6 @@ export interface Task {
 export abstract class TaskService {
 
   /**
-   * Get tasks for specified areas
-   * @param userId user id
-   * @param area task's area
-   */
-  abstract getUsersTasksForArea(area: Obszar);
-
-  /**
    * Create new task
    * @param task new task to save
    * @returns newly created task
@@ -36,5 +29,10 @@ export abstract class TaskService {
    * Get task stream for specified area
    */
   abstract getTasksStream(area: Obszar): Observable<Array<Task>>
+
+  /**
+   * Calls http get on api and gets all users tasks
+   */
+  abstract updateUsersTasks();
 
 }
