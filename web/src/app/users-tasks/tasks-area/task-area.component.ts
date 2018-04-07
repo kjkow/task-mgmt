@@ -8,7 +8,7 @@ import { Task, TaskService } from '../tasks-services/task.service';
   <h5>{{obszar}}</h5>
   <div class="row">
 
-    <div class="col-sm-4">
+    <div class="col-sm-4 mouse-pointer">
       <div class="card">
         <div class="card-body">
           <h6 class="card-title">+</h6>
@@ -17,14 +17,18 @@ import { Task, TaskService } from '../tasks-services/task.service';
     </div>
 
     <user-task 
-      class="col-sm-4" 
+      class="col-sm-4 mouse-pointer" 
       *ngFor="let task of tasksInArea | async"
       [task]="task">
     </user-task>
 
   </div>
   `,
-  styles: []
+  styles: [`
+  .mouse-pointer{
+    cursor: pointer;
+  }
+  `]
 })
 export class TaskAreaComponent implements OnInit {
 
