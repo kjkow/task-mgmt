@@ -1,5 +1,6 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { Obszar } from '../tasks-services/obszar.enum';
+import { Task } from '../tasks-services/task.service';
 
 
 @Component({
@@ -9,10 +10,8 @@ import { Obszar } from '../tasks-services/obszar.enum';
   <div class="row">
   <task-areas class="col-8"></task-areas>
   
-  <div class="onetask card col-4">
-    <h6 class="card-title">Nowe zadanie</h6>
-    <div class="card-text">Opisz swoje zadanie....</div>
-  </div>
+  <task-form [task]="task" class="onetask col-4">
+  </task-form>
   
   </div>
 
@@ -39,6 +38,8 @@ import { Obszar } from '../tasks-services/obszar.enum';
   `]
 })
 export class UsersTasksComponent implements OnInit {
+
+  task: Task;
 
   taskAreasTitle = "Bieżące zadania";
   referencesTitle = Obszar.MATERIALY_REFERENCYJNE;

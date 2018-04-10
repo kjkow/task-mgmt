@@ -6,10 +6,13 @@ import { UsersTasksComponent, ObszaryZadanLista } from './tasks-main/tasks-main.
 import { TaskAreasComponent } from './tasks-areas/task-areas.component';
 import { TaskAreaComponent } from './tasks-area/task-area.component';
 import { UserTaskComponent } from './user-task/user-task.component';
+import { TaskFormComponent } from './task-form/task-form.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   
   providers: [{provide: TaskService, useClass: TaskTestService}],
@@ -18,7 +21,8 @@ import { UserTaskComponent } from './user-task/user-task.component';
     TaskAreasComponent,
     ObszaryZadanLista,
     TaskAreaComponent,
-    UserTaskComponent
+    UserTaskComponent,
+    TaskFormComponent
   ],
   exports: [UsersTasksComponent],
   bootstrap: [UsersTasksComponent]
