@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, PipeTransform, Pipe } from '@angular/core';
-import { Task } from '../tasks-services/task.service';
+import { Task, TaskService } from '../tasks-services/task.service';
 import { Obszar } from '../tasks-services/obszar.enum';
 
 @Component({
   selector: 'task-form',
   template: `
     <div class="card">
+      <h5 class="card-title">Wybrane zadanie</h5>
 
       <div class="form-group">
         <label>Nazwa:</label>
@@ -48,6 +49,10 @@ import { Obszar } from '../tasks-services/obszar.enum';
         <label>Typ częstotliwości:</label>
         <input type="text" [(ngModel)]="task.typCzestotliwosci" class="form-control">
       </div>
+      
+      <div class="form-group">
+        <button class="btn btn-success float-right" (click)="save()">Zapisz</button>
+      </div>
     </div>
     
   `,//TODO: etykiety, stylowanie, submit button
@@ -62,10 +67,14 @@ export class TaskFormComponent implements OnInit {
   
   areas = Obszar;
 
+  save(){
+    console.log(this.task);
+  }
+
   @Input()
   task: Task;
 
-  constructor() { }
+  constructor(private taskService: TaskService) { }
 
   ngOnInit() {
     this.task = {
