@@ -51,22 +51,3 @@ export class UsersTasksComponent implements OnInit {
   }
 
 }
-
-/**
- * do iterowania po enumie, może się przyda:
- * JS:  obszaryZadan = Obszar;
- *   <div *ngFor="let item of obszaryZadan | obszaryZadanLista">
-    {{ item }}
-  </div> 
- */
-
-@Pipe({ //TODO: raczej do wywalenia, na początku myślałem że będę generował obszary zadań z listy, ale to mi nie pasuje do layotu
-  name: 'obszaryZadanLista'
-})
-export class ObszaryZadanLista implements PipeTransform {
-  
-  transform(data: Object) {
-    const keys = Object.keys(data);
-    return keys.slice(keys.length / 2);
-  }
-}
