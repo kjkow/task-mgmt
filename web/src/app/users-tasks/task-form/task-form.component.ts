@@ -21,7 +21,7 @@ import { Obszar } from '../tasks-services/obszar.enum';
       <div class="form-group">
         <label>Obszar:</label>
         <select [(ngModel)]="task.obszar" class="form-control" name="area">
-          <option *ngFor="let item of areas | allAreas" [value]="item.key">{{item.key}}</option>
+          <option *ngFor="let item of areas | allAreas" [value]="item.value">{{item.value}}</option>
         </select>
       </div>
 
@@ -68,7 +68,13 @@ export class TaskFormComponent implements OnInit {
   areas = Obszar;
 
   save(){
-    console.log(this.task);
+    let copy: Task = {
+      nazwa: "",
+      obszar: Obszar.UKONCZONE,
+      idUzytkownika: 123
+    };
+    Object.assign(copy, this.task);
+    this.taskService.addTask(this.task);
   }
 
   @Input()
@@ -80,9 +86,9 @@ export class TaskFormComponent implements OnInit {
     this.task = {
       nazwa: "Bieżące zadanie",
       idUzytkownika: 123,
-      obszar: Obszar.MATERIALY_REFERENCYJNE
+      obszar: Obszar.W_PIERWSZEJ_CHWILI
     }
-    
+    console.log(this.task);
   }
 
 }

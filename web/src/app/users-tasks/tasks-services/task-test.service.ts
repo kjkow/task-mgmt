@@ -23,13 +23,14 @@ export class TaskTestService implements TaskService {
           
   }
 
+  addTask(task: Task) {
+    console.log(this.tasks);
+    this.tasks.push(task);
+    console.log(task);
+    console.log(this.tasks); //TODO: dziwne zachowanie this.tasks przy dodawaniu kolejnych zadan
+    this.taskStream.next(this.tasks);
+  }
 
-  // addTask(task: Task): Observable<Task> {
-  //   this.tasks.push(task);
-  //   return task;
-  // }
-
-  
   updateUsersTasks(){
     //tutaj niby wołamy http get i pobieramy do naszej lokalnej tablicy zadania
     // do api będziemy wołać zadania po id użytkownika - z usługi lub kontekstu

@@ -21,9 +21,8 @@ export abstract class TaskService {
   /**
    * Create new task
    * @param task new task to save
-   * @returns newly created task
    */
-  //abstract addTask(task: Task): Observable<Task>;
+  abstract addTask(task: Task)
 
   /**
    * Get task stream for specified area
