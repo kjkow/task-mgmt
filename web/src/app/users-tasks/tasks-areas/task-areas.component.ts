@@ -11,6 +11,7 @@ import { Obszar } from '../tasks-services/obszar.enum';
       [obszar]="o">
     </task-area>
   </div>
+  
   `,
   styles: [`
   .quarter{

@@ -6,13 +6,37 @@ import { Obszar } from '../tasks-services/obszar.enum';
   selector: 'tasks-main',
   template: `
   <h4>{{taskAreasTitle}}</h4>
-  <task-areas></task-areas>
-  <h4>{{referencesTitle}}</h4>
-  <div>todo...</div>
-  <h4>{{finnishedTitle}}</h4>
-  <div>todo...</div>
+  <div class="row">
+  <task-areas class="col-8"></task-areas>
+  
+  <div class="onetask card col-4">
+    <h6 class="card-title">Nowe zadanie</h6>
+    <div class="card-text">Opisz swoje zadanie....</div>
+  </div>
+  
+  </div>
+
+  <div class="cl">
+    <h4>{{referencesTitle}}</h4>
+    todo...
+  </div>
+  
+  <div class="cl">
+    <h4>{{finnishedTitle}}</h4>
+    todo...
+  </div>
   `,
-  styles: []
+  styles: [`
+  cl{
+    clear: left;
+  }
+  .onetask{
+    width:25%;
+    float:left;
+    height: 100%;
+    min-height: 36em;
+  }
+  `]
 })
 export class UsersTasksComponent implements OnInit {
 
