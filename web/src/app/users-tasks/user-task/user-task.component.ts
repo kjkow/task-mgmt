@@ -7,7 +7,7 @@ import { Obszar } from '../tasks-services/obszar.enum';
   template: `
     <div class="card">
       <div class="card-body userTask">
-        <span class="card-title hideOverflow">{{task.nazwa}}</span>
+        <span class="card-title hideOverflow">{{task.name}}</span>
         <p *ngIf="task.termin" class="card-text">{{task.termin | date:'yyyy-MM-dd'}}</p>
       </div>
     </div>

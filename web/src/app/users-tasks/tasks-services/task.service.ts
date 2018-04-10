@@ -3,8 +3,8 @@ import { Obszar } from './obszar.enum';
 import { Observable } from 'rxjs';
 
 export interface Task {
-  nazwa: string;
-  obszar: Obszar;
+  name: string;
+  area: Obszar;
   priorytet?: number;
   termin?: Date;
   komentarz?: string;
