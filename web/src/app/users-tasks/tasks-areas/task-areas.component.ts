@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Obszar } from '../tasks-services/obszar.enum';
 
 @Component({
@@ -8,6 +8,7 @@ import { Obszar } from '../tasks-services/obszar.enum';
     <task-area 
       class="col-md-6 quarter card"  
       *ngFor="let o of viewedTaskAreas"
+      (selected)="selectedTask($event)"
       [obszar]="o">
     </task-area>
   </div>
@@ -28,6 +29,8 @@ import { Obszar } from '../tasks-services/obszar.enum';
 })
 export class TaskAreasComponent implements OnInit {
 
+  @Output() selected = new EventEmitter();
+
   viewedTaskAreas = [
     Obszar.W_PIERWSZEJ_CHWILI,
     Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI,
@@ -36,6 +39,10 @@ export class TaskAreasComponent implements OnInit {
   ]
 
   constructor() { }
+
+  selectedTask(selection){
+    this.selected.emit(selection);
+  }
 
   ngOnInit() {
   }

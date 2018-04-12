@@ -8,9 +8,12 @@ import { Task } from '../tasks-services/task.service';
   template: `
   <h4>{{taskAreasTitle}}</h4>
   <div class="row">
-  <task-areas class="col-8"></task-areas>
+  <task-areas (selected)="selection($event)" class="col-8"></task-areas>
   
-  <task-form [task]="task" class="onetask col-4">
+  <task-form 
+    [task]="task" 
+    class="onetask col-4"
+    *ngIf="selected">
   </task-form>
   
   </div>
@@ -40,12 +43,17 @@ import { Task } from '../tasks-services/task.service';
 export class UsersTasksComponent implements OnInit {
 
   task: Task;
+  selected = false;
 
   taskAreasTitle = "Bieżące zadania";
   referencesTitle = Obszar.MATERIALY_REFERENCYJNE;
   finnishedTitle = Obszar.UKONCZONE;
 
   constructor() { }
+
+  selection(selection){
+    this.selected = selection.selected;
+  }
 
   ngOnInit() {
   }
