@@ -69,12 +69,12 @@ export class TaskFormComponent implements OnInit {
 
   save(){
     let copy: Task = {
-      name: "",
-      area: Obszar.UKONCZONE,
-      idUzytkownika: 123
-    };
+      name: this.task.name,
+      area: this.task.area,
+      idUzytkownika: this.task.idUzytkownika 
+    }
     Object.assign(copy, this.task);
-    this.taskService.addTask(this.task);
+    this.taskService.addTask(copy);
   }
 
   @Input()
@@ -82,14 +82,7 @@ export class TaskFormComponent implements OnInit {
 
   constructor(private taskService: TaskService) { }
 
-  ngOnInit() {
-    this.task = {
-      name: "Bieżące zadanie",
-      idUzytkownika: 123,
-      area: Obszar.W_PIERWSZEJ_CHWILI
-    }
-    console.log(this.task);
-  }
+  ngOnInit() {}
 
 }
 
