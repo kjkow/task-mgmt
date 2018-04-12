@@ -19,7 +19,7 @@ import { Task, TaskService } from '../tasks-services/task.service';
     <user-task 
       class="col-sm-4 mouse-pointer" 
       *ngFor="let task of tasksInArea | async"
-      (click)="onSelecetedModify()"
+      (onSelectedOut)="onSelecetedModify($event)"
       [task]="task">
     </user-task>
 
@@ -41,11 +41,17 @@ export class TaskAreaComponent implements OnInit {
   constructor(private taskService: TaskService) {}
 
   onSelecetedAdd(){
-    this.selected.emit({selected: true, mode: "add"});
+    this.selected.emit({
+      selected: true,  
+      task: {
+        name: "Nowe zadanie",
+        area: Obszar.W_PIERWSZEJ_CHWILI,
+        idUzytkownika: 123
+      }});
   }
 
-  onSelecetedModify(){
-    this.selected.emit({selected: true, mode: "modify"});
+  onSelecetedModify(task){
+    this.selected.emit({selected: true, task: task});
   }
 
   ngOnInit() {
