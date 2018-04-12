@@ -8,11 +8,43 @@ import { HttpClient } from '@angular/common/http';
 @Injectable()
 export class TaskTestService implements TaskService {
 
+  taskStream = new Subject<Task[]>();
+  tasks: Task[] = [
+    {
+      name: "Umyć naczynia",
+      area: Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI,
+      idUzytkownika: 123
+    },
+    {
+      name: "Umyć naczynia 2",
+      area: Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI,
+      idUzytkownika: 123
+    },
+    {
+      name: "Umyć naczynia 3",
+      area: Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI,
+      idUzytkownika: 123
+    },
+    {
+      name: "Odkurzyć przedpokój",
+      area: Obszar.MOZE_KIEDYS,
+      idUzytkownika: 123
+    },
+    {
+      name: "Zamieść liście",
+      area: Obszar.W_PIERWSZEJ_CHWILI,
+      idUzytkownika: 123
+    },
+    {
+      name: "Nakarmić kota",
+      area: Obszar.OBOWIAZKI,
+      idUzytkownika: 123
+    }
+  ];
+
   constructor(private http:HttpClient) {
     this.updateUsersTasks();
   }
-
-  taskStream = new Subject<Task[]>();
 
   getTasksStream(area: Obszar): Observable<Task[]> {
     return Observable
@@ -26,29 +58,12 @@ export class TaskTestService implements TaskService {
   }
 
   addTask(task: Task) {
-    let body = {
-      "name": task.name,
-      "area": task.area
-    }
-    this.http.post<Task>("http://localhost:4500/tasks/add", body).subscribe(response => {
-      this.updateUsersTasks();
-    })
+    this.tasks.push(task);
+    this.updateUsersTasks();
   }
 
   updateUsersTasks(){
-    this.http.get<Array<Task>>("http://localhost:4500/tasks/")
-    .subscribe((response) =>{
-      this.tasks = response;
-      console.log(this.tasks);
-      this.taskStream.next(this.tasks);
-    })
-    //tutaj niby wołamy http get i pobieramy do naszej lokalnej tablicy zadania
-    // do api będziemy wołać zadania po id użytkownika - z usługi lub kontekstu
-    //TODO: te zadania można by wynieść do pliku
-    
+    this.taskStream.next(this.tasks);
   }
 
-  //lokalna tablica przechowująca pobrane elementy z bazy danych
-  tasks: Task[] = [];
-  
 }
