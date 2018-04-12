@@ -7,11 +7,15 @@ import { Task } from '../tasks-services/task.service';
   selector: 'tasks-main',
   template: `
 
-  <task-navigation></task-navigation>
+  <task-navigation (selection)="navSelected($event)"></task-navigation>
 
-  <h4>{{taskAreasTitle}}</h4>
   <div class="row">
-  <task-areas (selected)="selection($event)" class="col-8"></task-areas>
+  
+  <div [ngSwitch]="taskArea" class="col-8">
+    <task-areas *ngSwitchCase="'current'" (selected)="selection($event)"></task-areas>
+    <task-area  *ngSwitchCase="'reference'"></task-area>
+    <task-area  *ngSwitchCase="'finnished'"></task-area>
+  </div>
   
   <task-form 
     [task]="task" 
@@ -40,12 +44,17 @@ export class UsersTasksComponent implements OnInit {
   taskAreasTitle = "Bieżące zadania";
   referencesTitle = Obszar.MATERIALY_REFERENCYJNE;
   finnishedTitle = Obszar.UKONCZONE;
+  taskArea = "current";
 
   constructor() { }
 
   selection(selection){
     this.task = selection.task;
     this.selected = selection.selected;
+  }
+
+  navSelected(selection){
+    this.taskArea = selection;
   }
 
   ngOnInit() {
