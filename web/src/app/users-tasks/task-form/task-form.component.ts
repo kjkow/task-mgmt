@@ -58,7 +58,6 @@ import { Obszar } from '../tasks-services/obszar.enum';
   `,//TODO: etykiety, stylowanie, submit button
   styles: [`
   .card {
-    min-height: 36em;
     padding: 10px;
   }
   `]

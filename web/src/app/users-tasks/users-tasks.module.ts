@@ -8,6 +8,7 @@ import { TaskAreaComponent } from './tasks-area/task-area.component';
 import { UserTaskComponent } from './user-task/user-task.component';
 import { TaskFormComponent, AreasPipe } from './task-form/task-form.component';
 import { FormsModule } from '@angular/forms';
+import { TaskNavigationComponent } from './task-navigation/task-navigation.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { FormsModule } from '@angular/forms';
     TaskAreaComponent,
     UserTaskComponent,
     TaskFormComponent,
-    AreasPipe
+    AreasPipe,
+    TaskNavigationComponent
   ],
   exports: [UsersTasksComponent],
   bootstrap: [UsersTasksComponent]

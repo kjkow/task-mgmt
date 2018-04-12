@@ -6,6 +6,9 @@ import { Task } from '../tasks-services/task.service';
 @Component({
   selector: 'tasks-main',
   template: `
+
+  <task-navigation></task-navigation>
+
   <h4>{{taskAreasTitle}}</h4>
   <div class="row">
   <task-areas (selected)="selection($event)" class="col-8"></task-areas>
@@ -17,16 +20,6 @@ import { Task } from '../tasks-services/task.service';
   </task-form>
   
   </div>
-
-  <div class="cl">
-    <h4>{{referencesTitle}}</h4>
-    todo...
-  </div>
-  
-  <div class="cl">
-    <h4>{{finnishedTitle}}</h4>
-    todo...
-  </div>
   `,
   styles: [`
   cl{
@@ -36,7 +29,6 @@ import { Task } from '../tasks-services/task.service';
     width:25%;
     float:left;
     height: 100%;
-    min-height: 36em;
   }
   `]
 })
