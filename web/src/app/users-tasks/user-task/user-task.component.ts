@@ -14,7 +14,7 @@ import { Obszar } from '../tasks-services/obszar.enum';
   `,
   styles: [`
     .userTask{
-      height: 5em;
+      height: auto;
       font-size: 0,5em;
       padding: 5px;
     }
