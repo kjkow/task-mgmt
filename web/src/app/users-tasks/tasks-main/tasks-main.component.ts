@@ -13,8 +13,8 @@ import { Task } from '../tasks-services/task.service';
   
   <div [ngSwitch]="taskArea" class="col-8">
     <task-areas *ngSwitchCase="'current'" (selected)="selection($event)"></task-areas>
-    <task-area  *ngSwitchCase="'reference'"></task-area>
-    <task-area  *ngSwitchCase="'finnished'"></task-area>
+    <task-area (selected)="selection($event)"  *ngSwitchCase="'reference'" [obszar]="selectedArea"></task-area>
+    <task-area (selected)="selection($event)"  *ngSwitchCase="'finnished'" [obszar]="selectedArea"></task-area>
   </div>
   
   <task-form 
@@ -55,6 +55,11 @@ export class UsersTasksComponent implements OnInit {
 
   navSelected(selection){
     this.taskArea = selection;
+  }
+
+  get selectedArea(): Obszar{
+    if(this.taskArea == "reference") return Obszar.MATERIALY_REFERENCYJNE;
+    else if(this.taskArea == "finnished") return Obszar.UKONCZONE;
   }
 
   ngOnInit() {

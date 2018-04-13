@@ -56,7 +56,6 @@ export class TaskAreaComponent implements OnInit {
 
   ngOnInit() {
     this.tasksInArea = this.taskService.getTasksStream(this.obszar);
-    console.log(this.obszar);  
   }
 
 }
