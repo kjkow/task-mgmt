@@ -17,7 +17,15 @@ export class TaskRestService implements TaskService {
   save(task: Task) {
     let body = {
       "name": task.name,
-      "area": task.area
+      "area": task.area,
+      "id": task.id,
+      "userId": task.idUzytkownika,
+      "priority": task.priorytet,
+      "dueDate": task.termin,
+      "comment": task.komentarz,
+      "section": task.sekcja,
+      "recurrenceFrequency": task.czestotliwoscPowtarzalnosci,
+      "frequencyType": task.typCzestotliwosci
     }
     this.http.post<Task>("http://localhost:4500/tasks/add", body).subscribe(response => {
       this.updateUsersTasks();
