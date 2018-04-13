@@ -14,7 +14,7 @@ export class TaskRestService implements TaskService {
     this.updateUsersTasks();
   }
 
-  addTask(task: Task) {
+  save(task: Task) {
     let body = {
       "name": task.name,
       "area": task.area

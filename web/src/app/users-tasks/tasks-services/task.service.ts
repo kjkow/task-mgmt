@@ -22,7 +22,7 @@ export abstract class TaskService {
    * Create new task
    * @param task new task to save
    */
-  abstract addTask(task: Task)
+  abstract save(task: Task)
 
   /**
    * Get task stream for specified area

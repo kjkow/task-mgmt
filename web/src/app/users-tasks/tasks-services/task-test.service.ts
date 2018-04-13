@@ -57,7 +57,7 @@ export class TaskTestService implements TaskService {
           
   }
 
-  addTask(task: Task) {
+  save(task: Task) {
     this.tasks.push(task);
     this.updateUsersTasks();
   }
