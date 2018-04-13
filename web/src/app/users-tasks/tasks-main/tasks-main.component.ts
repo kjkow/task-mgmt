@@ -20,6 +20,7 @@ import { Task } from '../tasks-services/task.service';
   <task-form 
     [task]="task" 
     class="onetask col-4"
+    (onSave)="selection($event)"
     *ngIf="selected">
   </task-form>
   

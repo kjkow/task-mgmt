@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, PipeTransform, Pipe } from '@angular/core';
+import { Component, OnInit, Input, PipeTransform, Pipe, Output, EventEmitter } from '@angular/core';
 import { Task, TaskService } from '../tasks-services/task.service';
 import { Obszar } from '../tasks-services/obszar.enum';
 
@@ -73,11 +73,12 @@ export class TaskFormComponent implements OnInit {
       idUzytkownika: this.task.idUzytkownika 
     }
     Object.assign(copy, this.task);
-    this.taskService.addTask(copy);
+    this.taskService.save(copy);
+    this.onSave.emit({task: undefined, selected: false});
   }
 
-  @Input()
-  task: Task;
+  @Input() task: Task;
+  @Output() onSave = new EventEmitter();
 
   constructor(private taskService: TaskService) { }
 
