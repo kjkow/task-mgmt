@@ -52,7 +52,9 @@ import { Obszar } from '../tasks-services/obszar.enum';
       
       <div class="form-group">
         <button class="btn btn-success float-right" (click)="save()">Zapisz</button>
+        <button class="btn btn-success float-left" (click)="finnish()">Wykonaj</button>
       </div>
+
     </div>
     
   `,//TODO: etykiety, stylowanie, submit button
@@ -65,20 +67,35 @@ import { Obszar } from '../tasks-services/obszar.enum';
 export class TaskFormComponent implements OnInit {
   
   areas = Obszar;
+  
+  @Input() task: Task;
+  @Output() onSave = new EventEmitter();
 
   save(){
+    let copy = this.copyTask;
+    this.saveAndEmit(copy);
+  }
+
+  finnish(){
+    let copy = this.copyTask;
+    copy.area = Obszar.UKONCZONE;
+    this.saveAndEmit(copy);
+  }
+
+  get copyTask(): Task{
     let copy: Task = {
       name: this.task.name,
       area: this.task.area,
       idUzytkownika: this.task.idUzytkownika 
     }
     Object.assign(copy, this.task);
-    this.taskService.save(copy);
-    this.onSave.emit({task: undefined, selected: false});
+    return copy;
   }
 
-  @Input() task: Task;
-  @Output() onSave = new EventEmitter();
+  saveAndEmit(taskCopy){
+    this.taskService.save(taskCopy);
+    this.onSave.emit({task: undefined, selected: false});
+  }
 
   constructor(private taskService: TaskService) { }
 
