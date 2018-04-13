@@ -9,6 +9,7 @@ import { UserTaskComponent } from './user-task/user-task.component';
 import { TaskFormComponent, AreasPipe } from './task-form/task-form.component';
 import { FormsModule } from '@angular/forms';
 import { TaskNavigationComponent } from './task-navigation/task-navigation.component';
+import { TaskRestService } from './tasks-services/task-rest.service';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import { TaskNavigationComponent } from './task-navigation/task-navigation.compo
     FormsModule
   ],
   
-  providers: [{provide: TaskService, useClass: TaskTestService}],
+  providers: [{provide: TaskService, useClass: TaskRestService}],
   declarations: [
     UsersTasksComponent,
     TaskAreasComponent,
