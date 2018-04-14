@@ -51,13 +51,13 @@ export class TaskRestService implements TaskService {
       "name": task.name,
       "area": task.area,
       "id": task.id,
-      "userId": task.idUzytkownika,
-      "priority": task.priorytet,
-      "dueDate": task.termin,
-      "comment": task.komentarz,
-      "section": task.sekcja,
-      "recurrenceFrequency": task.czestotliwoscPowtarzalnosci,
-      "frequencyType": task.typCzestotliwosci
+      "userId": task.userId,
+      "priority": task.priority,
+      "dueDate": task.dueDate,
+      "comment": task.comment,
+      "section": task.section,
+      "recurrenceFrequency": task.recurrenceFrequency,
+      "frequencyType": task.frequencyType
     }
   }
 

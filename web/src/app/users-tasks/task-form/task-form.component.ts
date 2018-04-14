@@ -15,7 +15,7 @@ import { Obszar } from '../tasks-services/obszar.enum';
 
       <div class="form-group">
         <label>Komentarz:</label>
-        <input type="text" [(ngModel)]="task.komentarz" class="form-control">
+        <input type="text" [(ngModel)]="task.comment" class="form-control">
       </div>
 
       <div class="form-group">
@@ -27,27 +27,27 @@ import { Obszar } from '../tasks-services/obszar.enum';
 
       <div class="form-group">
         <label>Priorytet:</label>
-        <input type="number" [(ngModel)]="task.priorytet" class="form-control">
+        <input type="number" [(ngModel)]="task.priority" class="form-control">
       </div>
 
       <div class="form-group">
         <label>Termin:</label>
-        <input type="date" [(ngModel)]="task.termin" class="form-control">
+        <input type="date" [(ngModel)]="task.dueDate" class="form-control">
       </div>
 
       <div class="form-group">
         <label>Sekcja:</label>
-        <input type="text" [(ngModel)]="task.sekcja" class="form-control">
+        <input type="text" [(ngModel)]="task.section" class="form-control">
       </div>
 
       <div class="form-group">
         <label>Częstotliwość:</label>
-        <input type="number" [(ngModel)]="task.czestotliwoscPowtarzalnosci" class="form-control">
+        <input type="number" [(ngModel)]="task.recurrenceFrequency" class="form-control">
       </div>
 
       <div class="form-group">
         <label>Typ częstotliwości:</label>
-        <input type="text" [(ngModel)]="task.typCzestotliwosci" class="form-control">
+        <input type="text" [(ngModel)]="task.frequencyType" class="form-control">
       </div>
       
       <div class="form-group">
@@ -86,7 +86,7 @@ export class TaskFormComponent implements OnInit {
     let copy: Task = {
       name: this.task.name,
       area: this.task.area,
-      idUzytkownika: this.task.idUzytkownika 
+      userId: this.task.userId 
     }
     Object.assign(copy, this.task);
     return copy;
