@@ -6,13 +6,13 @@ export interface Task {
   id?: number;
   name: string;
   area: Obszar;
-  priorytet?: number;
-  termin?: Date;
-  komentarz?: string;
-  sekcja?: string;
-  czestotliwoscPowtarzalnosci?: number;
-  typCzestotliwosci?: string; //TODO: enum czestotliwosc zadania
-  idUzytkownika: number;
+  priority?: number;
+  dueDate?: Date;
+  comment?: string;
+  section?: string;
+  recurrenceFrequency?: number;
+  frequencyType?: string; //TODO: enum czestotliwosc zadania
+  userId: number;
   etykiety?: Array<string> //TODO: obiekt etykiety
 }
 
