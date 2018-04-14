@@ -1,5 +1,7 @@
 package pl.kjkow.server.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.util.Arrays;
 
 /**
@@ -24,6 +26,7 @@ public enum Area {
         return label;
     }
 
+    @JsonCreator
     public static Area fromValue(String value) {
         for (Area area : values()) {
             if (area.label.equalsIgnoreCase(value)) {
@@ -32,5 +35,10 @@ public enum Area {
         }
         throw new IllegalArgumentException(
                 "Unknown enum type " + value + ", Allowed values are " + Arrays.toString(values()));
+    }
+
+    @Override
+    public String toString(){
+        return label;
     }
 }
