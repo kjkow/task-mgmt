@@ -15,19 +15,23 @@ export class TaskRestService implements TaskService {
   }
 
   save(task: Task) {
-    let body = {
-      "name": task.name,
-      "area": task.area,
-      "id": task.id,
-      "userId": task.idUzytkownika,
-      "priority": task.priorytet,
-      "dueDate": task.termin,
-      "comment": task.komentarz,
-      "section": task.sekcja,
-      "recurrenceFrequency": task.czestotliwoscPowtarzalnosci,
-      "frequencyType": task.typCzestotliwosci
-    }
+    let body = this.prepareBody(task);
+    if(task.id != null) this.modifyTask(task.id, body);
+    else this.saveTask(task, body);
+  }
+
+  saveTask(task: Task, body){
+    console.log(body);
     this.http.post<Task>("http://localhost:4500/tasks/add", body).subscribe(response => {
+      console.log(response);
+      this.updateUsersTasks();
+    })
+  }
+
+  modifyTask(taskId, body){
+    console.log(body);
+    this.http.post<Task>("http://localhost:4500/tasks/update/" + taskId, body).subscribe(response =>{
+      console.log(response);
       this.updateUsersTasks();
     })
   }
@@ -40,6 +44,21 @@ export class TaskRestService implements TaskService {
             tasks => tasks.filter(
               task => task.area == area
             ));
+  }
+
+  prepareBody(task: Task){
+    return {
+      "name": task.name,
+      "area": task.area,
+      "id": task.id,
+      "userId": task.idUzytkownika,
+      "priority": task.priorytet,
+      "dueDate": task.termin,
+      "comment": task.komentarz,
+      "section": task.sekcja,
+      "recurrenceFrequency": task.czestotliwoscPowtarzalnosci,
+      "frequencyType": task.typCzestotliwosci
+    }
   }
 
   updateUsersTasks() {
