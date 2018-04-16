@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Task } from '../users-tasks/tasks-services/task.service';
 import { Observable } from 'rxjs';
+import { Task } from '../../users-tasks/tasks-services/task.service';
 
 export interface Project {
   id?: number;
