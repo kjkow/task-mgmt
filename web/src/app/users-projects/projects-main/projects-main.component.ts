@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   <div>Szczegóły projektu</div>
   
   <div class="row">
-    <projects-list class="col-sm"></projects-list>
+    <projects-list (clicked)="onProjectPick($event)" class="col-sm"></projects-list>
     <div class="col-sm">
       Etapy projektu
     </div>
@@ -19,6 +19,10 @@ export class ProjectsMainComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onProjectPick(project){
+    console.log(project);//TODO: przekazać do komponentu formularza projektu
   }
 
 }

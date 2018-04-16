@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ProjectsService } from '../services/projects.service';
 
 @Component({
@@ -19,7 +19,8 @@ import { ProjectsService } from '../services/projects.service';
   `]
 })
 export class ProjectsListComponent implements OnInit {
-
+  
+  @Output() clicked = new EventEmitter();
   projects;
 
   constructor(private projectsService: ProjectsService) { }
@@ -29,7 +30,7 @@ export class ProjectsListComponent implements OnInit {
   }
 
   onClick(project){
-    console.log(project);
+    this.clicked.emit(project);
   }
 
 }
