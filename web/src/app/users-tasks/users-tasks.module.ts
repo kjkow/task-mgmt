@@ -12,6 +12,8 @@ import { TaskNavigationComponent } from './task-navigation/task-navigation.compo
 import { TaskRestService } from './tasks-services/task-rest.service';
 import { ProjectsMainComponent } from '../users-projects/projects-main/projects-main.component';
 import { ProjectsListComponent } from '../users-projects/projects-list/projects-list.component';
+import { ProjectsService } from '../users-projects/services/projects.service';
+import { ProjectsTestService } from '../users-projects/services/projects-test.service';
 
 @NgModule({
   imports: [
@@ -19,7 +21,10 @@ import { ProjectsListComponent } from '../users-projects/projects-list/projects-
     FormsModule
   ],
   
-  providers: [{provide: TaskService, useClass: TaskRestService}],
+  providers: [
+    {provide: TaskService, useClass: TaskRestService},
+    {provide: ProjectsService, useClass: ProjectsTestService}
+  ],
   declarations: [
     UsersTasksComponent,
     TaskAreasComponent,
