@@ -6,9 +6,7 @@ import { Component, OnInit } from '@angular/core';
   <div>Szczegóły projektu</div>
   
   <div class="row">
-    <div class="col-sm">
-      Twoje projekty
-    </div>
+    <projects-list class="col-sm"></projects-list>
     <div class="col-sm">
       Etapy projektu
     </div>
