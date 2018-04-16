@@ -22,7 +22,7 @@ import { ProjectsTestService } from '../users-projects/services/projects-test.se
   ],
   
   providers: [
-    {provide: TaskService, useClass: TaskRestService},
+    {provide: TaskService, useClass: TaskTestService},
     {provide: ProjectsService, useClass: ProjectsTestService}
   ],
   declarations: [
