@@ -6,12 +6,17 @@ import { ProjectsService } from '../services/projects.service';
   template: `
     <h5>Twoje projekty</h5>
     <div 
+      (click)="onClick(project)"
       class="card"
       *ngFor="let project of projects | async">
       {{project.name}}
     </div>
   `,
-  styles: []
+  styles: [`
+    div {
+     cursor: pointer;  
+    }
+  `]
 })
 export class ProjectsListComponent implements OnInit {
 
@@ -21,6 +26,10 @@ export class ProjectsListComponent implements OnInit {
 
   ngOnInit() {
     this.projects = this.projectsService.getProjectsStream();
+  }
+
+  onClick(project){
+    console.log(project);
   }
 
 }
