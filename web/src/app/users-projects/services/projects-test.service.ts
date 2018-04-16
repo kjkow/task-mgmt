@@ -14,7 +14,7 @@ export class ProjectsTestService implements ProjectsService {
   ];
 
   getProjectsStream(): Observable<Project[]> {
-    return Observable.from(this.projectsStream);
+    return Observable.from(this.projectsStream).startWith(this.projects);
   }
 
   saveProject(project: Project) {
