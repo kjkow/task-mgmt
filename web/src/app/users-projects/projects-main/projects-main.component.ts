@@ -9,9 +9,7 @@ import { ProjectFormMode } from '../project-form/project-form-mode';
   
   <div class="row">
     <projects-list (clicked)="onProjectPick($event)" class="col-sm"></projects-list>
-    <div class="col-sm">
-      Etapy projektu
-    </div>
+    <projects-stages class="col-sm"></projects-stages>
   </div>
   `,
   styles: []

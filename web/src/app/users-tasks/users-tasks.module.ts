@@ -15,6 +15,7 @@ import { ProjectsListComponent } from '../users-projects/projects-list/projects-
 import { ProjectsService } from '../users-projects/services/projects.service';
 import { ProjectsTestService } from '../users-projects/services/projects-test.service';
 import { ProjectFormComponent } from '../users-projects/project-form/project-form.component';
+import { ProjectsStagesComponent } from '../users-projects/projects-stages/projects-stages.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { ProjectFormComponent } from '../users-projects/project-form/project-for
     TaskNavigationComponent,
     ProjectsMainComponent,
     ProjectsListComponent,
-    ProjectFormComponent
+    ProjectFormComponent,
+    ProjectsStagesComponent
   ],
   exports: [UsersTasksComponent],
   bootstrap: [UsersTasksComponent]
