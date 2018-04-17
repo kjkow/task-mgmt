@@ -14,6 +14,7 @@ import { ProjectsMainComponent } from '../users-projects/projects-main/projects-
 import { ProjectsListComponent } from '../users-projects/projects-list/projects-list.component';
 import { ProjectsService } from '../users-projects/services/projects.service';
 import { ProjectsTestService } from '../users-projects/services/projects-test.service';
+import { ProjectFormComponent } from '../users-projects/project-form/project-form.component';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import { ProjectsTestService } from '../users-projects/services/projects-test.se
     AreasPipe,
     TaskNavigationComponent,
     ProjectsMainComponent,
-    ProjectsListComponent
+    ProjectsListComponent,
+    ProjectFormComponent
   ],
   exports: [UsersTasksComponent],
   bootstrap: [UsersTasksComponent]

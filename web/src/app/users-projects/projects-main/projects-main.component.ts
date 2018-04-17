@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'projects-main',
   template: `
-  <div>Szczegóły projektu</div>
+  <project-form></project-form>
   
   <div class="row">
     <projects-list (clicked)="onProjectPick($event)" class="col-sm"></projects-list>
