@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Project } from '../services/projects.service';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Project, ProjectsService } from '../services/projects.service';
 import { ProjectFormMode } from './project-form-mode';
 
 @Component({
@@ -38,10 +38,10 @@ import { ProjectFormMode } from './project-form-mode';
 
       <div class="form-group">
         <!--Submit-->
-        <button type="submit" form="task-form" class="btn btn-success">Zapisz</button>
+        <button type="button" form="task-form" class="btn btn-success" (click)="save()">Zapisz</button>
 
         <!--Close project-->
-        <button type="submit" 
+        <button type="button" 
                 class="btn btn-success float-right"
                 *ngIf="mode == 'modify'">
         Zakończ projekt</button>
@@ -56,12 +56,29 @@ export class ProjectFormComponent implements OnInit {
 
   @Input() project: Project;
   @Input() mode: ProjectFormMode;
+  @Output() onSave = new EventEmitter();
 
   newProject(){
     this.mode = ProjectFormMode.NEW;
   }
 
-  constructor() { }
+  save(){
+    let copy = this.copyProject;
+    this.projectService.saveProject(copy);
+    this.onSave.emit(ProjectFormMode.EMPTY);
+  }
+
+  get copyProject(): Project {
+    let copy: Project = {
+      name: this.project.name,
+      ordered: this.project.ordered,
+      finnished: this.project.finnished
+    }
+    Object.assign(copy, this.project);
+    return copy;
+  }
+
+  constructor(private projectService: ProjectsService) { }
 
   ngOnInit() {
     //mock
