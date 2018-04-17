@@ -50,20 +50,7 @@ export class TaskTestService implements TaskService {
   ];
 
   constructor(private http:HttpClient) {
-    this.addProjectStages();
     this.updateUsersTasks();
-  }
-
-  addProjectStages(){
-    let projectStage: ProjectStage = {
-      area: Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI,
-      finnished: false,
-      name: "Zadanie projektu 1",
-      userId: 123,
-      projectId: 1,
-      id: 7
-    }
-    this.tasks.push(projectStage);
   }
 
   getTasksStream(area: Obszar): Observable<Task[]> {
