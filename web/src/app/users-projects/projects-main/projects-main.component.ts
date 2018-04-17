@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Project } from '../services/projects.service';
+import { ProjectFormMode } from '../project-form/project-form-mode';
 
 @Component({
   selector: 'projects-main',
   template: `
-  <project-form></project-form>
+  <project-form [project]="project" [mode]="mode"></project-form>
   
   <div class="row">
     <projects-list (clicked)="onProjectPick($event)" class="col-sm"></projects-list>
@@ -16,13 +18,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectsMainComponent implements OnInit {
 
+  project: Project;
+  mode: ProjectFormMode;
+
   constructor() { }
 
   ngOnInit() {
   }
 
   onProjectPick(project){
-    console.log(project);//TODO: przekazać do komponentu formularza projektu
+    this.project = project;
+    this.mode = ProjectFormMode.MODIFY;
   }
 
 }
