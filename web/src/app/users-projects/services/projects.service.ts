@@ -21,6 +21,10 @@ export abstract class ProjectsService {
 
   abstract getProjectsStream(): Observable<Array<Project>>;
 
+  abstract getProjectsTasksStream(): Observable<Array<ProjectStage>>;
+
   abstract saveProject(project: Project);
+
+  abstract saveProjectStage(projectStage: ProjectStage);
 
 }
