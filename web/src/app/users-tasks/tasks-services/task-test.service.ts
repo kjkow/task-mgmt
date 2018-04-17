@@ -3,6 +3,7 @@ import { TaskService, Task } from './task.service';
 import { Obszar } from './obszar.enum';
 import { Subject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { ProjectStage } from '../../users-projects/services/projects.service';
 
 
 @Injectable()
@@ -49,7 +50,20 @@ export class TaskTestService implements TaskService {
   ];
 
   constructor(private http:HttpClient) {
+    this.addProjectStages();
     this.updateUsersTasks();
+  }
+
+  addProjectStages(){
+    let projectStage: ProjectStage = {
+      area: Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI,
+      finnished: false,
+      name: "Zadanie projektu 1",
+      userId: 123,
+      projectId: 1,
+      id: 7
+    }
+    this.tasks.push(projectStage);
   }
 
   getTasksStream(area: Obszar): Observable<Task[]> {
