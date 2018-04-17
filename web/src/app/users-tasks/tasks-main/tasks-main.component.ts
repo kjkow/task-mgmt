@@ -9,7 +9,7 @@ import { Task } from '../tasks-services/task.service';
 
   <task-navigation (selection)="navSelected($event)"></task-navigation>
 
-  <div class="row">
+  <div class="row top-space">
   
   <div [ngSwitch]="taskArea" class="col-8">
     <task-areas *ngSwitchCase="'current'" (selected)="selection($event)"></task-areas>
@@ -35,6 +35,9 @@ import { Task } from '../tasks-services/task.service';
     width:25%;
     float:left;
     height: 100%;
+  }
+  .top-space{
+    margin-top: 1em;
   }
   `]
 })
