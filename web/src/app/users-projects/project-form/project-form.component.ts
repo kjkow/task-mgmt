@@ -1,12 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Project } from '../services/projects.service';
+import { ProjectFormMode } from './project-form-mode';
 
 @Component({
   selector: 'project-form',
   template: `
-    <form id="task-form">
+    <form id="task-form" *ngIf="mode == 'new' || mode =='modify'">
+
       <!--Project name-->
-      
       <div class="form-group row">
         <label for="projectName" class="col-sm-3 col-form-label">Nazwa</label>
         <div class="col-sm-9">
@@ -45,20 +46,26 @@ import { Project } from '../services/projects.service';
                 *ngIf="mode == 'modify'">
         Zakończ projekt</button>
       </div> 
-    </form>  
+    </form>
+    
+    <button class="btn" *ngIf="mode == 'empty'" (click)="newProject()">Stwórz nowy projekt</button>
   `,
   styles: []
 })
 export class ProjectFormComponent implements OnInit {
 
   @Input() project: Project;
-  @Input() mode;
+  @Input() mode: ProjectFormMode;
+
+  newProject(){
+    this.mode = ProjectFormMode.NEW;
+  }
 
   constructor() { }
 
   ngOnInit() {
     //mock
-    this.mode = "new";
+    this.mode = ProjectFormMode.EMPTY;
     this.project = {
       name: "Testowy mock projekt",
       ordered: true,
