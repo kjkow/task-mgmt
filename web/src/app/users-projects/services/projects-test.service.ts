@@ -16,7 +16,9 @@ export class ProjectsTestService implements ProjectsService {
   ];
 
   projectsStages: ProjectStage[] = [
-    {name: "Zadanie projektu 1", id: 7, area: Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI, finnished: false, projectId: 1, userId: 123}
+    {name: "Pierwsze zadanie projektu 1", id: 7, area: Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI, finnished: false, projectId: 1, userId: 123},
+    {name: "Drugie zadanie projektu 1", id: 8, area: Obszar.OBOWIAZKI, finnished: false, projectId: 1, userId: 123},
+    {name: "Pierwsze zadanie projektu 2", id: 9, area: Obszar.W_PIERWSZEJ_CHWILI, finnished: false, projectId: 2, userId: 123}
   ]
 
   getProjectsStream(): Observable<Project[]> {
