@@ -49,8 +49,14 @@ export class ProjectsTestService implements ProjectsService {
     this.projectsStagesStream.next(this.projectsStages);
   }
 
-  getProjectsTasksStream(): Observable<ProjectStage[]> {
-    return Observable.from(this.projectsStagesStream).startWith(this.projectsStages);
+  getProjectsTasksStream(projectId: number): Observable<ProjectStage[]> {
+    return Observable
+            .from(this.projectsStagesStream)
+            .startWith(this.projectsStages)
+            .map(
+              tasks => tasks.filter(
+                task => task.projectId == projectId
+              ));
   }
 
   saveProjectStage(projectStage: ProjectStage) {
