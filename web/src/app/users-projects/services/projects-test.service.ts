@@ -49,14 +49,18 @@ export class ProjectsTestService implements ProjectsService {
     this.projectsStagesStream.next(this.projectsStages);
   }
 
-  getProjectsTasksStream(projectId: number): Observable<ProjectStage[]> {
-    return Observable
-            .from(this.projectsStagesStream)
-            .startWith(this.projectsStages)
-            .map(
-              tasks => tasks.filter(
-                task => task.projectId == projectId
-              ));
+  getProjectsTasksStream(): Observable<ProjectStage[]> {
+    return Observable.from(this.projectsStagesStream);
+  }
+
+  updateProjectTasks(projectId: number){
+    let local: ProjectStage[] = new Array<ProjectStage>();
+    this.projectsStages.forEach( task => {
+      if(task.projectId == projectId){
+        local.push(task);
+      }
+    })
+    this.projectsStagesStream.next(local);
   }
 
   saveProjectStage(projectStage: ProjectStage) {

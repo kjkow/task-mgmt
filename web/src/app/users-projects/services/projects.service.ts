@@ -21,7 +21,9 @@ export abstract class ProjectsService {
 
   abstract getProjectsStream(): Observable<Array<Project>>;
 
-  abstract getProjectsTasksStream(projectId: number): Observable<Array<ProjectStage>>;
+  abstract getProjectsTasksStream(): Observable<Array<ProjectStage>>;
+
+  abstract updateProjectTasks(projectId: number);
 
   abstract saveProject(project: Project);
 

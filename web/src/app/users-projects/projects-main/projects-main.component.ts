@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Project } from '../services/projects.service';
+import { Project, ProjectsService } from '../services/projects.service';
 import { ProjectFormMode } from '../project-form/project-form-mode';
 
 @Component({
@@ -9,7 +9,7 @@ import { ProjectFormMode } from '../project-form/project-form-mode';
   
   <div class="row">
     <projects-list (clicked)="onProjectPick($event)" class="col-sm"></projects-list>
-    <projects-stages class="col-sm"></projects-stages>
+    <projects-stages *ngIf="project" class="col-sm"></projects-stages>
   </div>
   `,
   styles: []
@@ -19,12 +19,13 @@ export class ProjectsMainComponent implements OnInit {
   project: Project;
   mode: ProjectFormMode;
 
-  constructor() { }
+  constructor(private projectsService: ProjectsService) { }
 
   ngOnInit() {
   }
 
-  onProjectPick(project){
+  onProjectPick(project: Project){
+    this.projectsService.updateProjectTasks(project.id);
     this.project = project;
     this.mode = ProjectFormMode.MODIFY;
   }
