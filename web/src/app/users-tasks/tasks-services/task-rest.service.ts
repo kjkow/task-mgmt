@@ -65,6 +65,8 @@ export class TaskRestService implements TaskService {
     })
   }
   
-
+  updateProjectsTasks(projectId: any) {
+    throw new Error("Method not implemented.");
+  }
 
 }

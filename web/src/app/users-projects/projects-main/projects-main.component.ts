@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Project, ProjectsService } from '../services/projects.service';
+import { Project } from '../services/projects.service';
 import { ProjectFormMode } from '../project-form/project-form-mode';
+import { TaskService } from '../../users-tasks/tasks-services/task.service';
 
 @Component({
   selector: 'projects-main',
@@ -19,13 +20,13 @@ export class ProjectsMainComponent implements OnInit {
   project: Project;
   mode: ProjectFormMode;
 
-  constructor(private projectsService: ProjectsService) { }
+  constructor(private taskService: TaskService) { }
 
   ngOnInit() {
   }
 
   onProjectPick(project: Project){
-    this.projectsService.updateProjectTasks(project.id);
+    this.taskService.updateProjectsTasks(project.id);
     this.project = project;
     this.mode = ProjectFormMode.MODIFY;
   }

@@ -52,4 +52,14 @@ export class TaskTestService implements TaskService {
     this.taskStream.next(this.tasks);
   }
 
+  updateProjectsTasks(projectId){
+    let local: Task[] = new Array<Task>();
+    this.tasks.forEach( task => {
+      if(task.projectId == projectId){
+        local.push(task);
+      }
+    })
+    this.taskStream.next(local);
+  }
+
 }

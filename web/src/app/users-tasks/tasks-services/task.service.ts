@@ -38,4 +38,5 @@ export abstract class TaskService {
    */
   abstract updateUsersTasks();
 
+  abstract updateProjectsTasks(projectId);
 }
