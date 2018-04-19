@@ -11,42 +11,15 @@ export class TaskTestService implements TaskService {
 
   taskStream = new Subject<Task[]>();
   tasks: Task[] = [
-    {
-      id: 1,
-      name: "Umyć naczynia",
-      area: Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI,
-      userId: 123
-    },
-    {
-      id: 2,
-      name: "Umyć naczynia 2",
-      area: Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI,
-      userId: 123
-    },
-    {
-      id: 3,
-      name: "Umyć naczynia 3",
-      area: Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI,
-      userId: 123
-    },
-    {
-      id: 4,
-      name: "Odkurzyć przedpokój",
-      area: Obszar.MOZE_KIEDYS,
-      userId: 123
-    },
-    {
-      id: 5,
-      name: "Zamieść liście",
-      area: Obszar.W_PIERWSZEJ_CHWILI,
-      userId: 123
-    },
-    {
-      id: 6,
-      name: "Nakarmić kota",
-      area: Obszar.OBOWIAZKI,
-      userId: 123
-    }
+    {id: 1, name: "Umyć naczynia", area: Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI, userId: 123},
+    {id: 2, name: "Umyć naczynia 2", area: Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI, userId: 123},
+    {id: 3, name: "Umyć naczynia 3", area: Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI, userId: 123},
+    {id: 4, name: "Odkurzyć przedpokój", area: Obszar.MOZE_KIEDYS, userId: 123},
+    {id: 5, name: "Zamieść liście", area: Obszar.W_PIERWSZEJ_CHWILI, userId: 123},
+    {id: 6, name: "Nakarmić kota", area: Obszar.OBOWIAZKI, userId: 123},
+    {id: 7, name: "Pierwsze zadanie projektu 1", area: Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI, finnishedProjectStage: false, projectId: 1, userId: 123},
+    {id: 8, name: "Drugie zadanie projektu 1", area: Obszar.OBOWIAZKI, finnishedProjectStage: false, projectId: 1, userId: 123},
+    {id: 9, name: "Pierwsze zadanie projektu 2", area: Obszar.W_PIERWSZEJ_CHWILI, finnishedProjectStage: false, projectId: 2, userId: 123}
   ];
 
   constructor(private http:HttpClient) {
