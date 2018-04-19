@@ -36,14 +36,10 @@ export class TaskRestService implements TaskService {
     })
   }
 
-  getTasksStream(area: Obszar): Observable<Task[]> {
+  getTasksStream(): Observable<Task[]> {
     return Observable
           .from(this.taskStream)
-          .startWith(this.tasks)
-          .map(
-            tasks => tasks.filter(
-              task => task.area == area
-            ));
+          .startWith(this.tasks);
   }
 
   prepareBody(task: Task){

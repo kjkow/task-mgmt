@@ -31,7 +31,7 @@ export abstract class TaskService {
   /**
    * Get task stream for specified area
    */
-  abstract getTasksStream(area: Obszar): Observable<Array<Task>>
+  abstract getTasksStream(): Observable<Array<Task>>
 
   /**
    * Calls http get on api and gets all users tasks

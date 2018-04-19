@@ -26,15 +26,10 @@ export class TaskTestService implements TaskService {
     this.updateUsersTasks();
   }
 
-  getTasksStream(area: Obszar): Observable<Task[]> {
+  getTasksStream(): Observable<Task[]> {
     return Observable
           .from(this.taskStream)
-          .startWith(this.tasks)
-          .map(
-            tasks => tasks.filter(
-              task => task.area == area
-            ))
-          
+          .startWith(this.tasks);
   }
 
   save(task: Task) {
