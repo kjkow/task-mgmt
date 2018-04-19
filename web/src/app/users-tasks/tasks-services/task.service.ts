@@ -14,6 +14,9 @@ export interface Task {
   frequencyType?: string; //TODO: enum czestotliwosc zadania
   userId: number;
   etykiety?: Array<string> //TODO: obiekt etykiety
+  projectId?: number;
+  finnishedProjectStage?: boolean;
+  ordinalNumber?: number;
 }
 
 @Injectable()
