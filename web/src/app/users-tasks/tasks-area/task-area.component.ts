@@ -55,7 +55,12 @@ export class TaskAreaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tasksInArea = this.taskService.getTasksStream(this.obszar);
+    this.tasksInArea = this.taskService.getTasksStream()
+      .map(
+        tasks => tasks.filter(
+          task => task.area == this.obszar
+        )
+      );
   }
 
 }

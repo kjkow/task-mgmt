@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TaskService } from '../../users-tasks/tasks-services/task.service';
 import { Obszar } from '../../users-tasks/tasks-services/obszar.enum';
-import { ProjectStage, ProjectsService } from '../services/projects.service';
+import { ProjectStage } from '../services/projects.service';
 
 @Component({
   selector: 'projects-stages',
@@ -23,10 +23,10 @@ export class ProjectsStagesComponent implements OnInit {
 
   projectsTasks;
 
-  constructor(private projectsService: ProjectsService) { }
+  constructor(private taskService: TaskService) { }
 
   ngOnInit() {
-    this.projectsTasks = this.projectsService.getProjectsTasksStream();
+    this.projectsTasks = this.taskService.getTasksStream();
   }
 
 }

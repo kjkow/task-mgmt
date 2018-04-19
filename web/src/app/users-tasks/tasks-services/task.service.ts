@@ -14,6 +14,9 @@ export interface Task {
   frequencyType?: string; //TODO: enum czestotliwosc zadania
   userId: number;
   etykiety?: Array<string> //TODO: obiekt etykiety
+  projectId?: number;
+  finnishedProjectStage?: boolean;
+  ordinalNumber?: number;
 }
 
 @Injectable()
@@ -28,11 +31,12 @@ export abstract class TaskService {
   /**
    * Get task stream for specified area
    */
-  abstract getTasksStream(area: Obszar): Observable<Array<Task>>
+  abstract getTasksStream(): Observable<Array<Task>>
 
   /**
    * Calls http get on api and gets all users tasks
    */
   abstract updateUsersTasks();
 
+  abstract updateProjectsTasks(projectId);
 }
