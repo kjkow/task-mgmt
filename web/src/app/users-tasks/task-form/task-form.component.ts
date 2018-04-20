@@ -79,6 +79,7 @@ export class TaskFormComponent implements OnInit {
   finnish(){
     let copy = this.copyTask;
     copy.area = Obszar.UKONCZONE;
+    if(copy.finnishedProjectStage == false) copy.finnishedProjectStage = true;
     this.saveAndEmit(copy);
   }
 

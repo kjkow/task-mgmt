@@ -54,7 +54,7 @@ export class TaskTestService implements TaskService {
   updateProjectsTasks(projectId){
     let local: Task[] = new Array<Task>();
     this.tasks.forEach( task => {
-      if(task.projectId == projectId){
+      if(task.projectId == projectId && task.finnishedProjectStage == false){
         local.push(task);
       }
     })
