@@ -45,7 +45,7 @@ export class TaskAreaComponent implements OnInit {
     let taskSelection: TaskSelection = {
       selected: true,
       task: {
-        name: "Nowe zadanie",
+        name: "",
         area: Obszar.W_PIERWSZEJ_CHWILI,
         userId: 123
       }
