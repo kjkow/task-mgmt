@@ -33,10 +33,6 @@ export class ProjectsRestService implements ProjectsService {
     })
   }
 
-  finnishProject(project: Project) {
-    //TODO: zmiana modelu - trzeba dodać atrybut czy projekt ukonczony, bo pozniej musze miec dostep do ukonczonych
-  }
-
   updateProjects() {
     this.http.get<Array<Project>>("http://localhost:4500/projects/")
     .subscribe((response) =>{

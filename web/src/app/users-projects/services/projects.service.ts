@@ -17,6 +17,4 @@ export abstract class ProjectsService {
 
   abstract saveProject(project: Project);
 
-  abstract finnishProject(project: Project);
-
 }
