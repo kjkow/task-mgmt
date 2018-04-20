@@ -6,7 +6,7 @@ import { Obszar } from '../../users-tasks/tasks-services/obszar.enum';
   selector: 'projects-stages',
   template: `
     <h5>Etapy projektu</h5>
-    <div 
+    <div (click)="clicked(task)"
          class="card"
          *ngFor="let task of projectsTasks | async">
          {{task.name}}
@@ -23,6 +23,10 @@ export class ProjectsStagesComponent implements OnInit {
   projectsTasks;
 
   constructor(private taskService: TaskService) { }
+
+  clicked(task){
+    console.log(task)
+  }
 
   ngOnInit() {
     this.projectsTasks = this.taskService.getTasksStream();
