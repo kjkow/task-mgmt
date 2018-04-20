@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TaskService } from '../../users-tasks/tasks-services/task.service';
 import { Obszar } from '../../users-tasks/tasks-services/obszar.enum';
-import { ProjectStage } from '../services/projects.service';
 
 @Component({
   selector: 'projects-stages',
