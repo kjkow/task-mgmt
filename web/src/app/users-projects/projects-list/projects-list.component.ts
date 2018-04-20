@@ -26,7 +26,11 @@ export class ProjectsListComponent implements OnInit {
   constructor(private projectsService: ProjectsService) { }
 
   ngOnInit() {
-    this.projects = this.projectsService.getProjectsStream();
+    this.projects = this.projectsService.getProjectsStream()
+      .map( 
+        projects => projects.filter(
+         project => project.finnished == false
+      ))
   }
 
   onClick(project){

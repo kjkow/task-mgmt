@@ -80,17 +80,23 @@ export class ProjectFormComponent implements OnInit {
   }
 
   finnish(){
-    this.projectService.finnishProject(this.copyProject);
+    let copy = this.copyProject;
+    copy.finnished = true;
+    this.projectService.saveProject(copy);
+    this.project = this.templateProject;
     this.onSave.emit(ProjectFormMode.EMPTY);
   }
 
   constructor(private projectService: ProjectsService) { }
 
   ngOnInit() {
-    //mock
     this.mode = ProjectFormMode.EMPTY;
-    this.project = {
-      name: "Testowy mock projekt",
+    this.project = this.templateProject;
+  }
+
+  get templateProject(): Project{
+    return {
+      name: "",
       ordered: true,
       finnished: false
     }
