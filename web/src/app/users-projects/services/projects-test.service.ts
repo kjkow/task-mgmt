@@ -8,11 +8,12 @@ export class ProjectsTestService implements ProjectsService {
 
   projectsStream = new Subject<Project[]>();
   projectsStagesStream = new Subject<ProjectStage[]>();
+  projectId: number = 1;
 
   projects: Project[] = [
-    {id: 1, name: "Projekt 1", finnished: false, ordered: false},
-    {id: 2, name: "Projekt 2", finnished: false, ordered: true},
-    {id: 3, name: "Projekt 3", finnished: false, ordered: false, description: "Projekt trzeci"}
+    {id: this.projectId++, name: "Projekt 1", finnished: false, ordered: false},
+    {id: this.projectId++, name: "Projekt 2", finnished: false, ordered: true},
+    {id: this.projectId++, name: "Projekt 3", finnished: false, ordered: false, description: "Projekt trzeci"}
   ];
 
   projectsStages: ProjectStage[] = [
@@ -28,6 +29,7 @@ export class ProjectsTestService implements ProjectsService {
   saveProject(project: Project) {
     if(project.id != null) this.modify(project);
     else{
+      project.id = this.projectId++;
       this.projects.push(project);
       this.updateProjects();
     }
