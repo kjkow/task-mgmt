@@ -3,7 +3,6 @@ import { TaskService, Task } from './task.service';
 import { Obszar } from './obszar.enum';
 import { Subject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { ProjectStage } from '../../users-projects/services/projects.service';
 
 
 @Injectable()
