@@ -15,7 +15,7 @@ import { Task } from '../tasks-services/task.service';
     <task-areas *ngSwitchCase="'current'" (selected)="selection($event)"></task-areas>
     <task-area (selected)="selection($event)"  *ngSwitchCase="'reference'" [obszar]="selectedArea"></task-area>
     <task-area (selected)="selection($event)"  *ngSwitchCase="'finnished'" [obszar]="selectedArea"></task-area>
-    <projects-main *ngSwitchCase="'projects'"></projects-main>
+    <projects-main (selectedStage)="selection($event)" *ngSwitchCase="'projects'"></projects-main>
   </div>
   
   <task-form 

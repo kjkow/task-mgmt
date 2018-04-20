@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Project } from '../services/projects.service';
 import { ProjectFormMode } from '../project-form/project-form-mode';
 import { TaskService } from '../../users-tasks/tasks-services/task.service';
@@ -10,7 +10,7 @@ import { TaskService } from '../../users-tasks/tasks-services/task.service';
   
   <div class="row">
     <projects-list (clicked)="onProjectPick($event)" class="col-sm"></projects-list>
-    <projects-stages *ngIf="project" class="col-sm"></projects-stages>
+    <projects-stages (selected)="selectedProjectStage($event)" *ngIf="project" class="col-sm"></projects-stages>
   </div>
   `,
   styles: []
@@ -19,10 +19,15 @@ export class ProjectsMainComponent implements OnInit {
 
   project: Project;
   mode: ProjectFormMode;
+  @Output() selectedStage = new EventEmitter();
 
   constructor(private taskService: TaskService) { }
 
   ngOnInit() {
+  }
+
+  selectedProjectStage(selection){
+    this.selectedStage.emit(selection);
   }
 
   onProjectPick(project: Project){
