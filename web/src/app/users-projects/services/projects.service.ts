@@ -29,4 +29,6 @@ export abstract class ProjectsService {
 
   abstract saveProjectStage(projectStage: ProjectStage);
 
+  abstract finnishProject(project: Project);
+
 }

@@ -41,7 +41,8 @@ import { ProjectFormMode } from './project-form-mode';
         <button type="button" form="task-form" class="btn btn-success" (click)="save()">Zapisz</button>
 
         <!--Close project-->
-        <button type="button" 
+        <button type="button"
+                (click)="finnish()" 
                 class="btn btn-success float-right"
                 *ngIf="mode == 'modify'">
         Zakończ projekt</button>
@@ -76,6 +77,11 @@ export class ProjectFormComponent implements OnInit {
     }
     Object.assign(copy, this.project);
     return copy;
+  }
+
+  finnish(){
+    this.projectService.finnishProject(this.copyProject);
+    this.onSave.emit(ProjectFormMode.EMPTY);
   }
 
   constructor(private projectService: ProjectsService) { }

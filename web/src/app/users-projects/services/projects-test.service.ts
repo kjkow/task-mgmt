@@ -81,6 +81,14 @@ export class ProjectsTestService implements ProjectsService {
     this.updateProjectsStages();
   }
 
+  finnishProject(project: Project){
+    let localProject = this.projects.find(p => p.id == project.id);
+    let index = this.projects.indexOf(localProject);
+
+    if(index > 0) console.log(this.projects.splice(index, 1));
+    this.updateProjects();
+  }
+
   constructor() {
     this.updateProjects();
    }
