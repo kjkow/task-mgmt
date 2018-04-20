@@ -30,7 +30,7 @@ public class ProjectRest {
         return projectRepository.save(project);
     }
 
-    @RequestMapping(value = "tasks/update/{taskId}", method = RequestMethod.POST)
+    @RequestMapping(value = "projects/update/{projectId}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     Project updateProject(@PathVariable String projectId, @RequestBody Project project){
