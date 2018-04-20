@@ -10,6 +10,7 @@ import pl.kjkow.server.repository.ProjectRepository;
 /**
  * Created by kamil on 2018-04-20.
  */
+@RestController
 public class ProjectRest {
 
     @Autowired
