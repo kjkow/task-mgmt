@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TaskService } from '../../users-tasks/tasks-services/task.service';
 import { Obszar } from '../../users-tasks/tasks-services/obszar.enum';
+import { TaskSelection } from '../../users-tasks/tasks-main/tasks-main.component';
 
 @Component({
   selector: 'projects-stages',
@@ -26,7 +27,11 @@ export class ProjectsStagesComponent implements OnInit {
   constructor(private taskService: TaskService) { }
 
   clicked(task){
-    this.selected.emit();//TODO: po typowaniu obiektu emitowanego
+    let taskSelection: TaskSelection = {
+      selected: true,
+      task: task
+    }
+    this.selected.emit(taskSelection);
   }
 
   ngOnInit() {

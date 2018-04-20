@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Obszar } from '../tasks-services/obszar.enum';
 import { Task, TaskService } from '../tasks-services/task.service';
+import { TaskSelection } from '../tasks-main/tasks-main.component';
 
 @Component({
   selector: 'task-area',
@@ -41,13 +42,15 @@ export class TaskAreaComponent implements OnInit {
   constructor(private taskService: TaskService) {}
 
   onSelecetedAdd(){
-    this.selected.emit({
-      selected: true,  
+    let taskSelection: TaskSelection = {
+      selected: true,
       task: {
         name: "Nowe zadanie",
         area: Obszar.W_PIERWSZEJ_CHWILI,
-        idUzytkownika: 123
-      }});
+        userId: 123
+      }
+    }
+    this.selected.emit(taskSelection);
   }
 
   onSelecetedModify(task){

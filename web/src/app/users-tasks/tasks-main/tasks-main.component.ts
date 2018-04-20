@@ -57,7 +57,7 @@ export class UsersTasksComponent implements OnInit {
 
   constructor() { }
 
-  selection(selection){ //TYPOWANIE tego obiektu
+  selection(selection: TaskSelection){
     this.task = selection.task;
     this.selected = selection.selected;
   }

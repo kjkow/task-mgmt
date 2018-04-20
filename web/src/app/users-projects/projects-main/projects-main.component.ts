@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Project } from '../services/projects.service';
 import { ProjectFormMode } from '../project-form/project-form-mode';
 import { TaskService } from '../../users-tasks/tasks-services/task.service';
+import { TaskSelection } from '../../users-tasks/tasks-main/tasks-main.component';
 
 @Component({
   selector: 'projects-main',
@@ -26,7 +27,7 @@ export class ProjectsMainComponent implements OnInit {
   ngOnInit() {
   }
 
-  selectedProjectStage(selection){
+  selectedProjectStage(selection: TaskSelection){
     this.selectedStage.emit(selection);
   }
 
