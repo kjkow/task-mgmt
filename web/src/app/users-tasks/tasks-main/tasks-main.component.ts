@@ -2,6 +2,10 @@ import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { Obszar } from '../tasks-services/obszar.enum';
 import { Task } from '../tasks-services/task.service';
 
+export interface TaskSelection {
+  selected: boolean,
+  task: Task
+}
 
 @Component({
   selector: 'tasks-main',
@@ -53,7 +57,7 @@ export class UsersTasksComponent implements OnInit {
 
   constructor() { }
 
-  selection(selection){
+  selection(selection){ //TYPOWANIE tego obiektu
     this.task = selection.task;
     this.selected = selection.selected;
   }
