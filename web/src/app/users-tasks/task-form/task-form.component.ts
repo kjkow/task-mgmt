@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, PipeTransform, Pipe, Output, EventEmitter } from '@angular/core';
 import { Task, TaskService } from '../tasks-services/task.service';
 import { Obszar } from '../tasks-services/obszar.enum';
+import { ProjectsService } from '../../users-projects/services/projects.service';
 
 @Component({
   selector: 'task-form',
@@ -87,6 +88,13 @@ import { Obszar } from '../tasks-services/obszar.enum';
                  class="form-control">
         </div>
       </div>
+
+      <div class="form-group">
+        <label for="tasksProject">Przypisz zadanie do projektu</label>
+        <select id="tasksProject" [(ngModel)]="task.projectId" class="form-control" name="area">
+          <option *ngFor="let project of projects | async" [value]="project.id">{{project.name}}</option>
+        </select>
+      </div>
       
       <div class="form-group">
         <button class="btn btn-success float-right" (click)="save()">Zapisz</button>
@@ -105,6 +113,7 @@ import { Obszar } from '../tasks-services/obszar.enum';
 export class TaskFormComponent implements OnInit {
   
   areas = Obszar;
+  projects;
   
   @Input() task: Task;
   @Output() onSave = new EventEmitter();
@@ -136,9 +145,15 @@ export class TaskFormComponent implements OnInit {
     this.onSave.emit({task: undefined, selected: false});
   }
 
-  constructor(private taskService: TaskService) { }
+  constructor(private taskService: TaskService, private projectsService: ProjectsService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.projects = this.projectsService.getProjectsStream()
+    .map( 
+      projects => projects.filter(
+       project => project.finnished == false
+    ))
+  }
 
 }
 
