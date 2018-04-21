@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Obszar } from '../tasks-services/obszar.enum';
+import { TaskSelection } from '../tasks-main/tasks-main.component';
 
 @Component({
   selector: 'task-areas',
@@ -40,7 +41,7 @@ export class TaskAreasComponent implements OnInit {
 
   constructor() { }
 
-  selectedTask(selection){
+  selectedTask(selection: TaskSelection){
     this.selected.emit(selection);
   }
 

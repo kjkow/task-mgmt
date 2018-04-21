@@ -2,6 +2,10 @@ import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { Obszar } from '../tasks-services/obszar.enum';
 import { Task } from '../tasks-services/task.service';
 
+export interface TaskSelection {
+  selected: boolean,
+  task: Task
+}
 
 @Component({
   selector: 'tasks-main',
@@ -9,12 +13,13 @@ import { Task } from '../tasks-services/task.service';
 
   <task-navigation (selection)="navSelected($event)"></task-navigation>
 
-  <div class="row">
+  <div class="row top-space">
   
   <div [ngSwitch]="taskArea" class="col-8">
     <task-areas *ngSwitchCase="'current'" (selected)="selection($event)"></task-areas>
     <task-area (selected)="selection($event)"  *ngSwitchCase="'reference'" [obszar]="selectedArea"></task-area>
     <task-area (selected)="selection($event)"  *ngSwitchCase="'finnished'" [obszar]="selectedArea"></task-area>
+    <projects-main (selectedStage)="selection($event)" *ngSwitchCase="'projects'"></projects-main>
   </div>
   
   <task-form 
@@ -35,6 +40,9 @@ import { Task } from '../tasks-services/task.service';
     float:left;
     height: 100%;
   }
+  .top-space{
+    margin-top: 1em;
+  }
   `]
 })
 export class UsersTasksComponent implements OnInit {
@@ -49,7 +57,7 @@ export class UsersTasksComponent implements OnInit {
 
   constructor() { }
 
-  selection(selection){
+  selection(selection: TaskSelection){
     this.task = selection.task;
     this.selected = selection.selected;
   }

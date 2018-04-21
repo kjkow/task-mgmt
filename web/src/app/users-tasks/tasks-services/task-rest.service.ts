@@ -36,14 +36,10 @@ export class TaskRestService implements TaskService {
     })
   }
 
-  getTasksStream(area: Obszar): Observable<Task[]> {
+  getTasksStream(): Observable<Task[]> {
     return Observable
           .from(this.taskStream)
-          .startWith(this.tasks)
-          .map(
-            tasks => tasks.filter(
-              task => task.area == area
-            ));
+          .startWith(this.tasks);
   }
 
   prepareBody(task: Task){
@@ -57,7 +53,10 @@ export class TaskRestService implements TaskService {
       "comment": task.comment,
       "section": task.section,
       "recurrenceFrequency": task.recurrenceFrequency,
-      "frequencyType": task.frequencyType
+      "frequencyType": task.frequencyType,
+      "projectId": task.projectId,
+      "finnishedProjectStage": task.finnishedProjectStage,
+      "ordinalNumber": task.ordinalNumber
     }
   }
 
@@ -69,6 +68,15 @@ export class TaskRestService implements TaskService {
     })
   }
   
-
+  updateProjectsTasks(projectId: any) {
+    //Tutaj nie ma potrzeby wołać api, sortujemy więc tylko lokalnie pobrane taski
+    let local: Task[] = new Array<Task>();
+    this.tasks.forEach( task => {
+      if(task.projectId == projectId && task.finnishedProjectStage == false){
+        local.push(task);
+      }
+    })
+    this.taskStream.next(local);
+  }
 
 }

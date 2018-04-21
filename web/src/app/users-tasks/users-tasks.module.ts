@@ -10,6 +10,12 @@ import { TaskFormComponent, AreasPipe } from './task-form/task-form.component';
 import { FormsModule } from '@angular/forms';
 import { TaskNavigationComponent } from './task-navigation/task-navigation.component';
 import { TaskRestService } from './tasks-services/task-rest.service';
+import { ProjectsMainComponent } from '../users-projects/projects-main/projects-main.component';
+import { ProjectsListComponent } from '../users-projects/projects-list/projects-list.component';
+import { ProjectsService } from '../users-projects/services/projects.service';
+import { ProjectsTestService } from '../users-projects/services/projects-test.service';
+import { ProjectFormComponent } from '../users-projects/project-form/project-form.component';
+import { ProjectsStagesComponent } from '../users-projects/projects-stages/projects-stages.component';
 
 @NgModule({
   imports: [
@@ -17,7 +23,10 @@ import { TaskRestService } from './tasks-services/task-rest.service';
     FormsModule
   ],
   
-  providers: [{provide: TaskService, useClass: TaskRestService}],
+  providers: [
+    {provide: TaskService, useClass: TaskTestService},
+    {provide: ProjectsService, useClass: ProjectsTestService}
+  ],
   declarations: [
     UsersTasksComponent,
     TaskAreasComponent,
@@ -25,7 +34,11 @@ import { TaskRestService } from './tasks-services/task-rest.service';
     UserTaskComponent,
     TaskFormComponent,
     AreasPipe,
-    TaskNavigationComponent
+    TaskNavigationComponent,
+    ProjectsMainComponent,
+    ProjectsListComponent,
+    ProjectFormComponent,
+    ProjectsStagesComponent
   ],
   exports: [UsersTasksComponent],
   bootstrap: [UsersTasksComponent]
