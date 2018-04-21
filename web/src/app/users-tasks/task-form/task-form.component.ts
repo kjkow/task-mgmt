@@ -45,9 +45,9 @@ import { ProjectsService } from '../../users-projects/services/projects.service'
         <!-- Task priority -->
         <div class="form-group col-sm-3">
             <label for="taskPriority">Priorytet:</label>
-            <input id="taskPriority" type="number" 
-                  [(ngModel)]="task.priority" 
-                  class="form-control">      
+            <select id="taskPriority" [(ngModel)]="task.priority" class="form-control" name="priority">
+              <option *ngFor="let number of [1,2,3]" [value]="number">{{number}}</option>
+            </select>          
         </div>
 
         <!-- Task due date -->
