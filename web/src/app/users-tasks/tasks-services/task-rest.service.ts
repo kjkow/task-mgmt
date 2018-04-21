@@ -53,7 +53,10 @@ export class TaskRestService implements TaskService {
       "comment": task.comment,
       "section": task.section,
       "recurrenceFrequency": task.recurrenceFrequency,
-      "frequencyType": task.frequencyType
+      "frequencyType": task.frequencyType,
+      "projectId": task.projectId,
+      "finnishedProjectStage": task.finnishedProjectStage,
+      "ordinalNumber": task.ordinalNumber
     }
   }
 
