@@ -30,6 +30,7 @@ public class Task {
     private Calendar dueDate;
     private String comment;
     private String section;
+    @Min(0)
     private int recurrenceFrequency;
     private String frequencyType;
     private int projectId;

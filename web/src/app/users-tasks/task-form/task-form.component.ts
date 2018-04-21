@@ -76,7 +76,8 @@ import { ProjectsService } from '../../users-projects/services/projects.service'
           <input type="number" 
                  [(ngModel)]="task.recurrenceFrequency"
                  id="taskRecurrenceFrequency" 
-                 class="form-control">
+                 class="form-control"
+                 [class.text-danger]="task.recurrenceFrequency < 1">
         </div>
 
         <!-- Task frequency type -->
@@ -120,6 +121,7 @@ export class TaskFormComponent implements OnInit {
 
   save(){
     let copy = this.copyTask;
+    if(copy.recurrenceFrequency && copy.recurrenceFrequency < 1) return;
     this.saveAndEmit(copy);
   }
 

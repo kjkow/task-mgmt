@@ -76,6 +76,19 @@ public class TaskValidationTest {
     }
 
     @Test
+    public void reccurenceFrequencyNegative(){
+        Task task = new Task();
+        task.setUserId(123);
+        task.setArea(Area.MATERIALY_REFERENCYJNE);
+        task.setName("name");
+        task.setRecurrenceFrequency(-5);
+        Set<ConstraintViolation<Task>> constraintViolations = validator.validate(task);
+
+        assertEquals( 1, constraintViolations.size() );
+        assertEquals( "must be greater than or equal to 0", constraintViolations.iterator().next().getMessage() );
+    }
+
+    @Test
     public void taskIsValid(){
         Task task = new Task();
         task.setUserId(123);
