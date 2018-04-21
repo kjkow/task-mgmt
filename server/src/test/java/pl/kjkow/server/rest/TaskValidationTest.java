@@ -74,4 +74,17 @@ public class TaskValidationTest {
         assertEquals( 1, constraintViolations.size() );
         assertEquals( "must be greater than or equal to 0", constraintViolations.iterator().next().getMessage() );
     }
+
+    @Test
+    public void taskIsValid(){
+        Task task = new Task();
+        task.setUserId(123);
+        task.setArea(Area.MATERIALY_REFERENCYJNE);
+        task.setName("name");
+        task.setPriority(2);
+
+        Set<ConstraintViolation<Task>> constraintViolations = validator.validate(task);
+
+        assertEquals( 0, constraintViolations.size() );
+    }
 }
