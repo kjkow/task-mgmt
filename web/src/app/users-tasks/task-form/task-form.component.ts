@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, PipeTransform, Pipe, Output, EventEmitter } from '@angular/core';
 import { Task, TaskService } from '../tasks-services/task.service';
 import { Obszar } from '../tasks-services/obszar.enum';
+import { ProjectsService } from '../../users-projects/services/projects.service';
 
 @Component({
   selector: 'task-form',
@@ -8,46 +9,91 @@ import { Obszar } from '../tasks-services/obszar.enum';
     <div class="card">
       <h5 class="card-title">Wybrane zadanie</h5>
 
+      <!-- Task name -->
       <div class="form-group">
-        <label>Nazwa:</label>
-        <input type="text" [(ngModel)]="task.name" class="form-control">
+        <label for="taskName">Nazwa:</label>
+        <input id="taskName" type="text" 
+               [(ngModel)]="task.name" 
+               class="form-control" 
+               name="name"
+               placeholder="Wprowadź nazwę zadania">
+      </div>
+
+      <!-- Task comment -->
+      <div class="form-group">
+        <label for="taskComment">Komentarz:</label>
+        <textarea id="taskComment" 
+                  rows="2" 
+                  name="comment" 
+                  [(ngModel)]="task.comment" 
+                  class="form-control"
+                  placeholder="Opisz zadanie...">
+        </textarea>
+      </div>
+
+      <!-- Task area -->
+      <div class="form-group row">
+        <label for="projectArea" class="col-sm-3 col-form-label">Obszar:</label>
+        <div class="col-sm-9">
+          <select id="projectArea" [(ngModel)]="task.area" class="form-control" name="area">
+            <option *ngFor="let item of areas | allAreas" [value]="item.value">{{item.value}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <!-- Task priority -->
+        <div class="form-group col-sm-3">
+            <label for="taskPriority">Priorytet:</label>
+            <input id="taskPriority" type="number" 
+                  [(ngModel)]="task.priority" 
+                  class="form-control">      
+        </div>
+
+        <!-- Task due date -->
+        <div class="form-group col-sm-3">
+            <label for="taskDueDate">Termin:</label>
+            <input id="taskDueDate" type="date" 
+                   [(ngModel)]="task.dueDate" 
+                   class="form-control">
+        </div>
+
+        <!-- Task section -->
+        <div class="form-group col-sm-6">
+          <label for="taskSection">Sekcja:</label>
+          <input type="text"
+                 id="taskSection" 
+                 [(ngModel)]="task.section" 
+                 class="form-control"
+                 placeholder="Przypisz zadanie do sekcji...">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <!-- Task recurrence frequency -->
+        <div class="form-group col-sm-6">
+          <label for="taskRecurrenceFrequency">Częstotliwość:</label>
+          <input type="number" 
+                 [(ngModel)]="task.recurrenceFrequency"
+                 id="taskRecurrenceFrequency" 
+                 class="form-control">
+        </div>
+
+        <!-- Task frequency type -->
+        <div class="form-group col-sm-6">
+          <label for="taskFrequencyType">Typ częstotliwości:</label>
+          <input type="text" 
+                 [(ngModel)]="task.frequencyType"
+                 id="taskFrequencyType" 
+                 class="form-control">
+        </div>
       </div>
 
       <div class="form-group">
-        <label>Komentarz:</label>
-        <input type="text" [(ngModel)]="task.comment" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label>Obszar:</label>
-        <select [(ngModel)]="task.area" class="form-control" name="area">
-          <option *ngFor="let item of areas | allAreas" [value]="item.value">{{item.value}}</option>
+        <label for="tasksProject">Przypisz zadanie do projektu</label>
+        <select id="tasksProject" [(ngModel)]="task.projectId" class="form-control" name="area">
+          <option *ngFor="let project of projects | async" [value]="project.id">{{project.name}}</option>
         </select>
-      </div>
-
-      <div class="form-group">
-        <label>Priorytet:</label>
-        <input type="number" [(ngModel)]="task.priority" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label>Termin:</label>
-        <input type="date" [(ngModel)]="task.dueDate" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label>Sekcja:</label>
-        <input type="text" [(ngModel)]="task.section" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label>Częstotliwość:</label>
-        <input type="number" [(ngModel)]="task.recurrenceFrequency" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label>Typ częstotliwości:</label>
-        <input type="text" [(ngModel)]="task.frequencyType" class="form-control">
       </div>
       
       <div class="form-group">
@@ -67,6 +113,7 @@ import { Obszar } from '../tasks-services/obszar.enum';
 export class TaskFormComponent implements OnInit {
   
   areas = Obszar;
+  projects;
   
   @Input() task: Task;
   @Output() onSave = new EventEmitter();
@@ -98,9 +145,15 @@ export class TaskFormComponent implements OnInit {
     this.onSave.emit({task: undefined, selected: false});
   }
 
-  constructor(private taskService: TaskService) { }
+  constructor(private taskService: TaskService, private projectsService: ProjectsService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.projects = this.projectsService.getProjectsStream()
+    .map( 
+      projects => projects.filter(
+       project => project.finnished == false
+    ))
+  }
 
 }
 

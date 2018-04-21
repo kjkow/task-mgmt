@@ -38,5 +38,9 @@ export abstract class TaskService {
    */
   abstract updateUsersTasks();
 
+  /**
+   * Publishes through tasks stream only tasks with given project id
+   * @param projectId id of project which tasks should be published
+   */
   abstract updateProjectsTasks(projectId);
 }

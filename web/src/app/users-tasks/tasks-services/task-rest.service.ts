@@ -53,7 +53,10 @@ export class TaskRestService implements TaskService {
       "comment": task.comment,
       "section": task.section,
       "recurrenceFrequency": task.recurrenceFrequency,
-      "frequencyType": task.frequencyType
+      "frequencyType": task.frequencyType,
+      "projectId": task.projectId,
+      "finnishedProjectStage": task.finnishedProjectStage,
+      "ordinalNumber": task.ordinalNumber
     }
   }
 
@@ -66,7 +69,14 @@ export class TaskRestService implements TaskService {
   }
   
   updateProjectsTasks(projectId: any) {
-    throw new Error("Method not implemented.");
+    //Tutaj nie ma potrzeby wołać api, sortujemy więc tylko lokalnie pobrane taski
+    let local: Task[] = new Array<Task>();
+    this.tasks.forEach( task => {
+      if(task.projectId == projectId && task.finnishedProjectStage == false){
+        local.push(task);
+      }
+    })
+    this.taskStream.next(local);
   }
 
 }

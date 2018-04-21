@@ -28,6 +28,9 @@ public class Task {
     private String section;
     private int recurrenceFrequency;
     private String frequencyType;
+    private int projectId;
+    private boolean finnishedProjectStage;
+    private int ordinalNumber;
 
     private Task(){}
 
@@ -109,5 +112,29 @@ public class Task {
 
     public void setFrequencyType(String frequencyType) {
         this.frequencyType = frequencyType;
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
+
+    public boolean isFinnishedProjectStage() {
+        return finnishedProjectStage;
+    }
+
+    public void setFinnishedProjectStage(boolean finnishedProjectStage) {
+        this.finnishedProjectStage = finnishedProjectStage;
+    }
+
+    public int getOrdinalNumber() {
+        return ordinalNumber;
+    }
+
+    public void setOrdinalNumber(int ordinalNumber) {
+        this.ordinalNumber = ordinalNumber;
     }
 }

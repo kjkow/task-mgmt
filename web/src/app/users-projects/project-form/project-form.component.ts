@@ -5,7 +5,7 @@ import { ProjectFormMode } from './project-form-mode';
 @Component({
   selector: 'project-form',
   template: `
-    <form id="task-form" *ngIf="mode == 'new' || mode =='modify'">
+    <form id="project-form" *ngIf="mode == 'new' || mode =='modify'">
 
       <!--Project name-->
       <div class="form-group row">
@@ -38,7 +38,7 @@ import { ProjectFormMode } from './project-form-mode';
 
       <div class="form-group">
         <!--Submit-->
-        <button type="button" form="task-form" class="btn btn-success" (click)="save()">Zapisz</button>
+        <button type="button" form="project-form" class="btn btn-success" (click)="save()">Zapisz</button>
 
         <!--Close project-->
         <button type="button"
