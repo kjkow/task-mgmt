@@ -42,4 +42,16 @@ public class TaskIntegrationTest {
         assertEquals(Area.MATERIALY_REFERENCYJNE, saved.getArea());
 
     }
+
+    @Test
+    public void sectionNotValid(){
+        Task task = new Task();
+        task.setUserId(123);
+        task.setArea(Area.MOZE_KIEDYS);
+        task.setName("name");
+        task.setSection("sekcja");
+
+        ResponseEntity<Task> responseEntity = restTemplate.postForEntity("/tasks/add", task, Task.class);
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
 }
