@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 
@@ -16,12 +18,14 @@ public class Task {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
-    @NotNull
+    @Min(1)
     private int userId;
     @NotNull
     private String name;
     @NotNull
     private Area area;
+    @Min(0)
+    @Max(3)
     private int priority;
     private Calendar dueDate;
     private String comment;
@@ -32,7 +36,7 @@ public class Task {
     private boolean finnishedProjectStage;
     private int ordinalNumber;
 
-    private Task(){}
+    public Task(){}
 
     public Long getId() {
         return id;
