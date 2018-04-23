@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.Calendar;
+import java.sql.Date;
 
 /**
  * Created by kamil on 2018-04-10.
@@ -27,7 +27,7 @@ public class Task {
     @Min(0)
     @Max(3)
     private int priority;
-    private Calendar dueDate;
+    private Date dueDate;
     private String comment;
     private String section;
     @Min(0)
@@ -79,11 +79,11 @@ public class Task {
         this.priority = priority;
     }
 
-    public Calendar getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Calendar dueDate) {
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
 
