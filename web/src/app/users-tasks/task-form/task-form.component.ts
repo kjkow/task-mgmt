@@ -27,6 +27,7 @@ import { ProjectsService } from '../../users-projects/services/projects.service'
                   name="comment" 
                   [(ngModel)]="task.comment" 
                   class="form-control"
+                  maxlength="300"
                   placeholder="Opisz zadanie...">
         </textarea>
       </div>
@@ -41,31 +42,33 @@ import { ProjectsService } from '../../users-projects/services/projects.service'
         </div>
       </div>
 
+      <!-- Task due date -->
+      <div class="form-group">
+        <label for="taskDueDate">Termin:</label>
+        <input id="taskDueDate" type="date" 
+               [(ngModel)]="task.dueDate" 
+               class="form-control">
+      </div>
+
       <div class="form-row">
         <!-- Task priority -->
         <div class="form-group col-sm-3">
             <label for="taskPriority">Priorytet:</label>
-            <input id="taskPriority" type="number" 
-                  [(ngModel)]="task.priority" 
-                  class="form-control">      
-        </div>
-
-        <!-- Task due date -->
-        <div class="form-group col-sm-3">
-            <label for="taskDueDate">Termin:</label>
-            <input id="taskDueDate" type="date" 
-                   [(ngModel)]="task.dueDate" 
-                   class="form-control">
+            <select id="taskPriority" [(ngModel)]="task.priority" class="form-control" name="priority">
+              <option *ngFor="let number of [1,2,3]" [value]="number">{{number}}</option>
+            </select>          
         </div>
 
         <!-- Task section -->
-        <div class="form-group col-sm-6">
+        <div class="form-group col-sm-9">
           <label for="taskSection">Sekcja:</label>
           <input type="text"
                  id="taskSection" 
                  [(ngModel)]="task.section" 
                  class="form-control"
-                 placeholder="Przypisz zadanie do sekcji...">
+                 maxlength="50"
+                 placeholder="Przypisz zadanie do sekcji..."
+                 [readonly]="!(task.area == 'Materiały referencyjne')">
         </div>
       </div>
 
@@ -76,7 +79,8 @@ import { ProjectsService } from '../../users-projects/services/projects.service'
           <input type="number" 
                  [(ngModel)]="task.recurrenceFrequency"
                  id="taskRecurrenceFrequency" 
-                 class="form-control">
+                 class="form-control"
+                 [class.text-danger]="task.recurrenceFrequency < 1">
         </div>
 
         <!-- Task frequency type -->
@@ -120,6 +124,7 @@ export class TaskFormComponent implements OnInit {
 
   save(){
     let copy = this.copyTask;
+    if(copy.recurrenceFrequency && copy.recurrenceFrequency < 1) return;
     this.saveAndEmit(copy);
   }
 

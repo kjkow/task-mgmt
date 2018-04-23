@@ -4,8 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.Calendar;
+import javax.validation.constraints.Size;
+import java.sql.Date;
 
 /**
  * Created by kamil on 2018-04-10.
@@ -16,23 +19,28 @@ public class Task {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
-    @NotNull
+    @Min(1)
     private int userId;
     @NotNull
     private String name;
     @NotNull
     private Area area;
+    @Min(0)
+    @Max(3)
     private int priority;
-    private Calendar dueDate;
+    private Date dueDate;
+    @Size(max = 300)
     private String comment;
+    @Size(max = 50)
     private String section;
+    @Min(0)
     private int recurrenceFrequency;
     private String frequencyType;
     private int projectId;
     private boolean finnishedProjectStage;
     private int ordinalNumber;
 
-    private Task(){}
+    public Task(){}
 
     public Long getId() {
         return id;
@@ -74,11 +82,11 @@ public class Task {
         this.priority = priority;
     }
 
-    public Calendar getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Calendar dueDate) {
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
 
