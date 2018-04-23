@@ -89,6 +89,20 @@ public class TaskValidationTest {
     }
 
     @Test
+    public void commentTooLong(){
+        Task task = new Task();
+        task.setUserId(123);
+        task.setArea(Area.MATERIALY_REFERENCYJNE);
+        task.setName("name");
+        task.setComment("In sem justo, commodo ut, suscipit at, pharetra vitae, orci. Duis sapien nunc, commodo et, " +
+                "interdum suscipit, sollicitudin et, dolor. Pellentesque habitant morbi tristique senectus et netus et " +
+                "malesuada fames ac turpis egestas. Aliquam id dolor. Class aptent taciti sociosqu ad litora torquent per coasdijrqwoq");
+        Set<ConstraintViolation<Task>> constraintViolations = validator.validate(task);
+        assertEquals( 1, constraintViolations.size() );
+        assertEquals("size must be between 0 and 300", constraintViolations.iterator().next().getMessage());
+    }
+
+    @Test
     public void taskIsValid(){
         Task task = new Task();
         task.setUserId(123);
