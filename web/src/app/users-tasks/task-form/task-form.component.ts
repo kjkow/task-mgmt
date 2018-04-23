@@ -27,6 +27,7 @@ import { ProjectsService } from '../../users-projects/services/projects.service'
                   name="comment" 
                   [(ngModel)]="task.comment" 
                   class="form-control"
+                  maxlength="300"
                   placeholder="Opisz zadanie...">
         </textarea>
       </div>
