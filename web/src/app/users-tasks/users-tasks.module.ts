@@ -16,6 +16,8 @@ import { ProjectsService } from '../users-projects/services/projects.service';
 import { ProjectsTestService } from '../users-projects/services/projects-test.service';
 import { ProjectFormComponent } from '../users-projects/project-form/project-form.component';
 import { ProjectsStagesComponent } from '../users-projects/projects-stages/projects-stages.component';
+import { ProjectsRestService } from '../users-projects/services/projects-rest.service';
+import { TaskSearchComponent } from './task-search/task-search.component';
 
 @NgModule({
   imports: [
@@ -24,8 +26,8 @@ import { ProjectsStagesComponent } from '../users-projects/projects-stages/proje
   ],
   
   providers: [
-    {provide: TaskService, useClass: TaskTestService},
-    {provide: ProjectsService, useClass: ProjectsTestService}
+    {provide: TaskService, useClass: TaskRestService},
+    {provide: ProjectsService, useClass: ProjectsRestService}
   ],
   declarations: [
     UsersTasksComponent,
@@ -38,7 +40,8 @@ import { ProjectsStagesComponent } from '../users-projects/projects-stages/proje
     ProjectsMainComponent,
     ProjectsListComponent,
     ProjectFormComponent,
-    ProjectsStagesComponent
+    ProjectsStagesComponent,
+    TaskSearchComponent
   ],
   exports: [UsersTasksComponent],
   bootstrap: [UsersTasksComponent]

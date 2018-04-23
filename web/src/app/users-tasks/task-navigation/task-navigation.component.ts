@@ -11,6 +11,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
           <li class="nav-item "><a id="finnished"  (click)="select($event)" class="nav-link">Zadania ukończone</a></li>
           <li class="nav-item "><a id="projects"  (click)="select($event)" class="nav-link">Projekty</a></li>
         </ul>
+        <task-search></task-search>
       </div>  
       <button class="btn btn-outline-info my-2 my-sm-0 pull-right" type="submit">Zaloguj się</button>
     </nav>
