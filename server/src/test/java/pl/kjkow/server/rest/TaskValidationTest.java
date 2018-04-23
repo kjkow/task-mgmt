@@ -103,6 +103,18 @@ public class TaskValidationTest {
     }
 
     @Test
+    public void sectionTooLong(){
+        Task task = new Task();
+        task.setUserId(123);
+        task.setArea(Area.MATERIALY_REFERENCYJNE);
+        task.setName("name");
+        task.setSection("Too long section name In sem justo, commodo ut, sus");
+        Set<ConstraintViolation<Task>> constraintViolations = validator.validate(task);
+        assertEquals( 1, constraintViolations.size() );
+        assertEquals("size must be between 0 and 50", constraintViolations.iterator().next().getMessage());
+    }
+
+    @Test
     public void taskIsValid(){
         Task task = new Task();
         task.setUserId(123);

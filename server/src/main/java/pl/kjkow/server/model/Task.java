@@ -31,6 +31,7 @@ public class Task {
     private Date dueDate;
     @Size(max = 300)
     private String comment;
+    @Size(max = 50)
     private String section;
     @Min(0)
     private int recurrenceFrequency;
