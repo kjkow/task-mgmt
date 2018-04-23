@@ -66,6 +66,7 @@ import { ProjectsService } from '../../users-projects/services/projects.service'
                  id="taskSection" 
                  [(ngModel)]="task.section" 
                  class="form-control"
+                 maxlength="50"
                  placeholder="Przypisz zadanie do sekcji..."
                  [readonly]="!(task.area == 'Materiały referencyjne')">
         </div>
