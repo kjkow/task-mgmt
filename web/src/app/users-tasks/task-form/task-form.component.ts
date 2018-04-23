@@ -41,6 +41,14 @@ import { ProjectsService } from '../../users-projects/services/projects.service'
         </div>
       </div>
 
+      <!-- Task due date -->
+      <div class="form-group">
+        <label for="taskDueDate">Termin:</label>
+        <input id="taskDueDate" type="date" 
+               [(ngModel)]="task.dueDate" 
+               class="form-control">
+      </div>
+
       <div class="form-row">
         <!-- Task priority -->
         <div class="form-group col-sm-3">
@@ -50,16 +58,8 @@ import { ProjectsService } from '../../users-projects/services/projects.service'
             </select>          
         </div>
 
-        <!-- Task due date -->
-        <div class="form-group col-sm-3">
-            <label for="taskDueDate">Termin:</label>
-            <input id="taskDueDate" type="date" 
-                   [(ngModel)]="task.dueDate" 
-                   class="form-control">
-        </div>
-
         <!-- Task section -->
-        <div class="form-group col-sm-6">
+        <div class="form-group col-sm-9">
           <label for="taskSection">Sekcja:</label>
           <input type="text"
                  id="taskSection" 
