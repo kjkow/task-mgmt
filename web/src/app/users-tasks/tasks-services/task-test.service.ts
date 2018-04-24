@@ -8,6 +8,13 @@ import { HttpClient } from '@angular/common/http';
 @Injectable()
 export class TaskTestService implements TaskService {
 
+  search(query: any) {
+    let foundResults: Task[] = [];
+    this.tasks.forEach(task => {
+      if(task.name.indexOf(query) >= 0) foundResults.push(task);
+    });
+    this.taskStream.next(foundResults);
+  }
   taskStream = new Subject<Task[]>();
   tasks: Task[] = [
     {id: 1, name: "Umyć naczynia", area: Obszar.W_NIEDALEKIEJ_PRZYSZLOSCI, userId: 123},
