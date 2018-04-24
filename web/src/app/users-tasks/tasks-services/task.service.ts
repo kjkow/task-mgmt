@@ -43,4 +43,6 @@ export abstract class TaskService {
    * @param projectId id of project which tasks should be published
    */
   abstract updateProjectsTasks(projectId);
+
+  abstract search(query);
 }

@@ -3,6 +3,7 @@ import { TaskService, Task } from './task.service';
 import { Obszar } from './obszar.enum';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import 'rxjs/add/operator/do';
 
 @Injectable()
 export class TaskRestService implements TaskService {
@@ -12,6 +13,14 @@ export class TaskRestService implements TaskService {
 
   constructor(private http:HttpClient) {
     this.updateUsersTasks();
+  }
+
+  search(query){
+    this.http.get<Array<Task>>(`http://localhost:4500/tasks/search?name=${query}`)
+    .subscribe(tasks => {
+      this.tasks = tasks;
+      this.taskStream.next(this.tasks);
+    })
   }
 
   save(task: Task) {
