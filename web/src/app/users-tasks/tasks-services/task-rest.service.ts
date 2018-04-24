@@ -15,12 +15,12 @@ export class TaskRestService implements TaskService {
     this.updateUsersTasks();
   }
 
-  search(query){
-    this.http.get<Array<Task>>(`http://localhost:4500/tasks/search?name=${query}`)
-    .subscribe(tasks => {
-      this.tasks = tasks;
-      this.taskStream.next(this.tasks);
-    })
+  search(query: any) {
+    let foundResults: Task[] = [];
+    this.tasks.forEach(task => {
+      if(task.name.indexOf(query) >= 0) foundResults.push(task);
+    });
+    this.taskStream.next(foundResults);
   }
 
   save(task: Task) {
