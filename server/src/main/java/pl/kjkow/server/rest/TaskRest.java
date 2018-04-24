@@ -43,6 +43,12 @@ public class TaskRest {
         }
     }
 
+    @GetMapping(value = "tasks/search{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody Iterable<Task> getTasksByName(@PathVariable String name){
+        return taskRepository.findByName(name);
+    }
+
     private Task validateAndAddTask(Task task){
         if(task.getSection() != null && task.getArea() != Area.MATERIALY_REFERENCYJNE)
             throw new TaskValidationException("Section is not allowed when task is outside of reference materials area");
