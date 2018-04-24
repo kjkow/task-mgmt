@@ -9,6 +9,8 @@ import pl.kjkow.server.model.TaskNotFoundException;
 import pl.kjkow.server.model.TaskValidationException;
 import pl.kjkow.server.repository.TaskRepository;
 
+import java.util.List;
+
 /**
  * Created by kamil on 2018-04-10.
  */
@@ -41,6 +43,13 @@ public class TaskRest {
         }else{
             throw new TaskNotFoundException(taskId);
         }
+    }
+
+    @GetMapping(value = "tasks/search{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody
+    List<Task> getTasksByName(@PathVariable String name){
+        return taskRepository.findByNameContaining(name);
     }
 
     private Task validateAndAddTask(Task task){
