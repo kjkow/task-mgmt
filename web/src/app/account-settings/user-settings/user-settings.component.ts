@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UsersService } from '../../sign-in/users.service';
 
 @Component({
   selector: 'user-settings',
@@ -8,13 +9,21 @@ import { Component, OnInit } from '@angular/core';
     <form>
       <div class="form-group row">
         <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
-        <div class="col-sm-10">
-          <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com">
-        </div>
+        <input type="text" 
+               readonly 
+               class="form-control-plaintext col-sm-10" 
+               id="staticEmail"
+               name="userEmail"
+               [(ngModel)]="user.email">
       </div>
       <div class="form-group">
         <label for="userName">Nazwa użytkownika</label>
-        <input id="userName" type="text" name="name" class="form-control" maxlength="20">
+        <input id="userName" 
+               type="text" 
+               name="name" 
+               class="form-control" 
+               [(ngModel)]="user.name"
+               maxlength="20">
       </div>
       <div class="form-group form-check">
         <input class="form-check-input" id="emailNotifications" type="checkbox" name="notifications">
@@ -40,9 +49,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserSettingsComponent implements OnInit {
 
-  constructor() { }
+  user = {
+    email: "",
+    name: ""
+  };
+
+  constructor(private usersService: UsersService) { }
 
   ngOnInit() {
+    this.user = this.usersService.getUserInfo();
   }
 
 }
