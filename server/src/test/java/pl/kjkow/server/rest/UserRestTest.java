@@ -52,8 +52,8 @@ public class UserRestTest {
         userList = new ArrayList<>();
 
         userRepository.deleteAll();
-        userList.add(userRepository.save(new User("John", "Doe", "abc@example.com")));
-        userList.add(userRepository.save(new User("Michelle", "Francis", email)));
+        userList.add(userRepository.save(new User("John Doe", "abc@example.com")));
+        userList.add(userRepository.save(new User("Michelle Francis", email)));
     }
 
     @Test
@@ -61,8 +61,7 @@ public class UserRestTest {
         mvc.perform(get("/users/" + email))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$.firstName", is(userList.get(1).getFirstName())))
-                .andExpect(jsonPath("$.lastName", is(userList.get(1).getLastName())))
+                .andExpect(jsonPath("$.name", is(userList.get(1).getName())))
                 .andExpect(jsonPath("$.email", is(userList.get(1).getEmail())));
 
     }
