@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../sign-in/users.service';
+import { User } from '../../sign-in/user';
 
 @Component({
   selector: 'user-settings',
@@ -26,14 +27,22 @@ import { UsersService } from '../../sign-in/users.service';
                maxlength="20">
       </div>
       <div class="form-group form-check">
-        <input class="form-check-input" id="emailNotifications" type="checkbox" name="notifications">
+        <input class="form-check-input" 
+               id="emailNotifications" 
+               type="checkbox" 
+               [(ngModel)]="user.notifications"
+               name="notifications">
         <label class="form-check-label" for="emailNotifications">Włączone powiadomienia e-mail</label>
       </div>
       <div class="form-group">
         <label for="daysBeforeNotify">Ile dni przed terminem wysłać powiadomienie</label>
-        <input id="daysBeforeNotify" type="number" name="daysNotify" class="form-control">
+        <input id="daysBeforeNotify" 
+               type="number" 
+               name="daysNotify" 
+               [(ngModel)]="user.daysBeforeDue"
+               class="form-control">
       </div>
-      <button type="submit" class="btn btn-primary">Zapisz</button>
+      <button type="submit" class="btn btn-primary" (click)="save()">Zapisz</button>
     </form>
   </div>
   `,
@@ -51,8 +60,14 @@ export class UserSettingsComponent implements OnInit {
 
   user = {
     email: "",
-    name: ""
+    name: "",
+    notifications: false,
+    daysBeforeDue: 0
   };
+
+  save(){
+    this.usersService.updateUserData(this.user);
+  }
 
   constructor(private usersService: UsersService) { }
 
