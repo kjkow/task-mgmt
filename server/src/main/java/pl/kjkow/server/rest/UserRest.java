@@ -27,4 +27,12 @@ public class UserRest {
     public @ResponseBody User addUser(@RequestBody User user) {
         return userRepository.save(user);
     }
+
+    @RequestMapping(value = "users/{userName}", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody User changeUserName(@RequestBody String email, @PathVariable("userName") String userName) {
+        User user = getUserByEmail(email);
+        user.setName(userName);
+        return userRepository.save(user);
+    }
 }
