@@ -10,6 +10,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
           <li class="nav-item "><a id="reference" (click)="select($event)" class="nav-link">Materiały referencyjne</a></li>
           <li class="nav-item "><a id="finnished"  (click)="select($event)" class="nav-link">Zadania ukończone</a></li>
           <li class="nav-item "><a id="projects"  (click)="select($event)" class="nav-link">Projekty</a></li>
+          <li class="nav-item "><a id="settings"  (click)="select($event)" class="nav-link">Ustawienia konta</a></li>
         </ul>
         <task-search></task-search>
       </div>  

@@ -20,6 +20,7 @@ export interface TaskSelection {
     <task-area (selected)="selection($event)"  *ngSwitchCase="'reference'" [obszar]="selectedArea"></task-area>
     <task-area (selected)="selection($event)"  *ngSwitchCase="'finnished'" [obszar]="selectedArea"></task-area>
     <projects-main (selectedStage)="selection($event)" *ngSwitchCase="'projects'"></projects-main>
+    <user-settings (selectedStage)="selection($event)" *ngSwitchCase="'settings'"></user-settings>
   </div>
   
   <task-form 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-user-settings',
+  selector: 'user-settings',
   template: `
     <p>
       user-settings works!
