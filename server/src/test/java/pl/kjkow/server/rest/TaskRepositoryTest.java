@@ -11,6 +11,8 @@ import pl.kjkow.server.model.Area;
 import pl.kjkow.server.model.Task;
 import pl.kjkow.server.repository.TaskRepository;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,5 +51,28 @@ public class TaskRepositoryTest {
 
         List<Task> found = taskRepository.findByNameContaining("Task");
         assertThat(found.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void deleteByFinnishedAtBeforeAndByArea(){
+        Calendar c= Calendar.getInstance();
+        c.add(Calendar.DAY_OF_MONTH, -31);
+        Date moreThanMonthAgo = c.getTime();
+
+        Task task = new Task();
+        task.setName("TaskOne");
+        task.setArea(Area.UKONCZONE);
+        task.setUserId(123);
+        task.setFinnished(moreThanMonthAgo);
+        entityManager.persist(task);
+        entityManager.flush();
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, -30);
+        Date thirtyDaysAgo = cal.getTime();
+
+        assertThat(taskRepository.findById(1L).isPresent());
+        taskRepository.deleteByFinnishedBeforeAndArea(thirtyDaysAgo, Area.UKONCZONE);
+        assertThat(!taskRepository.findById(1L).isPresent());
     }
 }
