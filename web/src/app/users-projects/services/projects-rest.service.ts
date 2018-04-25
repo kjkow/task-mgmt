@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ProjectsService, Project } from './projects.service';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { AppSettings } from '../../app-main/app-settings';
 
 @Injectable()
 export class ProjectsRestService implements ProjectsService {
@@ -20,21 +21,21 @@ export class ProjectsRestService implements ProjectsService {
   }
 
   modify(id: number, body){
-    this.http.post<Project>("http://localhost:4500/projedcts/update/" + id, body)
+    this.http.post<Project>(AppSettings.API_ENDPOINT + "projedcts/update/" + id, body)
     .subscribe(response =>{
       this.updateProjects();
     })
   }
 
   save(project: Project, body){
-    this.http.post<Project>("http://localhost:4500/projects/add", body)
+    this.http.post<Project>(AppSettings.API_ENDPOINT + "projects/add", body)
     .subscribe(response => {
       this.updateProjects();
     })
   }
 
   updateProjects() {
-    this.http.get<Array<Project>>("http://localhost:4500/projects/")
+    this.http.get<Array<Project>>(AppSettings.API_ENDPOINT + "projects/")
     .subscribe((response) =>{
       this.projects = response;
       this.projectStream.next(this.projects);

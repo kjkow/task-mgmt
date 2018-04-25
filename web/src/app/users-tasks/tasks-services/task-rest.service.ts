@@ -4,6 +4,7 @@ import { Obszar } from './obszar.enum';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/do';
+import { AppSettings } from '../../app-main/app-settings';
 
 @Injectable()
 export class TaskRestService implements TaskService {
@@ -31,7 +32,7 @@ export class TaskRestService implements TaskService {
 
   saveTask(task: Task, body){
     console.log(body);
-    this.http.post<Task>("http://localhost:4500/tasks/add", body).subscribe(response => {
+    this.http.post<Task>(AppSettings.API_ENDPOINT + "tasks/add", body).subscribe(response => {
       console.log(response);
       this.updateUsersTasks();
     })
@@ -39,7 +40,7 @@ export class TaskRestService implements TaskService {
 
   modifyTask(taskId, body){
     console.log(body);
-    this.http.post<Task>("http://localhost:4500/tasks/update/" + taskId, body).subscribe(response =>{
+    this.http.post<Task>(AppSettings.API_ENDPOINT + "tasks/update/" + taskId, body).subscribe(response =>{
       console.log(response);
       this.updateUsersTasks();
     })
@@ -70,7 +71,7 @@ export class TaskRestService implements TaskService {
   }
 
   updateUsersTasks() {
-    this.http.get<Array<Task>>("http://localhost:4500/tasks/")
+    this.http.get<Array<Task>>(AppSettings.API_ENDPOINT + "tasks/")
     .subscribe((response) =>{
       this.tasks = response;
       this.taskStream.next(this.tasks);
