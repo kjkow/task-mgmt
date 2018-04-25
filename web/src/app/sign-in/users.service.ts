@@ -18,6 +18,8 @@ export abstract class UsersService {
    */
   abstract addUser(user: User): Observable<User>
 
+  abstract updateUserData(user);
+
   
   /** session methods */
 
