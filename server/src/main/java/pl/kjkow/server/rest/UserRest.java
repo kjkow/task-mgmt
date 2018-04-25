@@ -30,9 +30,11 @@ public class UserRest {
 
     @RequestMapping(value = "users/{userName}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody User changeUserName(@RequestBody String email, @PathVariable("userName") String userName) {
-        User user = getUserByEmail(email);
-        user.setName(userName);
-        return userRepository.save(user);
+    public @ResponseBody User updateUserData(@RequestBody User user, @PathVariable("userName") String userName) {
+        User recived = userRepository.findByEmail(user.getEmail()).orElseThrow(() -> new UserNotFoundException(user.getEmail()));
+        recived.setName(user.getName());
+        recived.setNotifications(user.isNotifications());
+        recived.setDaysBeforeDue(user.getDaysBeforeDue());
+        return userRepository.save(recived);
     }
 }
