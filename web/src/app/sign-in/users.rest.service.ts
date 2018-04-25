@@ -12,6 +12,9 @@ import { GoogleLoginProvider } from "angular4-social-login";
 @Injectable()
 export class UsersRestService implements UsersService {
 
+  userEmail;
+  userName;
+
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   getUser(user: User): Observable<User>{
@@ -26,12 +29,26 @@ export class UsersRestService implements UsersService {
     return this.http.post<User>("http://localhost:4500/users/add", body);
   }
 
+  changeUserName(name){
+    let body = {"email": this.userEmail};
+    this.http.post<User>(`http://localhost:4500/users/${this.userName}`, body).subscribe(val => {
+      this.userName = val.name;
+    })
+  }
+
   signIn(){
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(val => {
+      this.userEmail = val.email;
+      this.getUser(val).subscribe(user => {
+        this.userName = user.name;
+      })
+    })
   }
 
   signOut(){
-    this.authService.signOut();
+    this.authService.signOut().then(val => {
+      this.userEmail = "";
+    })
   }
 
   getAuthenticationStateStream(): Observable<User>{
