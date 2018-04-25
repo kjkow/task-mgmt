@@ -18,6 +18,7 @@ import { ProjectFormComponent } from '../users-projects/project-form/project-for
 import { ProjectsStagesComponent } from '../users-projects/projects-stages/projects-stages.component';
 import { ProjectsRestService } from '../users-projects/services/projects-rest.service';
 import { TaskSearchComponent } from './task-search/task-search.component';
+import { AccountSettingsModule } from '../account-settings/account-settings.module';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { TaskSearchComponent } from './task-search/task-search.component';
     ProjectsListComponent,
     ProjectFormComponent,
     ProjectsStagesComponent,
-    TaskSearchComponent
+    TaskSearchComponent,
+    AccountSettingsModule
   ],
   exports: [UsersTasksComponent],
   bootstrap: [UsersTasksComponent]
