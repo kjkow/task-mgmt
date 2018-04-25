@@ -18,23 +18,9 @@ export class UsersRestService implements UsersService {
     return this.http.get<User>("http://localhost:4500/users/" + user.email);   //TODO: localhost do wyciagniecia do konfiguracji
   }
 
-  addUser(user: User){
-    let userName: String = user.name;
-
-    let firstName;
-    let lastName;
-
-    if(userName.split(" ").length > 1){
-      firstName = userName.split(" ")[0];
-      lastName = userName.split(" ")[1];
-    } else {
-      firstName = userName;
-      lastName = "";
-    }
-    
+  addUser(user: User){    
     let body = {
-      "firstName": firstName,
-      "lastName": lastName,
+      "name": user.name,
       "email": user.email
     }
     return this.http.post<User>("http://localhost:4500/users/add", body);
