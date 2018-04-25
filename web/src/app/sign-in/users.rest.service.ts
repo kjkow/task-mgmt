@@ -17,8 +17,19 @@ export class UsersRestService implements UsersService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
+  getUserInfo(){
+    return {
+      email: this.userEmail,
+      name: this.userName
+    }
+  }
+
   getUser(user: User): Observable<User>{
-    return this.http.get<User>("http://localhost:4500/users/" + user.email);   //TODO: localhost do wyciagniecia do konfiguracji
+    //TODO: localhost do wyciagniecia do konfiguracji
+    return this.http.get<User>("http://localhost:4500/users/" + user.email).do(value => {
+      this.userEmail = value.email;
+      this.userName = value.name;
+    })
   }
 
   addUser(user: User){    

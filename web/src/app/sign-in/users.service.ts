@@ -26,4 +26,6 @@ export abstract class UsersService {
   abstract signOut();
 
   abstract getAuthenticationStateStream(): Observable<User>
+
+  abstract getUserInfo();
 }
