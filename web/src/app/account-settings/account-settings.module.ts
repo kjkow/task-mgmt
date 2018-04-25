@@ -7,6 +7,7 @@ import { UserSettingsComponent } from './user-settings/user-settings.component';
     CommonModule
   ],
   exports: [UserSettingsComponent],
-  declarations: [UserSettingsComponent]
+  declarations: [UserSettingsComponent],
+  bootstrap: [UserSettingsComponent]
 })
 export class AccountSettingsModule { }
