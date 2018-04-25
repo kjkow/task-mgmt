@@ -18,6 +18,8 @@ export abstract class UsersService {
    */
   abstract addUser(user: User): Observable<User>
 
+  abstract updateUserData(user);
+
   
   /** session methods */
 
@@ -26,4 +28,6 @@ export abstract class UsersService {
   abstract signOut();
 
   abstract getAuthenticationStateStream(): Observable<User>
+
+  abstract getUserInfo();
 }

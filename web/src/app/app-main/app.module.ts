@@ -10,6 +10,7 @@ import { UsersTasksModule } from '../users-tasks/users-tasks.module';
 import { UsersService } from '../sign-in/users.service';
 import { UsersRestService } from '../sign-in/users.rest.service';
 import { UsersMockService } from '../sign-in/users-mock.service';
+import { AccountSettingsModule } from '../account-settings/account-settings.module';
 
 let config = new AuthServiceConfig([
   {

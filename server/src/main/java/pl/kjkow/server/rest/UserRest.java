@@ -27,4 +27,14 @@ public class UserRest {
     public @ResponseBody User addUser(@RequestBody User user) {
         return userRepository.save(user);
     }
+
+    @RequestMapping(value = "users/{userName}", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody User updateUserData(@RequestBody User user, @PathVariable("userName") String userName) {
+        User recived = userRepository.findByEmail(user.getEmail()).orElseThrow(() -> new UserNotFoundException(user.getEmail()));
+        recived.setName(user.getName());
+        recived.setNotifications(user.isNotifications());
+        recived.setDaysBeforeDue(user.getDaysBeforeDue());
+        return userRepository.save(recived);
+    }
 }
