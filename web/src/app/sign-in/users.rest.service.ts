@@ -5,6 +5,7 @@ import { UsersService } from './users.service';
 import { Observable } from 'rxjs';
 import { AuthService } from "angular4-social-login";
 import { GoogleLoginProvider } from "angular4-social-login";
+import { AppSettings } from '../app-main/app-settings';
 
 /**
  * Calls server api, uses google authentication with AuthService from angular4-social-login library
@@ -12,24 +13,24 @@ import { GoogleLoginProvider } from "angular4-social-login";
 @Injectable()
 export class UsersRestService implements UsersService {
 
-  userEmail;
-  userName;
+  userLocalCopy: User = new User();
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   getUserInfo(){
-    return {
-      email: this.userEmail,
-      name: this.userName
-    }
+    return this.userLocalCopy;
+  }
+
+  mapUserToLocal(user: User){
+    this.userLocalCopy.email = user.email;
+    this.userLocalCopy.name = user.name;
+    this.userLocalCopy.notifications = user.notifications;
+    this.userLocalCopy.daysBeforeDue = user.daysBeforeDue;
   }
 
   getUser(user: User): Observable<User>{
-    //TODO: localhost do wyciagniecia do konfiguracji
-    return this.http.get<User>("http://localhost:4500/users/" + user.email).do(value => {
-      this.userEmail = value.email;
-      this.userName = value.name;
-    })
+    return this.http.get<User>(AppSettings.API_ENDPOINT + "users/" + user.email)
+                    .do(value => this.mapUserToLocal(value));
   }
 
   addUser(user: User){    
@@ -37,28 +38,35 @@ export class UsersRestService implements UsersService {
       "name": user.name,
       "email": user.email
     }
-    return this.http.post<User>("http://localhost:4500/users/add", body);
+    return this.http.post<User>(AppSettings.API_ENDPOINT + "users/add", body)
+                    .do(value => this.mapUserToLocal(value));
   }
 
-  changeUserName(name){
-    let body = {"email": this.userEmail};
-    this.http.post<User>(`http://localhost:4500/users/${this.userName}`, body).subscribe(val => {
-      this.userName = val.name;
-    })
+  updateUserData(user: User){
+    let body = {
+      "email": user.email,
+      "name": user.name,
+      "notifications": user.notifications,
+      "daysBeforeDue": user.daysBeforeDue
+    };
+
+    this.http.post<User>(AppSettings.API_ENDPOINT + `users/${this.userLocalCopy.name}`, body)
+              .subscribe(value => this.mapUserToLocal(value));
   }
 
   signIn(){
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(val => {
-      this.userEmail = val.email;
-      this.getUser(val).subscribe(user => {
-        this.userName = user.name;
-      })
+      this.userLocalCopy.email = val.email;
+      this.getUser(val).subscribe(value => this.mapUserToLocal(value))
     })
   }
 
   signOut(){
     this.authService.signOut().then(val => {
-      this.userEmail = "";
+      this.userLocalCopy.email = "";
+      this.userLocalCopy.name = "";
+      this.userLocalCopy.notifications = null;
+      this.userLocalCopy.daysBeforeDue = null;
     })
   }
 
