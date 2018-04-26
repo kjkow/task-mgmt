@@ -128,7 +128,7 @@ export class TaskFormComponent implements OnInit {
     if(!this.isFrequencySet() && !this.isFrequencyTypeSet()) return true;
     if(!this.isFrequencySet() && this.isFrequencyTypeSet()) return false;
     if(this.isFrequencySet() && !this.isFrequencyTypeSet()) return false;
-  }
+  }//TODO: error handle
 
   areas = Obszar;
   projects;
