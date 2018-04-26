@@ -1,6 +1,7 @@
 package pl.kjkow.server.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.kjkow.server.model.Area;
@@ -20,6 +21,9 @@ public class TaskRest {
     @Autowired
     private TaskRepository taskRepository;
 
+    @Value("${task.limit}")
+    private int taskLimit;
+
     @RequestMapping(value = "tasks/add", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
@@ -30,7 +34,7 @@ public class TaskRest {
     @GetMapping(value = "/tasks/")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    Iterable<Task> getUserByEmail(){
+    Iterable<Task> getAllTasks(){
         return taskRepository.findAll();
     }
 
@@ -53,8 +57,18 @@ public class TaskRest {
     }
 
     private Task validateAndAddTask(Task task){
-        if(task.getSection() != null && task.getArea() != Area.MATERIALY_REFERENCYJNE)
+        if(sectionIsValidFor(task))
             throw new TaskValidationException("Section is not allowed when task is outside of reference materials area");
+        if(taskLimitInAreaReached(task))
+            throw new TaskValidationException("Task limit reached in section " + task.getArea().getLabel());
         return taskRepository.save(task);
+    }
+
+    private boolean taskLimitInAreaReached(Task task){
+        return taskRepository.countByAreaAndUserId(task.getArea(), task.getUserId()) > taskLimit - 1;
+    }
+
+    private boolean sectionIsValidFor(Task task){
+        return task.getSection() != null && task.getArea() != Area.MATERIALY_REFERENCYJNE;
     }
 }
