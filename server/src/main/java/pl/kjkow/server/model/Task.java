@@ -1,5 +1,7 @@
 package pl.kjkow.server.model;
 
+import org.springframework.data.annotation.CreatedDate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,7 +10,8 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.sql.Date;
+import java.util.Date;
+
 
 /**
  * Created by kamil on 2018-04-10.
@@ -39,8 +42,29 @@ public class Task {
     private int projectId;
     private boolean finnishedProjectStage;
     private int ordinalNumber;
+    @CreatedDate
+    private Date created;
+    private Date finnished;
 
-    public Task(){}
+    public Task(){
+        created = new Date();
+    }
+
+    public Date getFinnished() {
+        return finnished;
+    }
+
+    public void setFinnished(Date finnished) {
+        this.finnished = finnished;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
 
     public Long getId() {
         return id;
