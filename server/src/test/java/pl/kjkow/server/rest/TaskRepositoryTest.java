@@ -35,6 +35,8 @@ public class TaskRepositoryTest {
 
     private Task testTaskOne;
     private Task testTaskTwo;
+    private Task testTaskThree;
+    private Task testTaskFour;
 
     @Before
     public void init(){
@@ -50,6 +52,18 @@ public class TaskRepositoryTest {
         testTaskTwo.setUserId(123);
         entityManager.persist(testTaskTwo);
 
+        testTaskThree = new Task();
+        testTaskThree.setName("Test");
+        testTaskThree.setArea(Area.MOZE_KIEDYS);
+        testTaskThree.setUserId(124);
+        entityManager.persist(testTaskThree);
+
+        testTaskFour = new Task();
+        testTaskFour.setName("Test");
+        testTaskFour.setArea(Area.OBOWIAZKI);
+        testTaskFour.setUserId(123);
+        entityManager.persist(testTaskFour);
+
         entityManager.flush();
     }
 
@@ -57,6 +71,8 @@ public class TaskRepositoryTest {
     public void clear(){
         entityManager.remove(testTaskOne);
         entityManager.remove(testTaskTwo);
+        entityManager.remove(testTaskThree);
+        entityManager.remove(testTaskFour);
 
         entityManager.flush();
     }
@@ -82,5 +98,12 @@ public class TaskRepositoryTest {
 
         taskRepository.deleteByFinnishedBeforeAndArea(thirtyDaysAgo, Area.UKONCZONE);
         assertThat(!taskRepository.findById(1L).isPresent());
+    }
+
+    @Test
+    public void countByAreaAndUserId(){
+        long tasksFound = taskRepository.countByAreaAndUserId(Area.MOZE_KIEDYS, 123);
+        assertThat(tasksFound).isEqualTo(2);
+
     }
 }
