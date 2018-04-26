@@ -10,6 +10,7 @@ import pl.kjkow.server.model.TaskNotFoundException;
 import pl.kjkow.server.model.TaskValidationException;
 import pl.kjkow.server.repository.TaskRepository;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -61,8 +62,17 @@ public class TaskRest {
             throw new TaskValidationException("Section is not allowed when task is outside of reference materials area");
         if(taskLimitInAreaReached(task))
             throw new TaskValidationException("Task limit reached in section " + task.getArea().getLabel());
+        if(!frequencyTypeValid(task)){
+            throw new TaskValidationException(task.getFrequencyType() + " is not allowed as tasks frequency type");
+        }
         return taskRepository.save(task);
     }
+
+    private boolean frequencyTypeValid(Task task){
+        String taskFrequency = task.getFrequencyType();
+        List<String> allowed = Arrays.asList("", "Dzienna", "Miesięczna");
+        return allowed.contains(taskFrequency);
+    } //TODO:test, enum
 
     private boolean taskLimitInAreaReached(Task task){
         return taskRepository.countByAreaAndUserId(task.getArea(), task.getUserId()) > taskLimit - 1;
