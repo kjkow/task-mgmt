@@ -80,7 +80,7 @@ import { ProjectsService } from '../../users-projects/services/projects.service'
                  [(ngModel)]="task.recurrenceFrequency"
                  id="taskRecurrenceFrequency" 
                  class="form-control"
-                 [class.text-danger]="task.recurrenceFrequency < 1">
+                 [class.text-danger]="task.recurrenceFrequency < 0">
         </div>
 
         <!-- Task frequency type -->
@@ -100,7 +100,7 @@ import { ProjectsService } from '../../users-projects/services/projects.service'
       </div>
       
       <div class="form-group">
-        <button class="btn btn-success float-right" (click)="save()">Zapisz</button>
+        <button [disabled]="!frequencyValid()" class="btn btn-success float-right" (click)="save()">Zapisz</button>
         <button class="btn btn-success float-left" (click)="finnish()">Wykonaj</button>
       </div>
 
@@ -114,7 +114,22 @@ import { ProjectsService } from '../../users-projects/services/projects.service'
   `]
 })
 export class TaskFormComponent implements OnInit {
-  
+
+  isFrequencySet(): boolean{
+    return this.task.recurrenceFrequency > 0;
+  }
+
+  isFrequencyTypeSet(): boolean{
+    return this.task.frequencyType != "";
+  }
+
+  frequencyValid(): boolean{
+    if(this.isFrequencySet() && this.isFrequencyTypeSet()) return true;
+    if(!this.isFrequencySet() && !this.isFrequencyTypeSet()) return true;
+    if(!this.isFrequencySet() && this.isFrequencyTypeSet()) return false;
+    if(this.isFrequencySet() && !this.isFrequencyTypeSet()) return false;
+  }
+
   areas = Obszar;
   projects;
   
