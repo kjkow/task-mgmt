@@ -1,5 +1,7 @@
 package pl.kjkow.server.rest;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,24 +33,36 @@ public class TaskRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
 
+    private Task testTaskOne;
+    private Task testTaskTwo;
+
+    @Before
+    public void init(){
+        testTaskOne = new Task();
+        testTaskOne.setName("TaskOne");
+        testTaskOne.setArea(Area.MOZE_KIEDYS);
+        testTaskOne.setUserId(123);
+        entityManager.persist(testTaskOne);
+
+        testTaskTwo = new Task();
+        testTaskTwo.setName("Other");
+        testTaskTwo.setArea(Area.MOZE_KIEDYS);
+        testTaskTwo.setUserId(123);
+        entityManager.persist(testTaskTwo);
+
+        entityManager.flush();
+    }
+
+    @After
+    public void clear(){
+        entityManager.remove(testTaskOne);
+        entityManager.remove(testTaskTwo);
+
+        entityManager.flush();
+    }
+
     @Test
     public void findTasksByNameContaining(){
-        Task task = new Task();
-        task.setName("TaskOne");
-        task.setArea(Area.MOZE_KIEDYS);
-        task.setUserId(123);
-        entityManager.persist(task);
-        Task task2 = new Task();
-        task2.setName("Other");
-        task2.setArea(Area.MOZE_KIEDYS);
-        task2.setUserId(123);
-        entityManager.persist(task2);
-        entityManager.flush();
-
-
-        Iterable<Task> foundAll = taskRepository.findAll();
-        foundAll.forEach(t -> System.out.println(t.getName()));
-
         List<Task> found = taskRepository.findByNameContaining("Task");
         assertThat(found.size()).isEqualTo(1);
     }
@@ -58,20 +72,14 @@ public class TaskRepositoryTest {
         Calendar c= Calendar.getInstance();
         c.add(Calendar.DAY_OF_MONTH, -31);
         Date moreThanMonthAgo = c.getTime();
-
-        Task task = new Task();
-        task.setName("TaskOne");
-        task.setArea(Area.UKONCZONE);
-        task.setUserId(123);
-        task.setFinnished(moreThanMonthAgo);
-        entityManager.persist(task);
-        entityManager.flush();
+        testTaskOne.setFinnished(moreThanMonthAgo);
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, -30);
         Date thirtyDaysAgo = cal.getTime();
 
         assertThat(taskRepository.findById(1L).isPresent());
+
         taskRepository.deleteByFinnishedBeforeAndArea(thirtyDaysAgo, Area.UKONCZONE);
         assertThat(!taskRepository.findById(1L).isPresent());
     }
