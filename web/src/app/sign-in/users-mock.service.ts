@@ -7,6 +7,12 @@ import { User } from './user';
 export class UsersMockService implements UsersService {
  
 
+  updateUserData(user: any) {
+    throw new Error("Method not implemented.");
+  }
+  getUserInfo() {
+    throw new Error("Method not implemented.");
+  }
   constructor() { }
 
   users: Array<User> = [];

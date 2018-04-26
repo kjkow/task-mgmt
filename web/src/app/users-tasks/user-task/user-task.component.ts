@@ -5,7 +5,10 @@ import { Obszar } from '../tasks-services/obszar.enum';
 @Component({
   selector: 'user-task',
   template: `
-    <div class="card" (click)="onSelected()">
+    <div class="card mouse-pointer" 
+         [dragDirective]='task' 
+         (click)="onSelected()" 
+         [dragHightlight]="'highlight'">
       <div class="card-body userTask">
         <span class="card-title hideOverflow">{{task.name}}</span>
         <p *ngIf="task.termin" class="card-text">{{task.termin | date:'yyyy-MM-dd'}}</p>
@@ -25,6 +28,12 @@ import { Obszar } from '../tasks-services/obszar.enum';
       width:100%;
       display:block;
     }
+    .mouse-pointer{
+      cursor: pointer;
+    }
+    .highlight{
+      border:solid 1px #0d0;
+    }
   `]
 })
 export class UserTaskComponent implements OnInit {
@@ -40,5 +49,5 @@ export class UserTaskComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  
 }
