@@ -86,10 +86,9 @@ import { ProjectsService } from '../../users-projects/services/projects.service'
         <!-- Task frequency type -->
         <div class="form-group col-sm-6">
           <label for="taskFrequencyType">Typ częstotliwości:</label>
-          <input type="text" 
-                 [(ngModel)]="task.frequencyType"
-                 id="taskFrequencyType" 
-                 class="form-control">
+          <select id="taskFrequencyType" [(ngModel)]="task.frequencyType" class="form-control" name="frequencyType">
+            <option *ngFor="let option of ['', 'Dzienna', 'Miesięczna']" [value]="option">{{option}}</option>
+          </select>       
         </div>
       </div>
 
