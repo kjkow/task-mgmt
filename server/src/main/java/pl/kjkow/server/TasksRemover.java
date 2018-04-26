@@ -24,7 +24,7 @@ public class TasksRemover {
     @Autowired
     private TaskRepository taskRepository;
 
-    @Scheduled(cron = "0 0 3 1 * *") //pierwszego dnia każdego miesiąca o 3 w nocy
+    @Scheduled(cron = "0 0 3 * * *") //codziennie o 3 w nocy
     public void removeFinnishedTasksOlderThanMonth() {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, -30);
