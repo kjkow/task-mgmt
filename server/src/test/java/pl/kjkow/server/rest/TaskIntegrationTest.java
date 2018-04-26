@@ -3,6 +3,7 @@ package pl.kjkow.server.rest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,9 @@ public class TaskIntegrationTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
+
+    @Value("${task.limit}")
+    private int taskLimit;
 
     @Test
     public void saveTask() throws Exception {
@@ -71,6 +75,24 @@ public class TaskIntegrationTest {
         task.setName("name");
         task.setSection("sekcja");
 
+        ResponseEntity<Task> responseEntity = restTemplate.postForEntity("/tasks/add", task, Task.class);
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    @Test
+    public void tasksInAreaLimitReached(){
+        for (int i = 0; i < taskLimit; i++) {
+            Task task = new Task();
+            task.setUserId(123);
+            task.setArea(Area.OBOWIAZKI);
+            task.setName("Task" + i);
+            restTemplate.postForEntity("/tasks/add", task, Task.class);
+        }
+
+        Task task = new Task();
+        task.setUserId(123);
+        task.setArea(Area.OBOWIAZKI);
+        task.setName("TaskOverload");
         ResponseEntity<Task> responseEntity = restTemplate.postForEntity("/tasks/add", task, Task.class);
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }

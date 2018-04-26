@@ -17,4 +17,6 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
     List<Task> findByNameContaining(String name);
 
     void deleteByFinnishedBeforeAndArea(Date expiryDate, Area area);
+
+    long countByAreaAndUserId(Area area, int userId);
 }
