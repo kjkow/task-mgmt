@@ -18,8 +18,10 @@ import { TaskSelection } from '../tasks-main/tasks-main.component';
     </div>
 
     <user-task 
-      class="col-sm-4 mouse-pointer" 
+      class="col-sm-4" 
       *ngFor="let task of tasksInArea | async"
+      
+      
       (onSelectedOut)="onSelecetedModify($event)"
       [task]="task">
     </user-task>
@@ -30,6 +32,7 @@ import { TaskSelection } from '../tasks-main/tasks-main.component';
   .mouse-pointer{
     cursor: pointer;
   }
+
   `]
 })
 export class TaskAreaComponent implements OnInit {
