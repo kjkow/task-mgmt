@@ -99,11 +99,37 @@ public class TaskIntegrationTest {
 
     //TODO: testy walidacji docelowo mają być w klsie testów usługi a nie integracyjnej
     @Test
-    public void taskFrequencyInvalid(){
+    public void frequencyTypeValidation(){
         Task task = new Task("Task", Area.MOZE_KIEDYS, 123);
         task.setRecurrenceFrequency(1);
         task.setFrequencyType("wrong frequency type");
         ResponseEntity<Task> responseEntity = restTemplate.postForEntity("/tasks/add", task, Task.class);
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
+
+    @Test
+    public void taskFrequencyValidationSetFrequency(){
+        Task task = new Task("Task", Area.MOZE_KIEDYS, 123);
+        task.setRecurrenceFrequency(1);
+        ResponseEntity<Task> responseEntity = restTemplate.postForEntity("/tasks/add", task, Task.class);
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    @Test
+    public void taskFrequencyValidationSetFrequencyType(){
+        Task task = new Task("Task", Area.MOZE_KIEDYS, 123);
+        task.setFrequencyType("Dzienna");
+        ResponseEntity<Task> responseEntity = restTemplate.postForEntity("/tasks/add", task, Task.class);
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    @Test
+    public void frequencyProperlySet(){
+        Task task = new Task("Task", Area.OBOWIAZKI, 123);
+        task.setFrequencyType("Dzienna");
+        task.setRecurrenceFrequency(1);
+        ResponseEntity<Task> responseEntity = restTemplate.postForEntity("/tasks/add", task, Task.class);
+        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+    }
+
 }
