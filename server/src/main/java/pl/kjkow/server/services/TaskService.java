@@ -25,7 +25,8 @@ public class TaskService {
     private int taskLimit;
 
     public Task save(Task task){
-        return validateAndAddTask(task);
+        validateTask(task);
+        return taskRepository.save(task);
     }
 
     public Iterable<Task> findAll(){
@@ -44,7 +45,7 @@ public class TaskService {
         }
     }
 
-    private Task validateAndAddTask(Task task){
+    private void validateTask(Task task){
         if(sectionIsValidFor(task))
             throw new TaskValidationException("Section is not allowed when task is outside of reference materials area");
         if(taskLimitInAreaReached(task))
@@ -52,8 +53,21 @@ public class TaskService {
         if(!frequencyTypeValid(task)){
             throw new TaskValidationException(task.getFrequencyType() + " is not allowed as tasks frequency type");
         }
-        return taskRepository.save(task);
+        if(!taskFrequencyValid(task)){
+            throw new TaskValidationException("If one of the frequency options is selected, other must be as well. " +
+                    "Frequency type:" + task.getFrequencyType() + ". Frequency reccurence: " + task.getRecurrenceFrequency());
+        }
     }
+
+    private boolean taskFrequencyValid(Task task){
+        if((task.getFrequencyType() != null || (task.getFrequencyType() != null && !task.getFrequencyType().equals(""))) && task.getRecurrenceFrequency() <= 0){
+            return false;
+        }
+        if(task.getRecurrenceFrequency() > 0 && (task.getFrequencyType() == null || (task.getFrequencyType() != null &&task.getFrequencyType().equals("")))){
+            return false;
+        }
+        return true;
+    }//TODO: testy uslugi, w tym tej metody
 
     private boolean frequencyTypeValid(Task task){
         String taskFrequency = task.getFrequencyType();
