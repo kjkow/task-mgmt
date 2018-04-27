@@ -125,7 +125,7 @@ public class TaskIntegrationTest {
 
     @Test
     public void frequencyProperlySet(){
-        Task task = new Task("Task", Area.OBOWIAZKI, 123);
+        Task task = new Task("Task", Area.W_PIERWSZEJ_CHWILI, 123);
         task.setFrequencyType("Dzienna");
         task.setRecurrenceFrequency(1);
         ResponseEntity<Task> responseEntity = restTemplate.postForEntity("/tasks/add", task, Task.class);
