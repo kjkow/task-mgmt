@@ -9,7 +9,9 @@ import pl.kjkow.server.model.Task;
 import pl.kjkow.server.model.TaskNotFoundException;
 import pl.kjkow.server.model.TaskValidationException;
 import pl.kjkow.server.repository.TaskRepository;
+import pl.kjkow.server.services.TaskService;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,56 +21,33 @@ import java.util.List;
 public class TaskRest {
 
     @Autowired
-    private TaskRepository taskRepository;
-
-    @Value("${task.limit}")
-    private int taskLimit;
+    private TaskService taskService;
 
     @RequestMapping(value = "tasks/add", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
     Task addTask(@RequestBody Task task) {
-        return validateAndAddTask(task);
+        return taskService.save(task);
     }
 
     @GetMapping(value = "/tasks/")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     Iterable<Task> getAllTasks(){
-        return taskRepository.findAll();
+        return taskService.findAll();
     }
 
     @RequestMapping(value = "tasks/update/{taskId}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     Task updateTask(@PathVariable String taskId, @RequestBody Task task){
-        if(taskRepository.existsById(Long.valueOf(taskId))){
-            return validateAndAddTask(task);
-        }else{
-            throw new TaskNotFoundException(taskId);
-        }
+        return taskService.updateTask(taskId, task);
     }
 
     @GetMapping(value = "tasks/search{name}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     List<Task> getTasksByName(@PathVariable String name){
-        return taskRepository.findByNameContaining(name);
-    }
-
-    private Task validateAndAddTask(Task task){
-        if(sectionIsValidFor(task))
-            throw new TaskValidationException("Section is not allowed when task is outside of reference materials area");
-        if(taskLimitInAreaReached(task))
-            throw new TaskValidationException("Task limit reached in section " + task.getArea().getLabel());
-        return taskRepository.save(task);
-    }
-
-    private boolean taskLimitInAreaReached(Task task){
-        return taskRepository.countByAreaAndUserId(task.getArea(), task.getUserId()) > taskLimit - 1;
-    }
-
-    private boolean sectionIsValidFor(Task task){
-        return task.getSection() != null && task.getArea() != Area.MATERIALY_REFERENCYJNE;
+        return taskService.findByNameContaining(name);
     }
 }

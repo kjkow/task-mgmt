@@ -46,6 +46,13 @@ public class Task {
     private Date created;
     private Date finnished;
 
+    public Task(String name, Area area, int userId){
+        this();
+        this.name = name;
+        this.area = area;
+        this.userId = userId;
+    }
+
     public Task(){
         created = new Date();
     }
