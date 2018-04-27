@@ -96,4 +96,14 @@ public class TaskIntegrationTest {
         ResponseEntity<Task> responseEntity = restTemplate.postForEntity("/tasks/add", task, Task.class);
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
+
+    //TODO: testy walidacji docelowo mają być w klsie testów usługi a nie integracyjnej
+    @Test
+    public void taskFrequencyInvalid(){
+        Task task = new Task("Task", Area.MOZE_KIEDYS, 123);
+        task.setRecurrenceFrequency(1);
+        task.setFrequencyType("wrong frequency type");
+        ResponseEntity<Task> responseEntity = restTemplate.postForEntity("/tasks/add", task, Task.class);
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
 }
