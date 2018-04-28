@@ -18,10 +18,8 @@ import { TaskSelection } from '../tasks-main/tasks-main.component';
     </div>
 
     <user-task 
-      class="col-sm-4" 
+      class="col-sm-4 mouse-pointer" 
       *ngFor="let task of tasksInArea | async"
-      
-      
       (onSelectedOut)="onSelecetedModify($event)"
       [task]="task">
     </user-task>

@@ -20,18 +20,16 @@ import { ProjectsRestService } from '../users-projects/services/projects-rest.se
 import { TaskSearchComponent } from './task-search/task-search.component';
 import { AccountSettingsModule } from '../account-settings/account-settings.module';
 import { UserSettingsComponent } from '../account-settings/user-settings/user-settings.component';
-import { DragDropDirectiveModule} from "angular4-drag-drop";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    AccountSettingsModule,
-    DragDropDirectiveModule
+    AccountSettingsModule
   ],
   
   providers: [
-    {provide: TaskService, useClass: TaskTestService},
+    {provide: TaskService, useClass: TaskRestService},
     {provide: ProjectsService, useClass: ProjectsRestService}
   ],
   declarations: [
