@@ -5,7 +5,7 @@ import { TaskSelection } from '../tasks-main/tasks-main.component';
 @Component({
   selector: 'task-areas',
   template: `
-  <div class="contents">
+  <div class="contents" dropDirective (dropEvent)="addDropItem($event)">
     <task-area 
       class="col-md-6 quarter card"  
       *ngFor="let o of viewedTaskAreas"
@@ -44,6 +44,11 @@ export class TaskAreasComponent implements OnInit {
   selectedTask(selection: TaskSelection){
     this.selected.emit(selection);
   }
+
+  addDropItem(event){
+    console.log(event);
+  }
+
 
   ngOnInit() {
   }
