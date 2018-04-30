@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Task } from '../../users-tasks/tasks-services/task.service';
 
 export interface Project {
   id?: number;
@@ -16,5 +15,7 @@ export abstract class ProjectsService {
   abstract getProjectsStream(): Observable<Array<Project>>;
 
   abstract saveProject(project: Project);
+
+  abstract updateProjects();
 
 }
