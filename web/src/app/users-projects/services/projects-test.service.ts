@@ -12,7 +12,8 @@ export class ProjectsTestService implements ProjectsService {
   projects: Project[] = [
     {id: this.projectId++, name: "Projekt 1", finnished: false, ordered: false},
     {id: this.projectId++, name: "Projekt 2", finnished: false, ordered: true},
-    {id: this.projectId++, name: "Projekt 3", finnished: false, ordered: false, description: "Projekt trzeci"}
+    {id: this.projectId++, name: "Projekt 3", finnished: false, ordered: false, description: "Projekt trzeci"},
+    {id: this.projectId++, name: "Projekt 4", finnished: true, ordered: false},
   ];
 
   getProjectsStream(): Observable<Project[]> {

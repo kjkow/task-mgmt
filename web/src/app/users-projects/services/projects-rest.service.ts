@@ -21,7 +21,7 @@ export class ProjectsRestService implements ProjectsService {
   }
 
   modify(id: number, body){
-    this.http.post<Project>(AppSettings.API_ENDPOINT + "projedcts/update/" + id, body)
+    this.http.post<Project>(AppSettings.API_ENDPOINT + "projects/update/" + id, body)
     .subscribe(response =>{
       this.updateProjects();
     })
