@@ -5,7 +5,7 @@ import { Obszar } from '../tasks-services/obszar.enum';
 @Component({
   selector: 'user-task',
   template: `
-    <div class="card" (click)="onSelected()">
+    <div class="card" (click)="onSelected()" draggable [dragData]="task">
       <div class="card-body userTask">
         <span class="card-title hideOverflow">{{task.name}}</span>
         <p *ngIf="task.termin" class="card-text">{{task.termin | date:'yyyy-MM-dd'}}</p>

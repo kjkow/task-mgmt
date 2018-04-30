@@ -7,7 +7,7 @@ import { TaskSelection } from '../tasks-main/tasks-main.component';
   selector: 'task-area',
   template: `
   <h5>{{obszar}}</h5>
-  <div class="row">
+  <div class="row" droppable (onDrop)="onItemDrop($event)">
 
     <div class="col-sm-4 mouse-pointer" (click)="onSelecetedAdd()">
       <div class="card">
@@ -30,6 +30,9 @@ import { TaskSelection } from '../tasks-main/tasks-main.component';
   .mouse-pointer{
     cursor: pointer;
   }
+  .row{
+    height: 100%;
+  }
 
   `]
 })
@@ -37,6 +40,12 @@ export class TaskAreaComponent implements OnInit {
 
   @Input() obszar: Obszar;
   @Output() selected = new EventEmitter();
+
+  onItemDrop(event){
+    let task: Task = event.dragData;
+    task.area = this.obszar;
+    this.taskService.save(task);
+  }
 
   tasksInArea;
 
