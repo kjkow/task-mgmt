@@ -21,6 +21,7 @@ import { TaskSearchComponent } from './task-search/task-search.component';
 import { AccountSettingsModule } from '../account-settings/account-settings.module';
 import { UserSettingsComponent } from '../account-settings/user-settings/user-settings.component';
 import { NgDragDropModule } from 'ng-drag-drop';
+import { SignInComponent } from '../sign-in/sign-in.component';
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import { NgDragDropModule } from 'ng-drag-drop';
     ProjectsListComponent,
     ProjectFormComponent,
     ProjectsStagesComponent,
-    TaskSearchComponent    
+    TaskSearchComponent,
+    SignInComponent   
   ],
   exports: [UsersTasksComponent],
   bootstrap: [UsersTasksComponent]
