@@ -22,7 +22,7 @@ public class Project {
     @NotNull
     private boolean ordered;
 
-    private Project(){}
+    public Project(){}
 
     public long getId() {
         return id;
