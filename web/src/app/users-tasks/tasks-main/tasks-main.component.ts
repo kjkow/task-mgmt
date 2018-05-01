@@ -55,7 +55,7 @@ export class UsersTasksComponent implements OnInit {
   taskAreasTitle = "Bieżące zadania";
   referencesTitle = Obszar.MATERIALY_REFERENCYJNE;
   finnishedTitle = Obszar.UKONCZONE;
-  taskArea = "current";
+  taskArea = "welcome";
 
   constructor() { }
 
