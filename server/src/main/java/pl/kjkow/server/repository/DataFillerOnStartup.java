@@ -45,6 +45,7 @@ public class DataFillerOnStartup implements ApplicationRunner {
     private void createTestUser(){
         User user = new User("John Tester", "testing@example.com");
         user.setNotifications(false);
+        user.setUserId("123456");
         User created = userRepository.save(user);
         log.info("Utworzono uzytkownika: " + created.getName());
     }

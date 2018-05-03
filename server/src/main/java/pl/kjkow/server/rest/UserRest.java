@@ -16,10 +16,10 @@ public class UserRest {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping(value = "/users/{email}")
+    @GetMapping(value = "/users/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody User getUserByEmail(@PathVariable("email") String email){
-        return userRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException(email));
+    public @ResponseBody User getUserById(@PathVariable("id") String id){
+        return userRepository.findByUserId(id).orElseThrow(()-> new UserNotFoundException(id));
     }
 
     @RequestMapping(value = "users/add", method = RequestMethod.POST)
