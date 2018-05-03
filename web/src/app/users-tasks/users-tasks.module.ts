@@ -22,6 +22,7 @@ import { AccountSettingsModule } from '../account-settings/account-settings.modu
 import { UserSettingsComponent } from '../account-settings/user-settings/user-settings.component';
 import { NgDragDropModule } from 'ng-drag-drop';
 import { SignInComponent } from '../sign-in/sign-in.component';
+import { UserService } from '../sign-in/service/user.service';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { SignInComponent } from '../sign-in/sign-in.component';
   
   providers: [
     {provide: TaskService, useClass: TaskRestService},
-    {provide: ProjectsService, useClass: ProjectsRestService}
+    {provide: ProjectsService, useClass: ProjectsRestService},
+    UserService
   ],
   declarations: [
     UsersTasksComponent,

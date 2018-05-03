@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UsersService } from '../../sign-in/users.service';
 import { User } from '../../sign-in/user';
+import { UserService } from '../../sign-in/service/user.service';
 
 @Component({
   selector: 'user-settings',
   template: `
   <div class="card">
-    <h5 class="card-title">Ustawienia konta</h5>
+    <h5 class="card-title">{{title}}</h5>
     <form>
       <div class="form-group row">
         <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
@@ -42,7 +43,7 @@ import { User } from '../../sign-in/user';
                [(ngModel)]="user.daysBeforeDue"
                class="form-control">
       </div>
-      <button type="submit" class="btn btn-primary" (click)="save()">Zapisz</button>
+      <button type="submit" class="btn btn-primary" (click)="save()">{{buttonMessage}}</button>
     </form>
   </div>
   `,
@@ -58,7 +59,13 @@ import { User } from '../../sign-in/user';
 })
 export class UserSettingsComponent implements OnInit {
 
-  user = {
+  @Input() title;
+  @Input() buttonMessage;
+  @Input() register;
+
+  private newUser: boolean;
+
+  private user = {
     email: "",
     name: "",
     notifications: false,
@@ -66,13 +73,31 @@ export class UserSettingsComponent implements OnInit {
   };
 
   save(){
-    this.usersService.updateUserData(this.user);
+    if(this.newUser){
+      this.userService.registerUser(this.user);
+    }else{
+      //TODO: update user conf
+    }
   }
 
-  constructor(private usersService: UsersService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.user = this.usersService.getUserInfo();
+    let register = (this.register == "true")
+    if(register){
+      let socialUser = this.userService.userInfo.socialUser;
+      this.user.email = socialUser.email;
+      this.user.name = socialUser.name;
+      this.newUser = true;
+    }
+    if(this.userService.userInfo.loggedIn){
+      let user = this.userService.userInfo.user;
+      this.user.email = user.email;
+      this.user.name = user.name
+      this.user.notifications = user.notifications;
+      this.user.daysBeforeDue = user.daysBeforeDue;
+      this.newUser = false;
+    }
   }
 
 }

@@ -14,7 +14,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
         </ul>
         <task-search></task-search>
       </div>  
-      <button id="welcome" (click)="select($event)" class="btn btn-outline-info my-2 my-sm-0 pull-right" type="submit">Zaloguj się</button>
+      <button id="welcome" (click)="select($event)" class="btn btn-outline-info my-2 my-sm-0 pull-right" type="submit">Rozpocznij / zakończ pracę</button>
     </nav>
   `,
   styles: []
