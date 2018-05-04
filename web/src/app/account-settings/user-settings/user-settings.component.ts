@@ -76,7 +76,13 @@ export class UserSettingsComponent implements OnInit {
     if(this.newUser){
       this.userService.registerUser(this.user);
     }else{
-      //TODO: update user conf
+      this.userService.updateUserData(this.user)
+        .subscribe(user => {
+          this.user.email = user.email;
+          this.user.name = user.name;
+          this.user.notifications = user.notifications;
+          this.user.daysBeforeDue = user.daysBeforeDue;
+        })
     }
   }
 

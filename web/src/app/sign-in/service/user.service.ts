@@ -66,6 +66,19 @@ export class UserService {
     this.getUser();
   }
 
+  updateUserData(user: User): Observable<User>{
+    let body = {
+      "userId": this.user.userId,
+      "email": user.email,
+      "name": user.name,
+      "notifications": user.notifications,
+      "daysBeforeDue": user.daysBeforeDue
+    };
+
+    return this.http.post<User>(AppSettings.API_ENDPOINT + `users/${this.user.userId}`, body)
+      .do(value => this.user = user);
+  }
+
   private getUser(){
     this.http.get<User>(AppSettings.API_ENDPOINT + "users/" + this.socialUser.id)
       .subscribe(

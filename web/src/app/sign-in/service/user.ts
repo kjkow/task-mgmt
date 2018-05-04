@@ -1,8 +1,8 @@
 export interface User {
     name: string;
-    userId: number;
+    userId?: number;
     email: string;
-    token: string;
+    token?: string;
     notifications?: boolean;
     daysBeforeDue?: number;
 }
