@@ -90,7 +90,7 @@ export class UserSettingsComponent implements OnInit {
       this.user.name = socialUser.name;
       this.newUser = true;
     }
-    if(this.userService.userInfo.loggedIn){
+    if(this.userService.userInfo.user){
       let user = this.userService.userInfo.user;
       this.user.email = user.email;
       this.user.name = user.name

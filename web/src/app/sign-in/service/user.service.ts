@@ -12,10 +12,13 @@ export class UserService {
   private user: User;
   private socialUser: SocialUser;
   private startWithGoogleStream = new Subject<any>();
-  private loggedIn: boolean;
+  private userLoggedInStream = new Subject<boolean>();
 
   constructor(private http: HttpClient, private authService: AuthService) {
-    this.loggedIn = false;
+  }
+
+  public userLoggedInDataStream(){
+    return Observable.from(this.userLoggedInStream).startWith(false);
   }
 
   public startWithGoogleDataStream(){
@@ -23,7 +26,8 @@ export class UserService {
   }
 
   public startWithGoogle(){
-    this.authenticateGoogle();
+    if(this.socialUser) this.getUser();
+    else this.authenticateGoogle();
   }
 
   public registerUser(user){
@@ -31,7 +35,7 @@ export class UserService {
     this.http.post<User>(AppSettings.API_ENDPOINT + "users/add", user)
       .subscribe(response => {
         this.user = response;
-        this.loggedIn = true;
+        this.userLoggedInStream.next(true);
         this.startWithGoogleStream.next(undefined);
       })
   }
@@ -39,8 +43,7 @@ export class UserService {
   public get userInfo(){
     return {
       user: this.user,
-      socialUser: this.socialUser,
-      loggedIn: this.loggedIn
+      socialUser: this.socialUser
     }
   }
 
@@ -50,41 +53,37 @@ export class UserService {
 
   public signOut(){
     this.authService.signOut().then(value => {
-      this.loggedIn = false;
+      this.userLoggedInStream.next(false);
     })
   }
 
-  public proceedWithSocialUser(socialUser): Observable<User>{
+  /**
+   * Checks if id of social user is saved in db
+   * @param socialUser user from google auth to check in db
+   */
+  public checkIfSocialUserIsRegistered(socialUser){
     this.socialUser = socialUser;
-    return this.getUser().do(response => {
-      this.loggedIn = true;
-      this.user = response;
-    })
-     
+    this.getUser();
   }
 
-  private getUser(): Observable<User>{
-    return this.http.get<User>(AppSettings.API_ENDPOINT + "users/" + this.socialUser.id);
+  private getUser(){
+    this.http.get<User>(AppSettings.API_ENDPOINT + "users/" + this.socialUser.id)
+      .subscribe(
+          response => {
+            this.user = response;
+            this.userLoggedInStream.next(true);
+          }, 
+          err => {
+            if(err.status == 404) this.startWithGoogleStream.next("user not found");
+          });
   }
 
   private authenticateGoogle(){
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID)
       .then(socialUser => {
         this.socialUser = socialUser;
-        this.proceedUser();
+        this.getUser();
       });
-  }
-
-  private proceedUser(){
-    this.getUser()
-      .subscribe(response => {
-        this.user = response;
-        this.loggedIn = true;
-      }, err => {
-        if(err.status == 404){
-          this.startWithGoogleStream.next("user not found");
-        }
-      })
   }
 
 }

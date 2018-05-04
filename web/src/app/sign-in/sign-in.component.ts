@@ -17,7 +17,7 @@ import { UserService } from './service/user.service';
 })
 export class SignInComponent implements OnInit {
 
-  private loggedIn: boolean;
+  private loggedIn;
   private openRegisterForm: boolean;
 
   constructor(private service: UserService) {
@@ -26,28 +26,19 @@ export class SignInComponent implements OnInit {
   enterWithGoogle(){
     this.service.startWithGoogle();
     this.service.startWithGoogleDataStream().subscribe(response =>{
-      if(response == "user not found") this.openRegisterForm = true;
-      this.loggedIn = this.service.userInfo.loggedIn;
-    })
+      if(response) this.openRegisterForm = true;
+    }); 
   }
 
-  signOut(): void {
+  signOut() {
     this.service.signOut();
-    this.loggedIn = false;
-    this.openRegisterForm = false;
   }
 
   ngOnInit() {
-    this.loggedIn = false;
-      this.service.getAuthenticationStateStream().subscribe(user => {
-        if(user != null){
-          this.service.proceedWithSocialUser(user).subscribe( user => {
-            this.loggedIn = this.service.userInfo.loggedIn;
-          })
-        } else {
-          this.loggedIn = false;
-        }
-      })
+    this.service.userLoggedInDataStream().subscribe(loggedIn => this.loggedIn = loggedIn);
+    this.service.getAuthenticationStateStream().subscribe(user => {
+      if(user != null) this.service.checkIfSocialUserIsRegistered(user);
+    }); 
   }
   
 }
