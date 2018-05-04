@@ -28,13 +28,15 @@ public class UserRest {
         return userRepository.save(user);
     }
 
-    @RequestMapping(value = "users/{userName}", method = RequestMethod.POST)
+    @RequestMapping(value = "users/{id}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody User updateUserData(@RequestBody User user, @PathVariable("userName") String userName) {
-        User recived = userRepository.findByEmail(user.getEmail()).orElseThrow(() -> new UserNotFoundException(user.getEmail()));
+    public @ResponseBody User updateUserData(@RequestBody User user, @PathVariable("id") String id) {
+        if(!user.getUserId().equals(id)) throw new RuntimeException("Invalid parameter");
+        User recived = userRepository.findByUserId(id).orElseThrow(()-> new UserNotFoundException(id));
         recived.setName(user.getName());
         recived.setNotifications(user.isNotifications());
         recived.setDaysBeforeDue(user.getDaysBeforeDue());
+        recived.setEmail(user.getEmail());
         return userRepository.save(recived);
     }
 }
