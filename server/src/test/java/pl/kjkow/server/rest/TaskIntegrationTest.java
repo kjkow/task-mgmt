@@ -44,7 +44,7 @@ public class TaskIntegrationTest {
         assertNotNull(task);
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
         assertEquals("name", saved.getName());
-        assertEquals(123, saved.getUserId());
+        assertEquals("123", saved.getUserId());
         assertEquals(Area.MATERIALY_REFERENCYJNE, saved.getArea());
 
     }

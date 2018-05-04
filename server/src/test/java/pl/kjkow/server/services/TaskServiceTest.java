@@ -55,9 +55,9 @@ public class TaskServiceTest {
 
     @Test
     public void findAll() throws Exception {
-        Iterable<Task> tasks = Arrays.asList(testTaskOne, testTaskTwo, testTaskFour);
-        when(mockRepository.findAll()).thenReturn(tasks);
-        Iterable<Task> actual = taskService.findAll("123");
+        List<Task> tasks = Arrays.asList(testTaskOne, testTaskTwo, testTaskFour);
+        when(mockRepository.findByUserId("123")).thenReturn(tasks);
+        List<Task> actual = taskService.findAll("123");
         assertEquals(actual, tasks);
     }
 

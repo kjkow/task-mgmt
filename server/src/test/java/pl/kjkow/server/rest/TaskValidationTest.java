@@ -34,7 +34,7 @@ public class TaskValidationTest {
         Set<ConstraintViolation<Task>> constraintViolations = validator.validate(task);
 
         assertEquals(1, constraintViolations.size());
-        assertEquals("must be greater than or equal to 1", constraintViolations.iterator().next().getMessage());
+        assertEquals("must not be null", constraintViolations.iterator().next().getMessage());
     }
 
     @Test
