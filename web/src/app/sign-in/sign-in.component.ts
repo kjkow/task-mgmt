@@ -9,7 +9,6 @@ import { UserService } from './service/user.service';
   <button *ngIf="loggedIn" type="button" (click)="signOut()" class="btn btn-info">Wyloguj się</button>
   <div id="startWorkWith" *ngIf="!loggedIn && !openRegisterForm">
     <button type="button" (click)="enterWithGoogle()" class="btn btn-info">Rozpocznij pracę za pomocą konta Google</button>
-    <button type="button" (click)="signInWithDemoAccount()" class="btn btn-info">Sprawdź aplikację z kontem demo</button>
   </div>
 
   <user-settings register="true" *ngIf="openRegisterForm && !loggedIn" title="Utwórz nowe konto" buttonMessage="Zarejestruj"></user-settings>
@@ -30,10 +29,6 @@ export class SignInComponent implements OnInit {
       if(response == "user not found") this.openRegisterForm = true;
       this.loggedIn = this.service.userInfo.loggedIn;
     })
-  }
-
-  signInWithDemoAccount(){
-    //TODO: impl patrz notatnik
   }
 
   signOut(): void {
