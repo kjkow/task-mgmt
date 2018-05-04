@@ -37,10 +37,10 @@ public class TaskServiceTest {
 
     @Before
     public void init(){
-        testTaskOne = new Task("TaskOne", Area.MOZE_KIEDYS, 123);
-        testTaskTwo = new Task("Other", Area.MOZE_KIEDYS, 123);
-        testTaskThree = new Task("Test", Area.MOZE_KIEDYS, 124);
-        testTaskFour = new Task("Test", Area.OBOWIAZKI, 123);
+        testTaskOne = new Task("TaskOne", Area.MOZE_KIEDYS, "123");
+        testTaskTwo = new Task("Other", Area.MOZE_KIEDYS, "123");
+        testTaskThree = new Task("Test", Area.MOZE_KIEDYS, "124");
+        testTaskFour = new Task("Test", Area.OBOWIAZKI, "123");
     }
 
     private Task testTaskOne;
@@ -55,9 +55,9 @@ public class TaskServiceTest {
 
     @Test
     public void findAll() throws Exception {
-        Iterable<Task> tasks = Arrays.asList(testTaskOne, testTaskTwo, testTaskThree, testTaskFour);
+        Iterable<Task> tasks = Arrays.asList(testTaskOne, testTaskTwo, testTaskFour);
         when(mockRepository.findAll()).thenReturn(tasks);
-        Iterable<Task> actual = taskService.findAll();
+        Iterable<Task> actual = taskService.findAll("123");
         assertEquals(actual, tasks);
     }
 

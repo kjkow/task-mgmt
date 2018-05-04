@@ -34,7 +34,7 @@ public class TaskIntegrationTest {
     @Test
     public void saveTask() throws Exception {
         Task task = new Task();
-        task.setUserId(123);
+        task.setUserId("123");
         task.setArea(Area.MATERIALY_REFERENCYJNE);
         task.setName("name");
 
@@ -52,13 +52,13 @@ public class TaskIntegrationTest {
     @Test
     public void findByNameContaining(){
         Task task = new Task();
-        task.setUserId(123);
+        task.setUserId("123");
         task.setArea(Area.MATERIALY_REFERENCYJNE);
         task.setName("Task");
         restTemplate.postForEntity("/tasks/add", task, Task.class);
 
         Task second = new Task();
-        second.setUserId(123);
+        second.setUserId("123");
         second.setArea(Area.MATERIALY_REFERENCYJNE);
         second.setName("Second");
         restTemplate.postForEntity("/tasks/add", second, Task.class);
@@ -70,7 +70,7 @@ public class TaskIntegrationTest {
     @Test
     public void sectionNotValid(){
         Task task = new Task();
-        task.setUserId(123);
+        task.setUserId("123");
         task.setArea(Area.MOZE_KIEDYS);
         task.setName("name");
         task.setSection("sekcja");
@@ -83,14 +83,14 @@ public class TaskIntegrationTest {
     public void tasksInAreaLimitReached(){
         for (int i = 0; i < taskLimit; i++) {
             Task task = new Task();
-            task.setUserId(123);
+            task.setUserId("123");
             task.setArea(Area.OBOWIAZKI);
             task.setName("Task" + i);
             restTemplate.postForEntity("/tasks/add", task, Task.class);
         }
 
         Task task = new Task();
-        task.setUserId(123);
+        task.setUserId("123");
         task.setArea(Area.OBOWIAZKI);
         task.setName("TaskOverload");
         ResponseEntity<Task> responseEntity = restTemplate.postForEntity("/tasks/add", task, Task.class);
@@ -100,7 +100,7 @@ public class TaskIntegrationTest {
     //TODO: testy walidacji docelowo mają być w klsie testów usługi a nie integracyjnej
     @Test
     public void frequencyTypeValidation(){
-        Task task = new Task("Task", Area.MOZE_KIEDYS, 123);
+        Task task = new Task("Task", Area.MOZE_KIEDYS, "123");
         task.setRecurrenceFrequency(1);
         task.setFrequencyType("wrong frequency type");
         ResponseEntity<Task> responseEntity = restTemplate.postForEntity("/tasks/add", task, Task.class);
@@ -109,7 +109,7 @@ public class TaskIntegrationTest {
 
     @Test
     public void taskFrequencyValidationSetFrequency(){
-        Task task = new Task("Task", Area.MOZE_KIEDYS, 123);
+        Task task = new Task("Task", Area.MOZE_KIEDYS, "123");
         task.setRecurrenceFrequency(1);
         ResponseEntity<Task> responseEntity = restTemplate.postForEntity("/tasks/add", task, Task.class);
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
@@ -117,7 +117,7 @@ public class TaskIntegrationTest {
 
     @Test
     public void taskFrequencyValidationSetFrequencyType(){
-        Task task = new Task("Task", Area.MOZE_KIEDYS, 123);
+        Task task = new Task("Task", Area.MOZE_KIEDYS, "123");
         task.setFrequencyType("Dzienna");
         ResponseEntity<Task> responseEntity = restTemplate.postForEntity("/tasks/add", task, Task.class);
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
@@ -125,7 +125,7 @@ public class TaskIntegrationTest {
 
     @Test
     public void frequencyProperlySet(){
-        Task task = new Task("Task", Area.W_PIERWSZEJ_CHWILI, 123);
+        Task task = new Task("Task", Area.W_PIERWSZEJ_CHWILI, "123");
         task.setFrequencyType("Dzienna");
         task.setRecurrenceFrequency(1);
         ResponseEntity<Task> responseEntity = restTemplate.postForEntity("/tasks/add", task, Task.class);

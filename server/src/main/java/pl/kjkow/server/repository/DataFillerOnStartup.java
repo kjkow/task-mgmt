@@ -62,7 +62,7 @@ public class DataFillerOnStartup implements ApplicationRunner {
             Task task = new Task();
             task.setName("Test task " + counter++);
             task.setArea(area);
-            task.setUserId(1);
+            task.setUserId("123456");
             Task created = taskRepository.save(task);
             log.info("Utworzono zadanie o nazwie: " + created.getName());
         }
@@ -82,7 +82,7 @@ public class DataFillerOnStartup implements ApplicationRunner {
         Task task = new Task();
         task.setName("Test task " + counter++);
         task.setArea(Area.OBOWIAZKI);
-        task.setUserId(1);
+        task.setUserId("123456");
         task.setProjectId(1);
         Task created = taskRepository.save(task);
         log.info("Utworzono zadanie o nazwie: " + created.getName());

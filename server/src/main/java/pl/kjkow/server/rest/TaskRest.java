@@ -30,11 +30,11 @@ public class TaskRest {
         return taskService.save(task);
     }
 
-    @GetMapping(value = "/tasks/")
+    @GetMapping(value = "/tasks/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    Iterable<Task> getAllTasks(){
-        return taskService.findAll();
+    List<Task> getAllTasks(@PathVariable String userId){
+        return taskService.findAll(userId);
     }
 
     @RequestMapping(value = "tasks/update/{taskId}", method = RequestMethod.POST)

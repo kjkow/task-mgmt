@@ -29,8 +29,8 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    public Iterable<Task> findAll(){
-        return taskRepository.findAll();
+    public List<Task> findAll(String userId){
+        return taskRepository.findByUserId(userId);
     }
 
     public List<Task> findByNameContaining(String name){
