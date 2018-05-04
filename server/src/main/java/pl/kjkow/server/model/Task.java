@@ -176,4 +176,25 @@ public class Task {
     public void setOrdinalNumber(int ordinalNumber) {
         this.ordinalNumber = ordinalNumber;
     }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
+                ", name='" + name + '\'' +
+                ", area=" + area +
+                ", priority=" + priority +
+                ", dueDate=" + dueDate +
+                ", comment='" + comment + '\'' +
+                ", section='" + section + '\'' +
+                ", recurrenceFrequency=" + recurrenceFrequency +
+                ", frequencyType='" + frequencyType + '\'' +
+                ", projectId=" + projectId +
+                ", finnishedProjectStage=" + finnishedProjectStage +
+                ", ordinalNumber=" + ordinalNumber +
+                ", created=" + created +
+                ", finnished=" + finnished +
+                '}';
+    }
 }

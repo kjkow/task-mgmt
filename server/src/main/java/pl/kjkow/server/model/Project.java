@@ -63,4 +63,15 @@ public class Project {
     public void setOrdered(boolean ordered) {
         this.ordered = ordered;
     }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", finnished=" + finnished +
+                ", description='" + description + '\'' +
+                ", ordered=" + ordered +
+                '}';
+    }
 }
