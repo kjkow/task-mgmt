@@ -28,4 +28,12 @@ public class GoogleVerificationResponse {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        return "GoogleVerificationResponse{" +
+                "userId='" + userId + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

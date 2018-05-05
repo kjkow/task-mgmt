@@ -76,6 +76,7 @@ public class ActiveUsersStorage {
 
     private boolean userTokenIsValid(String userId, String token){
         String uri = "https://www.googleapis.com/oauth2/v2/tokeninfo?access_token=" + token;
+        log.info("Checking user's " + userId + " token vaild with google api: " + uri);
         RestTemplate restTemplate = new RestTemplate();
         try {
             ResponseEntity<GoogleVerificationResponse> googleResponse =
@@ -83,7 +84,13 @@ public class ActiveUsersStorage {
                             HttpMethod.GET, null, new ParameterizedTypeReference<GoogleVerificationResponse>() {
                             });
             GoogleVerificationResponse response = googleResponse.getBody();
-            return response != null && response.getUserId().equals(userId);
+            if(response != null){
+                log.info("User's " + userId + " token validation response: " + response.toString());
+                return  response.getUserId().equals(userId);
+            }else {
+                log.warn("User's " + userId + " token validation response is null");
+                return false;
+            }
         } catch (RestClientException e){
             log.warn("Users token verification failed for user id: " + userId + ". Cause: " + e.getMessage());
             return false;
