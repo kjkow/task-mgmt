@@ -23,6 +23,7 @@ import { UserSettingsComponent } from '../account-settings/user-settings/user-se
 import { NgDragDropModule } from 'ng-drag-drop';
 import { SignInComponent } from '../sign-in/sign-in.component';
 import { UserService } from '../sign-in/service/user.service';
+import { AuthInterceptor } from '../app-main/auth-interceptor.service';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { UserService } from '../sign-in/service/user.service';
   providers: [
     {provide: TaskService, useClass: TaskRestService},
     {provide: ProjectsService, useClass: ProjectsRestService},
-    UserService
+    UserService,
+    AuthInterceptor
   ],
   declarations: [
     UsersTasksComponent,
