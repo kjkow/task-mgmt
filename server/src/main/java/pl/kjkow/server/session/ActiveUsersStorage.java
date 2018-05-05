@@ -1,13 +1,11 @@
 package pl.kjkow.server.session;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import pl.kjkow.server.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by kamil on 2018-05-04.
@@ -18,6 +16,9 @@ public class ActiveUsersStorage {
     @Autowired
     private UserRepository userRepository;
 
+    @Value("${session.time.minutes}")
+    private int sessionTimeInMinutes;
+
     private List<AuthenticatedUser> authenticatedUsers;
 
     public ActiveUsersStorage() {
@@ -25,8 +26,8 @@ public class ActiveUsersStorage {
     }
 
     public void authenticateUser(String userId, String userToken){
-        if(isAuthendicated(userId, userToken)){
-            refreshSession(userId);
+        if(isAuthendicated(userId, userToken) && getById(userId).isPresent()){
+            refreshSession(getById(userId).get());
         } else if(userRepository.findByUserId(userId).isPresent()){
             authenticate(userId, userToken);
         } else throw new RuntimeException("Cannot autenticate user. Not present in db");
@@ -42,23 +43,25 @@ public class ActiveUsersStorage {
     }
 
     public void refreshUserSession(String userId){
-        refreshSession(userId);
+        if(getById(userId).isPresent()) refreshSession(getById(userId).get());
     }
 
     private void authenticate(String userId, String userToken) {
         AuthenticatedUser authenticatedUser = new AuthenticatedUser();
         authenticatedUser.setUserId(userId);
         authenticatedUser.setToken(userToken);
-
-        Calendar date = Calendar.getInstance();
-        long t = date.getTimeInMillis();
-        long oneMinuteInMilisecs = 60000;
-        authenticatedUser.setSessionExpires(new Date(t + (2 * oneMinuteInMilisecs)));
-
+        refreshSession(authenticatedUser);
         authenticatedUsers.add(authenticatedUser);
     }
 
-    private void refreshSession(String userId){
-        //TODO: impl
+    private void refreshSession(AuthenticatedUser authenticatedUser){
+        Calendar date = Calendar.getInstance();
+        long t = date.getTimeInMillis();
+        long oneMinuteInMilisecs = 60000;
+        authenticatedUser.setSessionExpires(new Date(t + (sessionTimeInMinutes * oneMinuteInMilisecs)));
+    }
+
+    private Optional<AuthenticatedUser> getById(String id){
+        return authenticatedUsers.stream().filter(user -> user.getUserId().equals(id)).findFirst();
     }
 }
