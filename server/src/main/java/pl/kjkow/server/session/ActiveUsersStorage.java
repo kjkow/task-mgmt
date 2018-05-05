@@ -1,8 +1,15 @@
 package pl.kjkow.server.session;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 import pl.kjkow.server.repository.UserRepository;
 
 import java.util.*;
@@ -12,6 +19,8 @@ import java.util.*;
  */
 @Component
 public class ActiveUsersStorage {
+
+    private static final Logger log = LoggerFactory.getLogger(ActiveUsersStorage.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -28,9 +37,9 @@ public class ActiveUsersStorage {
     public void authenticateUser(String userId, String userToken){
         if(isAuthendicated(userId, userToken) && getById(userId).isPresent()){
             refreshSession(getById(userId).get());
-        } else if(userRepository.findByUserId(userId).isPresent()){
+        } else if(userRepository.findByUserId(userId).isPresent() && userTokenIsValid(userId, userToken)){
             authenticate(userId, userToken);
-        } else throw new RuntimeException("Cannot autenticate user. Not present in db");
+        } else log.warn("User failed to authenticate. Id: " + userId + ". Token: " + userToken);
 
     }
 
@@ -63,5 +72,21 @@ public class ActiveUsersStorage {
 
     private Optional<AuthenticatedUser> getById(String id){
         return authenticatedUsers.stream().filter(user -> user.getUserId().equals(id)).findFirst();
+    }
+
+    private boolean userTokenIsValid(String userId, String token){
+        String uri = "https://www.googleapis.com/oauth2/v2/tokeninfo?access_token=" + token;
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            ResponseEntity<GoogleVerificationResponse> googleResponse =
+                    restTemplate.exchange(uri,
+                            HttpMethod.GET, null, new ParameterizedTypeReference<GoogleVerificationResponse>() {
+                            });
+            GoogleVerificationResponse response = googleResponse.getBody();
+            return response != null && response.getUserId().equals(userId);
+        } catch (RestClientException e){
+            log.warn("Users token verification failed for user id: " + userId + ". Cause: " + e.getMessage());
+            return false;
+        }
     }
 }
