@@ -24,6 +24,7 @@ import { NgDragDropModule } from 'ng-drag-drop';
 import { SignInComponent } from '../sign-in/sign-in.component';
 import { UserService } from '../sign-in/service/user.service';
 import { AuthInterceptor } from '../app-main/auth-interceptor.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -37,7 +38,7 @@ import { AuthInterceptor } from '../app-main/auth-interceptor.service';
     {provide: TaskService, useClass: TaskRestService},
     {provide: ProjectsService, useClass: ProjectsRestService},
     UserService,
-    AuthInterceptor
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
   declarations: [
     UsersTasksComponent,

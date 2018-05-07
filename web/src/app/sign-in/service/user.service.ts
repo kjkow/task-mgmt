@@ -47,6 +47,11 @@ export class UserService {
     }
   }
 
+  public get token(){
+    if(this.user && this.user.token) return this.user.token;
+    else return "123";//TODO: do poprawy 123
+  }
+
   public getAuthenticationStateStream(): Observable<SocialUser>{
     return this.authService.authState;    
   }
