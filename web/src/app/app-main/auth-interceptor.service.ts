@@ -8,10 +8,12 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private auth: UserService) {}
  
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    if(this.auth.token){
-      const authToken = this.auth.token;
+    let user = this.auth.userInfo.socialUser;
+    if(user){
+      const authToken = user.authToken;
+      const userId = user.id;
       const authReq = req.clone({
-        headers: req.headers.set('Authorization', authToken)
+        headers: req.headers.set('Authorization', authToken).set('Identification', userId)
       });
       return next.handle(authReq);
     }
