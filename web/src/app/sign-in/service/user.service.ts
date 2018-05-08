@@ -35,6 +35,7 @@ export class UserService {
     this.http.post<User>(AppSettings.API_ENDPOINT + "users/add", user)
       .subscribe(response => {
         this.user = response;
+        this.user.token = this.socialUser.authToken;
         this.userLoggedInStream.next(true);
         this.startWithGoogleStream.next(undefined);
       })
@@ -48,8 +49,7 @@ export class UserService {
   }
 
   public get token(){
-    if(this.user && this.user.token) return this.user.token;
-    else return "123";//TODO: do poprawy 123
+    if(this.user) return this.user.token;
   }
 
   public getAuthenticationStateStream(): Observable<SocialUser>{
@@ -89,6 +89,7 @@ export class UserService {
       .subscribe(
           response => {
             this.user = response;
+            this.user.token = this.socialUser.authToken;
             this.userLoggedInStream.next(true);
           }, 
           err => {
