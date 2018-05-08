@@ -28,6 +28,9 @@ public class ActiveUsersStorage {
     @Value("${session.time.minutes}")
     private int sessionTimeInMinutes;
 
+    @Value("${validate.user.token.with}")
+    private String tokenValidationOption;
+
     private List<AuthenticatedUser> authenticatedUsers;
 
     public ActiveUsersStorage() {
@@ -37,9 +40,9 @@ public class ActiveUsersStorage {
     public void authenticateUser(String userId, String userToken){
         if(sessionActiveFor(userId, userToken)){
             refreshSession(getById(userId).get());
-        } else if(isRegistered(userId) && userTokenIsValid(userId, userToken)){
+        } else if(isRegistered(userId) && userTokenValid(userId, userToken)){
             authenticate(userId, userToken);
-        } else if(!isRegistered(userId) && userTokenIsValid(userId, userToken)){
+        } else if(!isRegistered(userId) && userTokenValid(userId, userToken)){
             log.info("User " + userId + " is not registered, token is valid");
         } else log.warn("User failed to authenticate. Id: " + userId + ". Token: " + userToken);
 
@@ -70,6 +73,12 @@ public class ActiveUsersStorage {
 
     private Optional<AuthenticatedUser> getById(String id){
         return authenticatedUsers.stream().filter(user -> user.getUserId().equals(id)).findFirst();
+    }
+
+    private boolean userTokenValid(String userId, String token){
+        if(tokenValidationOption.equalsIgnoreCase("google")) return userTokenIsValid(userId, token);
+        else if(tokenValidationOption.equalsIgnoreCase("none")) return true;
+        else throw new RuntimeException("Invalid option for 'validate.user.token.with.' Users won't be authorized");
     }
 
     private boolean userTokenIsValid(String userId, String token){
