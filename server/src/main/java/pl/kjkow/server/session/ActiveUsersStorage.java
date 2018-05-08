@@ -43,6 +43,10 @@ public class ActiveUsersStorage {
 
     }
 
+    public boolean userTokenValid(String userId, String token){
+        return userTokenIsValid(userId, token);
+    }
+
     public boolean isAuthendicated(String userId, String token){
         return authenticatedUsers.stream().anyMatch(user ->
             (user.getUserId().equals(userId)) &&

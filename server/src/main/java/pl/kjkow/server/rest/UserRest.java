@@ -29,7 +29,7 @@ public class UserRest {
     @RequestMapping(value = "users/add", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody User addUser(@RequestBody User user) {
-        return userRepository.save(user);
+        return userService.register(user);
     }
 
     @RequestMapping(value = "users/{id}", method = RequestMethod.POST)

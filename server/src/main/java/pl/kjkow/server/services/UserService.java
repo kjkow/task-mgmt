@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.kjkow.server.model.User;
 import pl.kjkow.server.model.UserNotFoundException;
 import pl.kjkow.server.repository.UserRepository;
+import pl.kjkow.server.session.ActiveUsersStorage;
 
 @Service
 public class UserService {
@@ -12,7 +13,16 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ActiveUsersStorage activeUsersStorage;
+
     public User getUserById(String userId, String email){
         return userRepository.findByUserIdAndEmail(userId, email).orElseThrow(()-> new UserNotFoundException(userId, email));
     }
+
+    public User register(User user){
+        if(activeUsersStorage.userTokenValid(user.getUserId(), "todo token")) return userRepository.save(user);
+        else throw new RuntimeException("Cannot register user");
+    }
+
 }
