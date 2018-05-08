@@ -13,8 +13,7 @@ import java.util.Date;
 public class User {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+    private String userId;
     private String name;
     @Email
     private String email;
@@ -49,12 +48,12 @@ public class User {
         this.daysBeforeDue = daysBeforeDue;
     }
 
-    public Long getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getEmail() {
@@ -71,5 +70,17 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", created=" + created +
+                ", notifications=" + notifications +
+                ", daysBeforeDue=" + daysBeforeDue +
+                '}';
     }
 }

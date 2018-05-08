@@ -22,8 +22,8 @@ public class Task {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
-    @Min(1)
-    private int userId;
+    @NotNull
+    private String userId;
     @NotNull
     private String name;
     @NotNull
@@ -46,7 +46,7 @@ public class Task {
     private Date created;
     private Date finnished;
 
-    public Task(String name, Area area, int userId){
+    public Task(String name, Area area, String userId){
         this();
         this.name = name;
         this.area = area;
@@ -81,11 +81,11 @@ public class Task {
         this.id = id;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -175,5 +175,26 @@ public class Task {
 
     public void setOrdinalNumber(int ordinalNumber) {
         this.ordinalNumber = ordinalNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
+                ", name='" + name + '\'' +
+                ", area=" + area +
+                ", priority=" + priority +
+                ", dueDate=" + dueDate +
+                ", comment='" + comment + '\'' +
+                ", section='" + section + '\'' +
+                ", recurrenceFrequency=" + recurrenceFrequency +
+                ", frequencyType='" + frequencyType + '\'' +
+                ", projectId=" + projectId +
+                ", finnishedProjectStage=" + finnishedProjectStage +
+                ", ordinalNumber=" + ordinalNumber +
+                ", created=" + created +
+                ", finnished=" + finnished +
+                '}';
     }
 }

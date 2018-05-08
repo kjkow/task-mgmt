@@ -12,7 +12,7 @@ export interface Task {
   section?: string;
   recurrenceFrequency?: number;
   frequencyType?: string; //TODO: enum czestotliwosc zadania
-  userId: number;
+  userId: string;
   etykiety?: Array<string> //TODO: obiekt etykiety
   projectId?: number;
   finnishedProjectStage?: boolean;

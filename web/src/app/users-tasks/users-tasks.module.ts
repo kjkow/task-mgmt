@@ -21,6 +21,10 @@ import { TaskSearchComponent } from './task-search/task-search.component';
 import { AccountSettingsModule } from '../account-settings/account-settings.module';
 import { UserSettingsComponent } from '../account-settings/user-settings/user-settings.component';
 import { NgDragDropModule } from 'ng-drag-drop';
+import { SignInComponent } from '../sign-in/sign-in.component';
+import { UserService } from '../sign-in/service/user.service';
+import { AuthInterceptor } from '../app-main/auth-interceptor.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -32,7 +36,9 @@ import { NgDragDropModule } from 'ng-drag-drop';
   
   providers: [
     {provide: TaskService, useClass: TaskRestService},
-    {provide: ProjectsService, useClass: ProjectsRestService}
+    {provide: ProjectsService, useClass: ProjectsRestService},
+    UserService,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
   declarations: [
     UsersTasksComponent,
@@ -46,7 +52,8 @@ import { NgDragDropModule } from 'ng-drag-drop';
     ProjectsListComponent,
     ProjectFormComponent,
     ProjectsStagesComponent,
-    TaskSearchComponent    
+    TaskSearchComponent,
+    SignInComponent   
   ],
   exports: [UsersTasksComponent],
   bootstrap: [UsersTasksComponent]

@@ -37,7 +37,7 @@ public class UserRestTest {
             Charset.forName("utf8"));
 
     private List<User> userList;
-    private String email = "doit@yourself.com";
+    private String id = "124";
     private MockMvc mvc;
 
     @Autowired
@@ -52,13 +52,17 @@ public class UserRestTest {
         userList = new ArrayList<>();
 
         userRepository.deleteAll();
-        userList.add(userRepository.save(new User("John Doe", "abc@example.com")));
-        userList.add(userRepository.save(new User("Michelle Francis", email)));
+        User user1 = new User("John Doe", "abc@example.com");
+        user1.setUserId("123");
+        userList.add(userRepository.save(user1));
+        User user2 = new User("Michelle Francis", "test@ex.com");
+        user2.setUserId(id);
+        userList.add(userRepository.save(user2));
     }
 
     @Test
-    public void getUserByEmail() throws Exception {
-        mvc.perform(get("/users/" + email))
+    public void getUserById() throws Exception {
+        mvc.perform(get("/users/" + id))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$.name", is(userList.get(1).getName())))

@@ -20,7 +20,8 @@ export interface TaskSelection {
     <task-area (selected)="selection($event)"  *ngSwitchCase="'reference'" [obszar]="selectedArea"></task-area>
     <task-area (selected)="selection($event)"  *ngSwitchCase="'finnished'" [obszar]="selectedArea"></task-area>
     <projects-main (selectedStage)="selection($event)" *ngSwitchCase="'projects'"></projects-main>
-    <user-settings (selectedStage)="selection($event)" *ngSwitchCase="'settings'"></user-settings>
+    <user-settings register="false" buttonMessage="Zapisz" title="Ustawienia konta" (selectedStage)="selection($event)" *ngSwitchCase="'settings'"></user-settings>
+    <app-sign-in *ngSwitchCase="'welcome'"></app-sign-in>
   </div>
   
   <task-form 
@@ -54,7 +55,7 @@ export class UsersTasksComponent implements OnInit {
   taskAreasTitle = "Bieżące zadania";
   referencesTitle = Obszar.MATERIALY_REFERENCYJNE;
   finnishedTitle = Obszar.UKONCZONE;
-  taskArea = "current";
+  taskArea = "welcome";
 
   constructor() { }
 

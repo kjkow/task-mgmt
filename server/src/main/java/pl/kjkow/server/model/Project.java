@@ -22,7 +22,7 @@ public class Project {
     @NotNull
     private boolean ordered;
 
-    private Project(){}
+    public Project(){}
 
     public long getId() {
         return id;
@@ -62,5 +62,16 @@ public class Project {
 
     public void setOrdered(boolean ordered) {
         this.ordered = ordered;
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", finnished=" + finnished +
+                ", description='" + description + '\'' +
+                ", ordered=" + ordered +
+                '}';
     }
 }
