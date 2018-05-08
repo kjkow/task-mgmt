@@ -26,28 +26,39 @@ public class TaskRest {
     @RequestMapping(value = "tasks/add", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
-    Task addTask(@RequestBody Task task) {
+    Task addTask(@RequestHeader(value="Authorization") String token,
+                 @RequestHeader(value="Identification") String userId,
+                 @RequestBody Task task) {
         return taskService.save(task);
     }
 
-    @GetMapping(value = "/tasks/{userId}")
+    @GetMapping(value = "/tasks/{id}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    List<Task> getAllTasks(@PathVariable String userId){
-        return taskService.findAll(userId);
+    List<Task> getAllTasks(
+            @RequestHeader(value="Authorization") String token,
+            @RequestHeader(value="Identification") String userId,
+            @PathVariable String id){
+        return taskService.findAll(id);
     }
 
     @RequestMapping(value = "tasks/update/{taskId}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    Task updateTask(@PathVariable String taskId, @RequestBody Task task){
+    Task updateTask(
+            @RequestHeader(value="Authorization") String token,
+            @RequestHeader(value="Identification") String userId,
+            @PathVariable String taskId, @RequestBody Task task){
         return taskService.updateTask(taskId, task);
     }
 
     @GetMapping(value = "tasks/search{name}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    List<Task> getTasksByName(@PathVariable String name){
+    List<Task> getTasksByName(
+            @RequestHeader(value="Authorization") String token,
+            @RequestHeader(value="Identification") String userId,
+            @PathVariable String name){
         return taskService.findByNameContaining(name);
     }
 }
