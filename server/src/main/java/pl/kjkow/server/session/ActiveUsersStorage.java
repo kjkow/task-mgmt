@@ -35,28 +35,22 @@ public class ActiveUsersStorage {
     }
 
     public void authenticateUser(String userId, String userToken){
-        if(isAuthendicated(userId, userToken) && getById(userId).isPresent()){ //todo: dziwna konstrukcja, sprawdza prawie to samo
+        if(sessionActiveFor(userId, userToken)){
             refreshSession(getById(userId).get());
         } else if(isRegistered(userId) && userTokenIsValid(userId, userToken)){
             authenticate(userId, userToken);
+        } else if(!isRegistered(userId) && userTokenIsValid(userId, userToken)){
+            log.info("User " + userId + " is not registered, token is valid");
         } else log.warn("User failed to authenticate. Id: " + userId + ". Token: " + userToken);
 
     }
 
-    public boolean userTokenValid(String userId, String token){
-        return userTokenIsValid(userId, token);
-    }
-
-    public boolean isAuthendicated(String userId, String token){
+    private boolean sessionActiveFor(String userId, String token){
         return authenticatedUsers.stream().anyMatch(user ->
-            (user.getUserId().equals(userId)) &&
-                    (user.getToken().equals(token)) &&
-                    (user.getSessionExpires().after(new Date()))
+                (user.getUserId().equals(userId)) &&
+                (user.getToken().equals(token)) &&
+                (user.getSessionExpires().after(new Date()))
         );
-    }
-
-    public void refreshUserSession(String userId){
-        if(getById(userId).isPresent()) refreshSession(getById(userId).get());
     }
 
     private void authenticate(String userId, String userToken) {
