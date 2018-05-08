@@ -47,10 +47,6 @@ export class UserService {
     }
   }
 
-  public get token(){
-    if(this.socialUser) return this.socialUser.authToken;
-  }
-
   public getAuthenticationStateStream(): Observable<SocialUser>{
     return this.authService.authState;    
   }
