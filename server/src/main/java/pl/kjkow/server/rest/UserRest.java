@@ -22,19 +22,30 @@ public class UserRest {
 
     @GetMapping(value = "/users/{id}/{email}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody User getUserById(@PathVariable("id") String id, @PathVariable("email") String email){
+    public @ResponseBody User getUserById(
+            @RequestHeader(value="Authorization") String token,
+            @RequestHeader(value="Identification") String userId,
+            @PathVariable("id") String id,
+            @PathVariable("email") String email){
         return userService.getUserById(id, email);
     }
 
     @RequestMapping(value = "users/add", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public @ResponseBody User addUser(@RequestBody User user) {
+    public @ResponseBody User addUser(
+            @RequestHeader(value="Authorization") String token,
+            @RequestHeader(value="Identification") String userId,
+            @RequestBody User user) {
         return userService.register(user);
     }
 
     @RequestMapping(value = "users/{id}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody User updateUserData(@RequestBody User user, @PathVariable("id") String id) {
+    public @ResponseBody User updateUserData(
+            @RequestHeader(value="Authorization") String token,
+            @RequestHeader(value="Identification") String userId,
+            @RequestBody User user,
+            @PathVariable("id") String id) {
         if(!user.getUserId().equals(id)) throw new RuntimeException("Invalid parameter");
         User recived = userRepository.findByUserIdAndEmail(id, user.getEmail()).orElseThrow(()-> new UserNotFoundException(id, user.getEmail()));
         recived.setName(user.getName());
