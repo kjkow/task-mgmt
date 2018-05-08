@@ -35,7 +35,7 @@ public class ActiveUsersStorage {
     }
 
     public void authenticateUser(String userId, String userToken){
-        if(isAuthendicated(userId, userToken) && getById(userId).isPresent()){
+        if(isAuthendicated(userId, userToken) && getById(userId).isPresent()){ //todo: dziwna konstrukcja, sprawdza prawie to samo
             refreshSession(getById(userId).get());
         } else if(userRepository.findByUserId(userId).isPresent() && userTokenIsValid(userId, userToken)){
             authenticate(userId, userToken);
