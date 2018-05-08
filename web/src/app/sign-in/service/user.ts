@@ -1,6 +1,6 @@
 export interface User {
     name: string;
-    userId?: number;
+    userId?: string;
     email: string;
     notifications?: boolean;
     daysBeforeDue?: number;
