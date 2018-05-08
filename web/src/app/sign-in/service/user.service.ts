@@ -35,6 +35,7 @@ export class UserService {
     this.http.post<User>(AppSettings.API_ENDPOINT + "users/add", user)
       .subscribe(response => {
         this.user = response;
+        this.user.userId = this.socialUser.id;
         this.userLoggedInStream.next(true);
         this.startWithGoogleStream.next(undefined);
       })
@@ -84,6 +85,7 @@ export class UserService {
       .subscribe(
           response => {
             this.user = response;
+            this.user.userId = this.socialUser.id;
             this.userLoggedInStream.next(true);
           }, 
           err => {
