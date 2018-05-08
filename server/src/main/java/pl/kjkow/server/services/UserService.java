@@ -21,8 +21,7 @@ public class UserService {
     }
 
     public User register(User user){
-        if(activeUsersStorage.userTokenValid(user.getUserId(), "todo token")) return userRepository.save(user);
-        else throw new RuntimeException("Cannot register user");
+        return userRepository.save(user);
     }
 
 }
