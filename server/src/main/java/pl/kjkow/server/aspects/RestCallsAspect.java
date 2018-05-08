@@ -39,7 +39,7 @@ public class RestCallsAspect {
 
     @AfterThrowing(throwing = "e", pointcut = "restPackage()")
     public void afterExceptionResponse(Exception e){
-        log.info(createResponseLogInformation(e.getMessage()));
+        log.info(createResponseLogInformation(e));
     }
 
     private String createRequestLogInformation(JoinPoint joinPoint){
