@@ -34,13 +34,13 @@ public class TaskValidationTest {
         Set<ConstraintViolation<Task>> constraintViolations = validator.validate(task);
 
         assertEquals(1, constraintViolations.size());
-        assertEquals("must be greater than or equal to 1", constraintViolations.iterator().next().getMessage());
+        assertEquals("must not be null", constraintViolations.iterator().next().getMessage());
     }
 
     @Test
     public void taskNameIsNull() {
         Task task = new Task();
-        task.setUserId(123);
+        task.setUserId("123");
         task.setArea(Area.MATERIALY_REFERENCYJNE);
 
         Set<ConstraintViolation<Task>> constraintViolations = validator.validate(task);
@@ -52,7 +52,7 @@ public class TaskValidationTest {
     @Test
     public void priorityOutOfRange(){
         Task task = new Task();
-        task.setUserId(123);
+        task.setUserId("123");
         task.setArea(Area.MATERIALY_REFERENCYJNE);
         task.setName("name");
         task.setPriority(5);
@@ -65,7 +65,7 @@ public class TaskValidationTest {
     @Test
     public void priorityOutOfRangeNegative(){
         Task task = new Task();
-        task.setUserId(123);
+        task.setUserId("123");
         task.setArea(Area.MATERIALY_REFERENCYJNE);
         task.setName("name");
         task.setPriority(-1);
@@ -78,7 +78,7 @@ public class TaskValidationTest {
     @Test
     public void reccurenceFrequencyNegative(){
         Task task = new Task();
-        task.setUserId(123);
+        task.setUserId("123");
         task.setArea(Area.MATERIALY_REFERENCYJNE);
         task.setName("name");
         task.setRecurrenceFrequency(-5);
@@ -91,7 +91,7 @@ public class TaskValidationTest {
     @Test
     public void commentTooLong(){
         Task task = new Task();
-        task.setUserId(123);
+        task.setUserId("123");
         task.setArea(Area.MATERIALY_REFERENCYJNE);
         task.setName("name");
         task.setComment("In sem justo, commodo ut, suscipit at, pharetra vitae, orci. Duis sapien nunc, commodo et, " +
@@ -105,7 +105,7 @@ public class TaskValidationTest {
     @Test
     public void sectionTooLong(){
         Task task = new Task();
-        task.setUserId(123);
+        task.setUserId("123");
         task.setArea(Area.MATERIALY_REFERENCYJNE);
         task.setName("name");
         task.setSection("Too long section name In sem justo, commodo ut, sus");
@@ -117,7 +117,7 @@ public class TaskValidationTest {
     @Test
     public void taskIsValid(){
         Task task = new Task();
-        task.setUserId(123);
+        task.setUserId("123");
         task.setArea(Area.MATERIALY_REFERENCYJNE);
         task.setName("name");
         task.setPriority(2);

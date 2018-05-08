@@ -43,25 +43,25 @@ public class TaskRepositoryTest {
         testTaskOne = new Task();
         testTaskOne.setName("TaskOne");
         testTaskOne.setArea(Area.MOZE_KIEDYS);
-        testTaskOne.setUserId(123);
+        testTaskOne.setUserId("123");
         entityManager.persist(testTaskOne);
 
         testTaskTwo = new Task();
         testTaskTwo.setName("Other");
         testTaskTwo.setArea(Area.MOZE_KIEDYS);
-        testTaskTwo.setUserId(123);
+        testTaskTwo.setUserId("123");
         entityManager.persist(testTaskTwo);
 
         testTaskThree = new Task();
         testTaskThree.setName("Test");
         testTaskThree.setArea(Area.MOZE_KIEDYS);
-        testTaskThree.setUserId(124);
+        testTaskThree.setUserId("124");
         entityManager.persist(testTaskThree);
 
         testTaskFour = new Task();
         testTaskFour.setName("Test");
         testTaskFour.setArea(Area.OBOWIAZKI);
-        testTaskFour.setUserId(123);
+        testTaskFour.setUserId("123");
         entityManager.persist(testTaskFour);
 
         entityManager.flush();
@@ -102,7 +102,7 @@ public class TaskRepositoryTest {
 
     @Test
     public void countByAreaAndUserId(){
-        long tasksFound = taskRepository.countByAreaAndUserId(Area.MOZE_KIEDYS, 123);
+        long tasksFound = taskRepository.countByAreaAndUserId(Area.MOZE_KIEDYS, "123");
         assertThat(tasksFound).isEqualTo(2);
 
     }

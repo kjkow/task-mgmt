@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/do';
 import { AppSettings } from '../../app-main/app-settings';
+import { UserService } from '../../sign-in/service/user.service';
 
 @Injectable()
 export class TaskRestService implements TaskService {
@@ -12,7 +13,7 @@ export class TaskRestService implements TaskService {
   taskStream = new Subject<Task[]>();
   tasks: Task[] = [];
 
-  constructor(private http:HttpClient) {
+  constructor(private http:HttpClient, private userService: UserService) {
     this.updateUsersTasks();
   }
 
@@ -71,7 +72,8 @@ export class TaskRestService implements TaskService {
   }
 
   updateUsersTasks() {
-    this.http.get<Array<Task>>(AppSettings.API_ENDPOINT + "tasks/")
+    let userId = this.userService.userInfo.user.userId;
+    this.http.get<Array<Task>>(AppSettings.API_ENDPOINT + `tasks/${userId}`)
     .subscribe((response) =>{
       this.tasks = response;
       this.taskStream.next(this.tasks);

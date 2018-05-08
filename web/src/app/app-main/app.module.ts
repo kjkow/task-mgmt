@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { SocialLoginModule, AuthServiceConfig } from "angular4-social-login";
 import { GoogleLoginProvider } from "angular4-social-login";
-import { SignInComponent } from '../sign-in/sign-in.component';
 
 import { UsersTasksModule } from '../users-tasks/users-tasks.module';
 import { UsersService } from '../sign-in/users.service';
@@ -22,8 +21,7 @@ let config = new AuthServiceConfig([
 
 @NgModule({
   declarations: [
-    AppComponent,
-    SignInComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +29,7 @@ let config = new AuthServiceConfig([
     SocialLoginModule.initialize(config),
     UsersTasksModule
   ],
-  providers: [{provide: UsersService, useClass: UsersMockService}],
+  providers: [{provide: UsersService, useClass: UsersRestService}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

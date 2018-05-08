@@ -19,21 +19,30 @@ public class ProjectRest {
     @GetMapping(value = "/projects/")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    Iterable<Project> getAllProjects(){
+    Iterable<Project> getAllProjects(
+            @RequestHeader(value="Authorization") String token,
+            @RequestHeader(value="Identification") String userId){//TODO: wyszukaj po id uzytkownika
         return projectRepository.findAll();
     }
 
     @RequestMapping(value = "projects/add", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
-    Project addProject(@RequestBody Project project) {
+    Project addProject(
+            @RequestHeader(value="Authorization") String token,
+            @RequestHeader(value="Identification") String userId,
+            @RequestBody Project project) {
         return projectRepository.save(project);
     }
 
     @RequestMapping(value = "projects/update/{projectId}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    Project updateProject(@PathVariable String projectId, @RequestBody Project project){
+    Project updateProject(
+            @RequestHeader(value="Authorization") String token,
+            @RequestHeader(value="Identification") String userId,
+            @PathVariable String projectId,
+            @RequestBody Project project){
         if(projectRepository.existsById(Long.valueOf(projectId))){
             return projectRepository.save(project);
         }else{
