@@ -53,12 +53,15 @@ export class TaskAreaComponent implements OnInit {
   constructor(private taskService: TaskService, private userService: UserService) {}
 
   onSelecetedAdd(){
+    let userId = this.userService.userInfo.user.userId;
+    
+    if(!userId) return;
     let taskSelection: TaskSelection = {
       selected: true,
       task: {
         name: "",
         area: this.obszar,
-        userId: this.userService.userInfo.user.userId
+        userId: userId 
       }
     }
     this.selected.emit(taskSelection);
