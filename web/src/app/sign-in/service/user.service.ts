@@ -84,7 +84,7 @@ export class UserService {
   }
 
   private getUser(){
-    this.http.get<User>(AppSettings.API_ENDPOINT + "users/" + this.socialUser.id)
+    this.http.get<User>(AppSettings.API_ENDPOINT + "users/" + this.socialUser.id + "/" + this.socialUser.email)
       .subscribe(
           response => {
             this.user = response;
