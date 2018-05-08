@@ -37,7 +37,7 @@ public class ActiveUsersStorage {
     public void authenticateUser(String userId, String userToken){
         if(isAuthendicated(userId, userToken) && getById(userId).isPresent()){ //todo: dziwna konstrukcja, sprawdza prawie to samo
             refreshSession(getById(userId).get());
-        } else if(userRepository.findByUserId(userId).isPresent() && userTokenIsValid(userId, userToken)){
+        } else if(isRegistered(userId) && userTokenIsValid(userId, userToken)){
             authenticate(userId, userToken);
         } else log.warn("User failed to authenticate. Id: " + userId + ". Token: " + userToken);
 
@@ -81,10 +81,10 @@ public class ActiveUsersStorage {
         try {
             ResponseEntity<GoogleVerificationResponse> googleResponse =
                     restTemplate.exchange(uri,
-                            HttpMethod.GET, null, new ParameterizedTypeReference<GoogleVerificationResponse>() {
+                            HttpMethod.GET, null, new ParameterizedTypeReference<GoogleVerificationResponse>() {//todo: passing null
                             });
             GoogleVerificationResponse response = googleResponse.getBody();
-            if(response != null){
+            if(response != null){ //todo: condition makes sense?
                 log.info("User's " + userId + " token validation response: " + response.toString());
                 return  response.getUserId().equals(userId);
             }else {
@@ -95,5 +95,9 @@ public class ActiveUsersStorage {
             log.warn("Users token verification failed for user id: " + userId + ". Cause: " + e.getMessage());
             return false;
         }
+    }
+
+    private boolean isRegistered(String userId){
+        return userRepository.findByUserId(userId).isPresent();
     }
 }
