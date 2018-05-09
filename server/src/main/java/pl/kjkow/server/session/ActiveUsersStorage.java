@@ -43,8 +43,8 @@ public class ActiveUsersStorage {
         } else if(isRegistered(userId) && userTokenValid(userId, userToken)){
             authenticate(userId, userToken);
         } else if(!isRegistered(userId) && userTokenValid(userId, userToken)){
-            log.info("User " + userId + " is not registered, token is valid");
-        } else log.warn("User failed to authenticate. Id: " + userId + ". Token: " + userToken);
+            throw new RuntimeException("User " + userId + " is not registered, token is valid");//todo http status code in separate exception
+        } else throw new RuntimeException("User failed to authenticate. Id: " + userId + ". Token: " + userToken);
 
     }
 
