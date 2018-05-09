@@ -37,15 +37,18 @@ public class ActiveUsersStorage {
         authenticatedUsers = new ArrayList<>();
     }
 
-    public void authenticateUser(String userId, String userToken){
+    public void register(String userId, String userToken){
+        if(userTokenValid(userId, userToken) && !isRegistered(userId)) authenticate(userId, userToken);
+        else if(isRegistered(userId)) log.warn("User " + userId + " already registered");
+        else throw new RuntimeException("Cannot register user " + userId + " " + userToken);
+    }
+
+    public void validateAuthentication(String userId, String userToken){
         if(sessionActiveFor(userId, userToken)){
             refreshSession(getById(userId).get());
         } else if(isRegistered(userId) && userTokenValid(userId, userToken)){
             authenticate(userId, userToken);
-        } else if(!isRegistered(userId) && userTokenValid(userId, userToken)){
-            log.info("User " + userId + " is not registered, token is valid");
-        } else log.warn("User failed to authenticate. Id: " + userId + ". Token: " + userToken);
-
+        } else throw new RuntimeException("User failed to authenticate. Id: " + userId + ". Token: " + userToken);
     }
 
     private boolean sessionActiveFor(String userId, String token){
@@ -75,7 +78,7 @@ public class ActiveUsersStorage {
         return authenticatedUsers.stream().filter(user -> user.getUserId().equals(id)).findFirst();
     }
 
-    private boolean userTokenValid(String userId, String token){
+    private boolean userTokenValid(String userId, String token){ //TODO: separate class
         if(tokenValidationOption.equalsIgnoreCase("google")) return userTokenIsValid(userId, token);
         else if(tokenValidationOption.equalsIgnoreCase("none")) return true;
         else throw new RuntimeException("Invalid option for 'validate.user.token.with.' Users won't be authorized");

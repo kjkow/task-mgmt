@@ -26,10 +26,19 @@ public class RestCallsAspect {
     @Pointcut("execution(* pl.kjkow.server.rest.*.*(..))")
     public void restPackage(){}
 
+    private String token;
+    private String userId;
+
     @Before("restPackage()")
     private void beforeMethod(JoinPoint joinPoint){
-        handleAuthorization(joinPoint);
         log.info(createRequestLogInformation(joinPoint));
+        retriveAuthenticationData(joinPoint);
+
+        if(joinPoint.getSignature().toShortString().contains("addUser")){
+            activeUsersStorage.register(userId, token);
+        }else {
+            activeUsersStorage.validateAuthentication(userId, token);
+        }
     }
 
     @AfterReturning(pointcut = "restPackage()", returning = "returnValue")
@@ -59,9 +68,7 @@ public class RestCallsAspect {
                 returnedValue.toString();
     }
 
-    private void handleAuthorization(JoinPoint joinPoint){//todo test coverage
-        String token;
-        String userId;
+    private void retriveAuthenticationData(JoinPoint joinPoint){
         List args = Arrays.asList(joinPoint.getArgs());
 
         if(args.size() < 2) throw new RuntimeException("Missing authentication parameters");
@@ -71,7 +78,5 @@ public class RestCallsAspect {
 
         if(args.get(1) instanceof String) userId = (String) args.get(1);
         else throw new RuntimeException("Argument type mismatch. Second should be String");
-
-        activeUsersStorage.authenticateUser(userId, token);
     }
 }
