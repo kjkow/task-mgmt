@@ -28,8 +28,8 @@ public class RestCallsAspect {
 
     @Before("restPackage()")
     private void beforeMethod(JoinPoint joinPoint){
-        handleAuthorization(joinPoint);
         log.info(createRequestLogInformation(joinPoint));
+        handleAuthorization(joinPoint);
     }
 
     @AfterReturning(pointcut = "restPackage()", returning = "returnValue")
