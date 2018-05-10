@@ -16,7 +16,7 @@ public class ProjectRest {
     @Autowired
     private ProjectRepository projectRepository;
 
-    @GetMapping(value = "/projects/")
+    @GetMapping(value = RestConstants.GET_ALL_PROJECTS)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     Iterable<Project> getAllProjects(
