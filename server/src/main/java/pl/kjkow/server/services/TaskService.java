@@ -33,10 +33,6 @@ public class TaskService {
         return taskRepository.findByUserId(userId);
     }
 
-    public List<Task> findByNameContaining(String name){
-        return taskRepository.findByNameContaining(name);
-    }
-
     public Task updateTask(String taskId, Task task){
         if(taskRepository.existsById(Long.valueOf(taskId))){
             return save(task);

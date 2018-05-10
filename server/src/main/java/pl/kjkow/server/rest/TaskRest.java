@@ -51,14 +51,4 @@ public class TaskRest {
             @PathVariable String taskId, @RequestBody Task task){
         return taskService.updateTask(taskId, task);
     }
-
-    @GetMapping(value = "tasks/search{name}")
-    @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody
-    List<Task> getTasksByName(
-            @RequestHeader(value="Authorization") String token,
-            @RequestHeader(value="Identification") String userId,
-            @PathVariable String name){
-        return taskService.findByNameContaining(name);
-    }
 }

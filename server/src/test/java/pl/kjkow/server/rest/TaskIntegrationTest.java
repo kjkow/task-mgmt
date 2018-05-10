@@ -50,24 +50,6 @@ public class TaskIntegrationTest {
     }
 
     @Test
-    public void findByNameContaining(){
-        Task task = new Task();
-        task.setUserId("123");
-        task.setArea(Area.MATERIALY_REFERENCYJNE);
-        task.setName("Task");
-        restTemplate.postForEntity("/tasks/add", task, Task.class);
-
-        Task second = new Task();
-        second.setUserId("123");
-        second.setArea(Area.MATERIALY_REFERENCYJNE);
-        second.setName("Second");
-        restTemplate.postForEntity("/tasks/add", second, Task.class);
-
-        ResponseEntity<List> responseEntity = restTemplate.getForEntity("/tasks/search?name=Task", List.class);
-        //todo: testing repository works fine, here and in app returns all tasks
-    }
-
-    @Test
     public void sectionNotValid(){
         Task task = new Task();
         task.setUserId("123");

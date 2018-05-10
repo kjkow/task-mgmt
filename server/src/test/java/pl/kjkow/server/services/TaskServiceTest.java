@@ -13,7 +13,6 @@ import pl.kjkow.server.model.Task;
 import pl.kjkow.server.repository.TaskRepository;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -59,14 +58,6 @@ public class TaskServiceTest {
         when(mockRepository.findByUserId("123")).thenReturn(tasks);
         List<Task> actual = taskService.findAll("123");
         assertEquals(actual, tasks);
-    }
-
-    @Test
-    public void findByNameContaining() throws Exception {
-        List<Task> found = Collections.singletonList(testTaskOne);
-        when(mockRepository.findByNameContaining("Task")).thenReturn(found);
-        List<Task> actual = taskService.findByNameContaining("Task");
-        assertEquals(actual, found);
     }
 
     @Test

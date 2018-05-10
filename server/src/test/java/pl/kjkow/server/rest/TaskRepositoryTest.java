@@ -78,12 +78,6 @@ public class TaskRepositoryTest {
     }
 
     @Test
-    public void findTasksByNameContaining(){
-        List<Task> found = taskRepository.findByNameContaining("Task");
-        assertThat(found.size()).isEqualTo(1);
-    }
-
-    @Test
     public void deleteByFinnishedAtBeforeAndByArea(){
         Calendar c= Calendar.getInstance();
         c.add(Calendar.DAY_OF_MONTH, -31);
