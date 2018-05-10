@@ -18,9 +18,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 
@@ -59,8 +56,8 @@ public class UserRestTest {
         user2.setUserId(id);
         userList.add(userRepository.save(user2));
     }
-
-    @Test
+//todo: zrobić jak w TaskIntegrationTest
+/*    @Test
     public void getUserById() throws Exception {
         mvc.perform(get("/users/" + id))
                 .andExpect(status().isOk())
@@ -75,7 +72,7 @@ public class UserRestTest {
         mvc.perform(get("/users/notpresent@example.com")
                 .contentType(contentType))
                 .andExpect(status().isNotFound());
-    }
+    }*/
 
     @Test
     public void addUser() throws Exception {
