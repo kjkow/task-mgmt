@@ -47,5 +47,18 @@ public class UserRestTest extends RestTest {
 
     @Test
     public void updateUserData() {
+        User user = new User("New user name", "testing@example.com");
+        user.setNotifications(true);
+        user.setUserId("123456");
+
+        HttpEntity<User> httpEntity = new HttpEntity<>(user, getAuthenticationHeaders());
+        ResponseEntity<User> response = restTemplate.exchange("/users/123456", HttpMethod.POST, httpEntity, User.class);
+        User updated = response.getBody();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(updated.getName(), user.getName());
+        assertEquals(updated.getUserId(), user.getUserId());
+        assertEquals(updated.isNotifications(), user.isNotifications());
+        assertEquals(updated.getEmail(), user.getEmail());
     }
 }

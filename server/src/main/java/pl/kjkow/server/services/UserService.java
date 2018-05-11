@@ -23,6 +23,7 @@ public class UserService {
     public User updateUserData(String id, User user) {
         if(!user.getUserId().equals(id)) throw new RuntimeException("Invalid parameter");
         User recived = userRepository.findByUserIdAndEmail(id, user.getEmail()).orElseThrow(()-> new UserNotFoundException(id, user.getEmail()));
-        return userRepository.save(recived);
+        if(!id.equals(recived.getUserId())) throw new RuntimeException("Invalid user id, or changed");
+        return userRepository.save(user);
     }
 }
