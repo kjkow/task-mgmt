@@ -29,6 +29,20 @@ public class UserRestTest extends RestTest {
 
     @Test
     public void addUser() {
+        User user = new User("Mike Makovsky", "unit@tests.com");
+        user.setUserId("123457");
+        HttpEntity<User> httpEntity = new HttpEntity<>(user, getAuthenticationHeaders());
+        ResponseEntity<User> response = restTemplate.exchange(
+                RestConstants.ADD_USER,
+                HttpMethod.POST,
+                httpEntity,
+                User.class);
+        User saved = response.getBody();
+
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(saved.getName(), user.getName());
+        assertEquals(saved.getEmail(), user.getEmail());
+        assertEquals(saved.getUserId(), user.getUserId());
     }
 
     @Test
