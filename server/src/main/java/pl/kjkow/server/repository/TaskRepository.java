@@ -12,8 +12,6 @@ import java.util.List;
  */
 public interface TaskRepository extends CrudRepository<Task, Long> {
 
-    Iterable<Task> findByName(String name);
-
     void deleteByFinnishedBeforeAndArea(Date expiryDate, Area area);
 
     long countByAreaAndUserId(Area area, String userId);
