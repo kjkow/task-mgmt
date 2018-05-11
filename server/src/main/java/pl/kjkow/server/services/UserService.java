@@ -5,16 +5,12 @@ import org.springframework.stereotype.Service;
 import pl.kjkow.server.model.User;
 import pl.kjkow.server.model.UserNotFoundException;
 import pl.kjkow.server.repository.UserRepository;
-import pl.kjkow.server.session.ActiveUsersStorage;
 
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private ActiveUsersStorage activeUsersStorage;
 
     public User getUserById(String userId, String email){
         return userRepository.findByUserIdAndEmail(userId, email).orElseThrow(()-> new UserNotFoundException(userId, email));
@@ -24,4 +20,9 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User updateUserData(String id, User user) {
+        if(!user.getUserId().equals(id)) throw new RuntimeException("Invalid parameter");
+        User recived = userRepository.findByUserIdAndEmail(id, user.getEmail()).orElseThrow(()-> new UserNotFoundException(id, user.getEmail()));
+        return userRepository.save(recived);
+    }
 }
