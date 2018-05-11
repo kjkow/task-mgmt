@@ -32,7 +32,7 @@ public class TaskRest {
         return taskService.save(task);
     }
 
-    @GetMapping(value = "/tasks/{id}")
+    @GetMapping(value = RestConstants.GET_ALL_TASKS)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     List<Task> getAllTasks(

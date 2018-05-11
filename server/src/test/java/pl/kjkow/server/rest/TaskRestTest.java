@@ -5,6 +5,8 @@ import org.springframework.http.*;
 import pl.kjkow.server.model.Area;
 import pl.kjkow.server.model.Task;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class TaskRestTest extends RestTest {
@@ -29,6 +31,11 @@ public class TaskRestTest extends RestTest {
 
     @Test
     public void getAllTasks() {
+        ResponseEntity<ArrayList> response = restTemplate.exchange(
+                "/tasks/123456", HttpMethod.GET, new HttpEntity<>(getAuthenticationHeaders()), ArrayList.class);
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertTrue(response.getBody().size() > 0);
     }
 
     @Test
