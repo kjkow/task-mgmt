@@ -23,7 +23,7 @@ public class TaskRest {
     @Autowired
     private TaskService taskService;
 
-    @RequestMapping(value = "tasks/add", method = RequestMethod.POST)
+    @RequestMapping(value = RestConstants.ADD_TASK, method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
     Task addTask(@RequestHeader(value="Authorization") String token,
