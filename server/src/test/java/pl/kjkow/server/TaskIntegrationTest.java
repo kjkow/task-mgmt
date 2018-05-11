@@ -1,4 +1,4 @@
-package pl.kjkow.server.rest;
+package pl.kjkow.server;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +18,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Created by kamil on 2018-04-21.
  */
+@Deprecated
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class TaskIntegrationTest {

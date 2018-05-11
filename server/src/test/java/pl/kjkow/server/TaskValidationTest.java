@@ -1,4 +1,4 @@
-package pl.kjkow.server.rest;
+package pl.kjkow.server;
 
 import org.junit.BeforeClass;
 import org.junit.Test;

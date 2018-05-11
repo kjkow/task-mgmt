@@ -2,6 +2,7 @@ package pl.kjkow.server.rest;
 
 import org.junit.Test;
 import org.springframework.http.*;
+import pl.kjkow.server.RestConstants;
 import pl.kjkow.server.model.Area;
 import pl.kjkow.server.model.Task;
 

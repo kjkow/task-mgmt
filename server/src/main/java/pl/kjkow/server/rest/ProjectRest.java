@@ -3,6 +3,7 @@ package pl.kjkow.server.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import pl.kjkow.server.RestConstants;
 import pl.kjkow.server.model.Project;
 import pl.kjkow.server.services.ProjectService;
 

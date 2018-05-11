@@ -1,17 +1,12 @@
 package pl.kjkow.server.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import pl.kjkow.server.model.Area;
+import pl.kjkow.server.RestConstants;
 import pl.kjkow.server.model.Task;
-import pl.kjkow.server.model.TaskNotFoundException;
-import pl.kjkow.server.model.TaskValidationException;
-import pl.kjkow.server.repository.TaskRepository;
 import pl.kjkow.server.services.TaskService;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
