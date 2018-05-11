@@ -6,6 +6,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import pl.kjkow.server.model.Project;
 
 import java.util.*;
 
@@ -31,6 +32,19 @@ public class ProjectRestTest extends RestTest {
 
     @Test
     public void addProject() {
+        Project project = new Project();
+        project.setName("Unit test project");
+        project.setFinnished(false);
+        project.setOrdered(true);
+
+        HttpEntity<Project> httpEntity = new HttpEntity<>(project, getAuthenticationHeaders());
+        ResponseEntity<Project> response = restTemplate.exchange(RestConstants.ADD_PROJECT, HttpMethod.POST, httpEntity, Project.class);
+        Project saved = response.getBody();
+
+        assertNotNull(saved);
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(saved.getName(), project.getName());
+        assertEquals(saved.isFinnished(), project.isFinnished());
     }
 
     @Test

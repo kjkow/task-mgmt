@@ -25,7 +25,7 @@ public class ProjectRest {
         return projectRepository.findAll();
     }
 
-    @RequestMapping(value = "projects/add", method = RequestMethod.POST)
+    @RequestMapping(value = RestConstants.ADD_PROJECT, method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
     Project addProject(
