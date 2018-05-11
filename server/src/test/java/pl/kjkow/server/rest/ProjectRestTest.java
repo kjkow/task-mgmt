@@ -52,7 +52,7 @@ public class ProjectRestTest extends RestTest {
         ResponseEntity<ArrayList> allProjectsResponse = restTemplate.exchange(
                 RestConstants.GET_ALL_PROJECTS, HttpMethod.GET, new HttpEntity<>(getAuthenticationHeaders()), ArrayList.class);
 
-        if(allProjectsResponse.getBody() != null && allProjectsResponse.getBody().size() == 0) throw new RuntimeException("Cannot proceed test");
+        if(allProjectsResponse.getBody().size() == 0) throw new RuntimeException("Cannot proceed test");
         int id = (int) ((LinkedHashMap)allProjectsResponse.getBody().get(0)).get("id");
 
         Project project = new Project();
