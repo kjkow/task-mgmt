@@ -1,4 +1,4 @@
-package pl.kjkow.server;
+package pl.kjkow.server.repository;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,11 +11,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.kjkow.server.model.Area;
 import pl.kjkow.server.model.Task;
-import pl.kjkow.server.repository.TaskRepository;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -88,6 +86,7 @@ public class TaskRepositoryTest {
         cal.add(Calendar.DAY_OF_MONTH, -30);
         Date thirtyDaysAgo = cal.getTime();
 
+        //TODO: restult of assert that is ignored
         assertThat(taskRepository.findById(1L).isPresent());
 
         taskRepository.deleteByFinnishedBeforeAndArea(thirtyDaysAgo, Area.UKONCZONE);
