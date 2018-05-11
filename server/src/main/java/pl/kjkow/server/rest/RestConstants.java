@@ -8,4 +8,5 @@ class RestConstants {
 
     static final String ADD_TASK = "/tasks/add/";
     static final String GET_ALL_TASKS = "/tasks/{id}";
+    static final String UPDATE_TASK = "tasks/update/{taskId}";
 }

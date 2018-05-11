@@ -42,7 +42,7 @@ public class TaskRest {
         return taskService.findAll(id);
     }
 
-    @RequestMapping(value = "tasks/update/{taskId}", method = RequestMethod.POST)
+    @RequestMapping(value = RestConstants.UPDATE_TASK, method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     Task updateTask(
