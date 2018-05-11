@@ -35,7 +35,7 @@ public class ProjectRest {
         return projectRepository.save(project);
     }
 
-    @RequestMapping(value = "projects/update/{projectId}", method = RequestMethod.POST)
+    @RequestMapping(value = RestConstants.UPDATE_PROJECT, method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     Project updateProject(

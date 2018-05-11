@@ -49,5 +49,27 @@ public class ProjectRestTest extends RestTest {
 
     @Test
     public void updateProject() {
+        ResponseEntity<ArrayList> allProjectsResponse = restTemplate.exchange(
+                RestConstants.GET_ALL_PROJECTS, HttpMethod.GET, new HttpEntity<>(getAuthenticationHeaders()), ArrayList.class);
+
+        if(allProjectsResponse.getBody() != null && allProjectsResponse.getBody().size() == 0) throw new RuntimeException("Cannot proceed test");
+        int id = (int) ((LinkedHashMap)allProjectsResponse.getBody().get(0)).get("id");
+
+        Project project = new Project();
+        project.setId(id);
+        project.setName("New project name");
+        project.setFinnished(false);
+        project.setOrdered(true);
+        project.setDescription("This is project for testing purposes");
+
+        HttpEntity<Project> httpEntity = new HttpEntity<>(project, getAuthenticationHeaders());
+        ResponseEntity<Project> response = restTemplate.exchange("/projects/update/" + id, HttpMethod.POST, httpEntity, Project.class);
+        Project updated = response.getBody();
+
+        assertNotNull(updated);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(updated.getName(), project.getName());
+        assertEquals(updated.getId(), project.getId());
+        assertEquals(updated.getDescription(), project.getDescription());
     }
 }
