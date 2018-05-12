@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import org.springframework.test.util.ReflectionTestUtils;
 import pl.kjkow.server.model.Area;
 import pl.kjkow.server.model.Task;
 import pl.kjkow.server.repository.TaskRepository;
@@ -35,6 +36,27 @@ public class TaskServiceTest {
         when(mockRepository.findByUserId("123")).thenReturn(tasks);
         List<Task> actual = taskService.findAll("123");
         assertEquals(actual, tasks);
+    }
+
+    @Test
+    public void save(){
+        ReflectionTestUtils.setField(taskService, "taskLimit", 5);
+
+        Task task = new Task();
+        task.setArea(Area.MATERIALY_REFERENCYJNE);
+        task.setUserId("123");
+        task.setName("Name");
+
+        Task expected = new Task();
+        expected.setId(1L);
+        expected.setArea(Area.MATERIALY_REFERENCYJNE);
+        expected.setUserId("123");
+        expected.setName("Name");
+
+        when(mockRepository.save(task)).thenReturn(expected);
+
+        Task actual = taskService.save(task);
+        assertEquals(actual, expected);
     }
 
 }
