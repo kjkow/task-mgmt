@@ -79,4 +79,18 @@ public class TaskServiceTest {
         taskService.save(task);
     }
 
+    @Test
+    public void reachedTaskLimitInArea(){
+        when(mockRepository.countByAreaAndUserId(Area.OBOWIAZKI, "123")).thenReturn(5L);
+
+        Task task = new Task();
+        task.setArea(Area.OBOWIAZKI);
+        task.setUserId("123");
+        task.setName("Name");
+
+        expectedEx.expect(TaskValidationException.class);
+        expectedEx.expectMessage("Task limit reached in section " + task.getArea().getLabel());
+        taskService.save(task);
+    }
+
 }
