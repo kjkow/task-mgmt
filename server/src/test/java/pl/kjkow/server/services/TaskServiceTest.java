@@ -93,4 +93,16 @@ public class TaskServiceTest {
         taskService.save(task);
     }
 
+    @Test
+    public void frequencyTypeInvalid(){
+        Task task = new Task();
+        task.setArea(Area.OBOWIAZKI);
+        task.setUserId("123");
+        task.setName("Name");
+        task.setFrequencyType("Not allowed frequency type");
+
+        expectedEx.expect(TaskValidationException.class);
+        expectedEx.expectMessage(task.getFrequencyType() + " is not allowed as tasks frequency type");
+        taskService.save(task);
+    }
 }
