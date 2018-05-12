@@ -105,4 +105,33 @@ public class TaskServiceTest {
         expectedEx.expectMessage(task.getFrequencyType() + " is not allowed as tasks frequency type");
         taskService.save(task);
     }
+
+    @Test
+    public void frequencyTypeSetAndFreqReccurencyNotSet(){
+        Task task = new Task();
+        task.setArea(Area.OBOWIAZKI);
+        task.setUserId("123");
+        task.setName("Name");
+        task.setFrequencyType("Dzienna");
+        task.setRecurrenceFrequency(0);
+
+        expectedEx.expect(TaskValidationException.class);
+        expectedEx.expectMessage("If one of the frequency options is selected, other must be as well. " +
+                "Frequency type:" + task.getFrequencyType() + ". Frequency reccurence: " + task.getRecurrenceFrequency());
+        taskService.save(task);
+    }
+
+    @Test
+    public void frequencyTypeNotSetAndFreqReccurencySet(){
+        Task task = new Task();
+        task.setArea(Area.OBOWIAZKI);
+        task.setUserId("123");
+        task.setName("Name");
+        task.setRecurrenceFrequency(5);
+
+        expectedEx.expect(TaskValidationException.class);
+        expectedEx.expectMessage("If one of the frequency options is selected, other must be as well. " +
+                "Frequency type:" + task.getFrequencyType() + ". Frequency reccurence: " + task.getRecurrenceFrequency());
+        taskService.save(task);
+    }
 }
