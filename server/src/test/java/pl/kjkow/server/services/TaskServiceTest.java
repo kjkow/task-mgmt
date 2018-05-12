@@ -1,7 +1,9 @@
 package pl.kjkow.server.services;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
@@ -9,6 +11,7 @@ import org.mockito.junit.MockitoRule;
 import org.springframework.test.util.ReflectionTestUtils;
 import pl.kjkow.server.model.Area;
 import pl.kjkow.server.model.Task;
+import pl.kjkow.server.model.TaskValidationException;
 import pl.kjkow.server.repository.TaskRepository;
 
 import java.util.Arrays;
@@ -23,9 +26,15 @@ import static org.mockito.Mockito.when;
 public class TaskServiceTest {
 
     @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
+    @Rule public ExpectedException expectedEx = ExpectedException.none();
 
     @Mock private TaskRepository mockRepository;
     @InjectMocks private TaskService taskService;
+
+    @Before
+    public void init(){
+        ReflectionTestUtils.setField(taskService, "taskLimit", 5);
+    }
 
     @Test
     public void findAll() {
@@ -40,8 +49,6 @@ public class TaskServiceTest {
 
     @Test
     public void save(){
-        ReflectionTestUtils.setField(taskService, "taskLimit", 5);
-
         Task task = new Task();
         task.setArea(Area.MATERIALY_REFERENCYJNE);
         task.setUserId("123");
@@ -57,6 +64,19 @@ public class TaskServiceTest {
 
         Task actual = taskService.save(task);
         assertEquals(actual, expected);
+    }
+
+    @Test
+    public void sectionInvalid(){
+        Task task = new Task();
+        task.setArea(Area.OBOWIAZKI);
+        task.setUserId("123");
+        task.setName("Name");
+        task.setSection("secion");
+
+        expectedEx.expect(TaskValidationException.class);
+        expectedEx.expectMessage("Section is not allowed when task is outside of reference materials area");
+        taskService.save(task);
     }
 
 }
