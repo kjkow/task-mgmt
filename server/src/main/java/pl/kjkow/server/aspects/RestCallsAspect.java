@@ -30,7 +30,7 @@ public class RestCallsAspect {
     private String userId;
 
     @Before("restPackage()")
-    private void beforeMethod(JoinPoint joinPoint){
+    public void beforeMethod(JoinPoint joinPoint){
         log.info(createRequestLogInformation(joinPoint));
         retriveAuthenticationData(joinPoint.getArgs());
 
