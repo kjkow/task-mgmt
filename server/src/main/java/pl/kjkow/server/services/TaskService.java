@@ -56,20 +56,20 @@ public class TaskService {
     }
 
     private boolean taskFrequencyValid(Task task){
-        if((task.getFrequencyType() != null || (task.getFrequencyType() != null && !task.getFrequencyType().equals(""))) && task.getRecurrenceFrequency() <= 0){
+        if((task.getFrequencyType() != null && !task.getFrequencyType().equals("")) && task.getRecurrenceFrequency() <= 0){
             return false;
         }
-        if(task.getRecurrenceFrequency() > 0 && (task.getFrequencyType() == null || (task.getFrequencyType() != null &&task.getFrequencyType().equals("")))){
+        if(task.getRecurrenceFrequency() > 0 && (task.getFrequencyType() == null || (task.getFrequencyType() != null && task.getFrequencyType().equals("")))){
             return false;
         }
         return true;
-    }//TODO: testy uslugi, w tym tej metody
+    }
 
     private boolean frequencyTypeValid(Task task){
         String taskFrequency = task.getFrequencyType();
         List<String> allowed = Arrays.asList("", "Dzienna", "Miesięczna", null);
         return allowed.contains(taskFrequency);
-    } //TODO:test, enum
+    } //TODO: enum
 
     private boolean taskLimitInAreaReached(Task task){
         return taskRepository.countByAreaAndUserId(task.getArea(), task.getUserId()) > taskLimit - 1;
