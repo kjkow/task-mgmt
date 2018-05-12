@@ -3,6 +3,7 @@ package pl.kjkow.server.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import pl.kjkow.server.model.Area;
 import pl.kjkow.server.model.Task;
 import pl.kjkow.server.model.TaskNotFoundException;
@@ -56,10 +57,10 @@ public class TaskService {
     }
 
     private boolean taskFrequencyValid(Task task){
-        if((task.getFrequencyType() != null && !task.getFrequencyType().equals("")) && task.getRecurrenceFrequency() <= 0){
+        if(!StringUtils.isEmpty(task.getFrequencyType()) && task.getRecurrenceFrequency() <= 0){
             return false;
         }
-        if(task.getRecurrenceFrequency() > 0 && (task.getFrequencyType() == null || (task.getFrequencyType() != null && task.getFrequencyType().equals("")))){
+        if(task.getRecurrenceFrequency() > 0 && StringUtils.isEmpty(task.getFrequencyType())){
             return false;
         }
         return true;
