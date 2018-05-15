@@ -1,9 +1,7 @@
-package pl.kjkow.server.rest;
+package pl.kjkow.server.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import pl.kjkow.server.model.Area;
-import pl.kjkow.server.model.Task;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -15,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by kamil on 2018-04-21.
  */
-public class TaskValidationTest {
+public class TaskTest {
 
     private static Validator validator;
 

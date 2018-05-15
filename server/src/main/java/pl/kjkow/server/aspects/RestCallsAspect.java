@@ -30,9 +30,9 @@ public class RestCallsAspect {
     private String userId;
 
     @Before("restPackage()")
-    private void beforeMethod(JoinPoint joinPoint){
+    public void beforeMethod(JoinPoint joinPoint){
         log.info(createRequestLogInformation(joinPoint));
-        retriveAuthenticationData(joinPoint);
+        retriveAuthenticationData(joinPoint.getArgs());
 
         if(joinPoint.getSignature().toShortString().contains("addUser")){
             activeUsersStorage.register(userId, token);
@@ -68,8 +68,8 @@ public class RestCallsAspect {
                 returnedValue.toString();
     }
 
-    private void retriveAuthenticationData(JoinPoint joinPoint){
-        List args = Arrays.asList(joinPoint.getArgs());
+    private void retriveAuthenticationData(Object[] joinPointArgs){
+        List args = Arrays.asList(joinPointArgs);
 
         if(args.size() < 2) throw new RuntimeException("Missing authentication parameters");
 

@@ -1,19 +1,20 @@
 package pl.kjkow.server.services;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.rules.ExpectedException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.test.context.ContextConfiguration;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
+import org.springframework.test.util.ReflectionTestUtils;
 import pl.kjkow.server.model.Area;
 import pl.kjkow.server.model.Task;
+import pl.kjkow.server.model.TaskValidationException;
 import pl.kjkow.server.repository.TaskRepository;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -22,60 +23,115 @@ import static org.mockito.Mockito.when;
 /**
  * Created by kamil on 2018-04-27.
  */
-@RunWith(MockitoJUnitRunner.class)
-@ContextConfiguration(value = "application-dev.properties")
 public class TaskServiceTest {
 
-    @Mock
-    private TaskRepository mockRepository;
+    @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
+    @Rule public ExpectedException expectedEx = ExpectedException.none();
 
-    @Value("${task.limit}")
-    private int limit;
-
-    @InjectMocks
-    private TaskService taskService;
+    @Mock private TaskRepository mockRepository;
+    @InjectMocks private TaskService taskService;
 
     @Before
     public void init(){
-        testTaskOne = new Task("TaskOne", Area.MOZE_KIEDYS, "123");
-        testTaskTwo = new Task("Other", Area.MOZE_KIEDYS, "123");
-        testTaskThree = new Task("Test", Area.MOZE_KIEDYS, "124");
-        testTaskFour = new Task("Test", Area.OBOWIAZKI, "123");
-    }
-
-    private Task testTaskOne;
-    private Task testTaskTwo;
-    private Task testTaskThree;
-    private Task testTaskFour;
-
-    @Test
-    public void save() throws Exception {
-
+        ReflectionTestUtils.setField(taskService, "taskLimit", 5);
     }
 
     @Test
-    public void findAll() throws Exception {
-        List<Task> tasks = Arrays.asList(testTaskOne, testTaskTwo, testTaskFour);
+    public void findAll() {
+        List<Task> tasks = Arrays.asList(
+                new Task("TaskOne", Area.MOZE_KIEDYS, "123"),
+                new Task("Other", Area.MOZE_KIEDYS, "123"),
+                new Task("Test", Area.OBOWIAZKI, "123"));
         when(mockRepository.findByUserId("123")).thenReturn(tasks);
         List<Task> actual = taskService.findAll("123");
         assertEquals(actual, tasks);
     }
 
     @Test
-    public void findByNameContaining() throws Exception {
-        List<Task> found = Collections.singletonList(testTaskOne);
-        when(mockRepository.findByNameContaining("Task")).thenReturn(found);
-        List<Task> actual = taskService.findByNameContaining("Task");
-        assertEquals(actual, found);
+    public void save(){
+        Task task = new Task();
+        task.setArea(Area.MATERIALY_REFERENCYJNE);
+        task.setUserId("123");
+        task.setName("Name");
+
+        Task expected = new Task();
+        expected.setId(1L);
+        expected.setArea(Area.MATERIALY_REFERENCYJNE);
+        expected.setUserId("123");
+        expected.setName("Name");
+
+        when(mockRepository.save(task)).thenReturn(expected);
+
+        Task actual = taskService.save(task);
+        assertEquals(actual, expected);
     }
 
     @Test
-    public void updateTask() throws Exception {
+    public void sectionInvalid(){
+        Task task = new Task();
+        task.setArea(Area.OBOWIAZKI);
+        task.setUserId("123");
+        task.setName("Name");
+        task.setSection("secion");
+
+        expectedEx.expect(TaskValidationException.class);
+        expectedEx.expectMessage("Section is not allowed when task is outside of reference materials area");
+        taskService.save(task);
     }
 
-    @Test()
-    public void sectionSetInWrongArea(){
-        //todo: mockito wstawia w taskservice#limit wartosc 0, a nie chce brac jej z application-dev.properties
+    @Test
+    public void reachedTaskLimitInArea(){
+        when(mockRepository.countByAreaAndUserId(Area.OBOWIAZKI, "123")).thenReturn(5L);
+
+        Task task = new Task();
+        task.setArea(Area.OBOWIAZKI);
+        task.setUserId("123");
+        task.setName("Name");
+
+        expectedEx.expect(TaskValidationException.class);
+        expectedEx.expectMessage("Task limit reached in section " + task.getArea().getLabel());
+        taskService.save(task);
     }
 
+    @Test
+    public void frequencyTypeInvalid(){
+        Task task = new Task();
+        task.setArea(Area.OBOWIAZKI);
+        task.setUserId("123");
+        task.setName("Name");
+        task.setFrequencyType("Not allowed frequency type");
+
+        expectedEx.expect(TaskValidationException.class);
+        expectedEx.expectMessage(task.getFrequencyType() + " is not allowed as tasks frequency type");
+        taskService.save(task);
+    }
+
+    @Test
+    public void frequencyTypeSetAndFreqReccurencyNotSet(){
+        Task task = new Task();
+        task.setArea(Area.OBOWIAZKI);
+        task.setUserId("123");
+        task.setName("Name");
+        task.setFrequencyType("Dzienna");
+        task.setRecurrenceFrequency(0);
+
+        expectedEx.expect(TaskValidationException.class);
+        expectedEx.expectMessage("If one of the frequency options is selected, other must be as well. " +
+                "Frequency type:" + task.getFrequencyType() + ". Frequency reccurence: " + task.getRecurrenceFrequency());
+        taskService.save(task);
+    }
+
+    @Test
+    public void frequencyTypeNotSetAndFreqReccurencySet(){
+        Task task = new Task();
+        task.setArea(Area.OBOWIAZKI);
+        task.setUserId("123");
+        task.setName("Name");
+        task.setRecurrenceFrequency(5);
+
+        expectedEx.expect(TaskValidationException.class);
+        expectedEx.expectMessage("If one of the frequency options is selected, other must be as well. " +
+                "Frequency type:" + task.getFrequencyType() + ". Frequency reccurence: " + task.getRecurrenceFrequency());
+        taskService.save(task);
+    }
 }

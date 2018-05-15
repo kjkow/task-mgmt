@@ -1,95 +1,77 @@
 package pl.kjkow.server.rest;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.context.WebApplicationContext;
-import pl.kjkow.server.ServerApplication;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import pl.kjkow.server.RestConstants;
 import pl.kjkow.server.model.User;
-import pl.kjkow.server.repository.UserRepository;
 
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
-import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+public class UserRestTest extends RestTest {
 
+    @Test
+    public void getUserById() {
+        ResponseEntity<User> response = restTemplate.exchange(
+                "/users/123456/testing@example.com",
+                HttpMethod.GET,
+                new HttpEntity<>(getAuthenticationHeaders()),
+                User.class);
+        User recived = response.getBody();
 
-/**
- * Created by kamil on 2018-03-31.
- */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = ServerApplication.class)
-@WebAppConfiguration
-public class UserRestTest {
-
-    private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
-            MediaType.APPLICATION_JSON.getSubtype(),
-            Charset.forName("utf8"));
-
-    private List<User> userList;
-    private String id = "124";
-    private MockMvc mvc;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    @Before
-    public void setUp(){
-        this.mvc = webAppContextSetup(webApplicationContext).build();
-        userList = new ArrayList<>();
-
-        userRepository.deleteAll();
-        User user1 = new User("John Doe", "abc@example.com");
-        user1.setUserId("123");
-        userList.add(userRepository.save(user1));
-        User user2 = new User("Michelle Francis", "test@ex.com");
-        user2.setUserId(id);
-        userList.add(userRepository.save(user2));
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(recived.getName(), "John Tester");
+        assertEquals(recived.getEmail(), "testing@example.com");
+        assertFalse(recived.isNotifications());
     }
 
     @Test
-    public void getUserById() throws Exception {
-        mvc.perform(get("/users/" + id))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$.name", is(userList.get(1).getName())))
-                .andExpect(jsonPath("$.email", is(userList.get(1).getEmail())));
+    public void addUser() {
+        User user = new User("Mike Makovsky", "unit@tests.com");
+        user.setUserId("123457");
+        HttpEntity<User> httpEntity = new HttpEntity<>(user, getAuthenticationHeaders());
+        ResponseEntity<User> response = restTemplate.exchange(
+                RestConstants.ADD_USER,
+                HttpMethod.POST,
+                httpEntity,
+                User.class);
+        User saved = response.getBody();
 
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(saved.getName(), user.getName());
+        assertEquals(saved.getEmail(), user.getEmail());
+        assertEquals(saved.getUserId(), user.getUserId());
     }
 
     @Test
-    public void userNotFound() throws Exception {
-        mvc.perform(get("/users/notpresent@example.com")
-                .contentType(contentType))
-                .andExpect(status().isNotFound());
+    public void updateUserData() {
+        String userId = "123458";
+        String userEmail = "unit4@tests.com";
+
+        User newUser = new User("Brand new one", userEmail);
+        newUser.setUserId(userId);
+        HttpEntity<User> httpEntityOne = new HttpEntity<>(newUser, getAuthenticationHeaders());
+        restTemplate.exchange(
+                RestConstants.ADD_USER,
+                HttpMethod.POST,
+                httpEntityOne,
+                User.class);
+
+        User user = new User("New user name", userEmail);
+        user.setNotifications(true);
+        user.setUserId(userId);
+
+        HttpEntity<User> httpEntity = new HttpEntity<>(user, getAuthenticationHeaders());
+        ResponseEntity<User> response = restTemplate.exchange("/users/" + userId, HttpMethod.POST, httpEntity, User.class);
+        User updated = response.getBody();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(updated.getName(), user.getName());
+        assertEquals(updated.getUserId(), user.getUserId());
+        assertEquals(updated.isNotifications(), user.isNotifications());
+        assertEquals(updated.getEmail(), user.getEmail());
     }
-
-    @Test
-    public void addUser() throws Exception {
-        String firstName = "Percy";
-        String lastName = "Jackson";
-        String mail = "test@ing.com";
-
-        //TODO: pass request body, najprawdopodobniej przez coś takiego MappingJackson2HttpMessageConverter
-/*        mvc.perform(post("/users/add")
-                .sessionAttr("user", new User(firstName, lastName, email)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.firstName", is(firstName)))
-                .andExpect(jsonPath("$.lastName", is(lastName)))
-                .andExpect(jsonPath("$.email", is(mail)));*/
-    }
-
 }

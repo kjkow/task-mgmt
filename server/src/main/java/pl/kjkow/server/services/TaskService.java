@@ -3,6 +3,7 @@ package pl.kjkow.server.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import pl.kjkow.server.model.Area;
 import pl.kjkow.server.model.Task;
 import pl.kjkow.server.model.TaskNotFoundException;
@@ -33,10 +34,6 @@ public class TaskService {
         return taskRepository.findByUserId(userId);
     }
 
-    public List<Task> findByNameContaining(String name){
-        return taskRepository.findByNameContaining(name);
-    }
-
     public Task updateTask(String taskId, Task task){
         if(taskRepository.existsById(Long.valueOf(taskId))){
             return save(task);
@@ -60,20 +57,20 @@ public class TaskService {
     }
 
     private boolean taskFrequencyValid(Task task){
-        if((task.getFrequencyType() != null || (task.getFrequencyType() != null && !task.getFrequencyType().equals(""))) && task.getRecurrenceFrequency() <= 0){
+        if(!StringUtils.isEmpty(task.getFrequencyType()) && task.getRecurrenceFrequency() <= 0){
             return false;
         }
-        if(task.getRecurrenceFrequency() > 0 && (task.getFrequencyType() == null || (task.getFrequencyType() != null &&task.getFrequencyType().equals("")))){
+        if(task.getRecurrenceFrequency() > 0 && StringUtils.isEmpty(task.getFrequencyType())){
             return false;
         }
         return true;
-    }//TODO: testy uslugi, w tym tej metody
+    }
 
     private boolean frequencyTypeValid(Task task){
         String taskFrequency = task.getFrequencyType();
         List<String> allowed = Arrays.asList("", "Dzienna", "Miesięczna", null);
         return allowed.contains(taskFrequency);
-    } //TODO:test, enum
+    } //TODO: enum
 
     private boolean taskLimitInAreaReached(Task task){
         return taskRepository.countByAreaAndUserId(task.getArea(), task.getUserId()) > taskLimit - 1;
