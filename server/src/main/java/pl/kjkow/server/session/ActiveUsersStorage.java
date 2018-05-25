@@ -46,8 +46,10 @@ public class ActiveUsersStorage {
     public void validateAuthentication(String userId, String userToken){
         if(sessionActiveFor(userId, userToken)){
             refreshSession(getById(userId).get());
-        } else if(isRegistered(userId) && userTokenValid(userId, userToken)){
+        } else if(isRegistered(userId) && userTokenValid(userId, userToken)) {
             authenticate(userId, userToken);
+        }else if(!isRegistered(userId) && userTokenValid(userId, userToken)){
+            log.info("User " + userId + " token valid but is not registered");
         } else throw new RuntimeException("User failed to authenticate. Id: " + userId + ". Token: " + userToken);
     }
 
